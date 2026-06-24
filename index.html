@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lola Gastronomia — Porto Alegre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{--red:#a92a2b;--gold:#c49955;--ink:#2b2620;--mac:rgb(68,93,79);color-scheme:light;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:#0f0d0b;}
+.hero{position:relative;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:60px 20px;overflow:hidden;}
+.hero::before{content:"";position:absolute;inset:-16px;z-index:0;background:url('https://static.wixstatic.com/media/d4ec75_d2dc9a80894f4851a2ca85f020ccd600~mv2.jpg/v1/fill/w_1600,h_1000,al_c,q_90,enc_auto/lola.jpg') center/cover no-repeat;filter:blur(3px) brightness(.82) saturate(1.18) contrast(1.04);transform:scale(1.07);}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(150deg,rgba(120,30,25,.42),rgba(18,12,8,.72));}
+.hero>*{position:relative;z-index:2;}
+.hero .kick{font-family:Arial,sans-serif;letter-spacing:7px;text-transform:uppercase;font-size:11px;color:#f0e2c4;}
+.hero h1{font-weight:500;font-size:clamp(42px,8vw,92px);line-height:1.02;margin:10px 0 4px;font-variation-settings:"opsz" 144;text-shadow:0 2px 24px rgba(0,0,0,.4);}
+.hero h1 em{font-style:italic;color:#f0c97a;}
+.hero .tg{font-family:Arial,sans-serif;letter-spacing:5px;text-transform:uppercase;font-size:12px;color:#eadfce;margin-top:12px;}
+.hero .gline{width:60px;height:2px;background:var(--gold);margin:22px auto 0;}
+.brands{background:#f7f2e9;padding:50px 20px 60px;}
+.brands h2{text-align:center;color:var(--gold);font-weight:600;font-size:30px;font-variation-settings:"opsz" 144;}
+.brands .lead{text-align:center;font-family:Arial,sans-serif;font-size:13px;color:#8a7f6d;margin-top:6px;}
+.cards{display:flex;flex-direction:column;gap:20px;max-width:940px;margin:30px auto 0;}
+.card{position:relative;height:330px;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 16px 40px rgba(80,55,20,.18);display:block;text-decoration:none;transition:filter .45s ease;}
+@media(max-width:600px){.card{height:260px;}}
+.card img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease, filter .45s ease;filter:brightness(.95);}
+.card .shade{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.52));transition:opacity .45s ease;}
+.card .cap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:20px;}
+.card .word{font-weight:600;font-size:clamp(46px,8vw,72px);letter-spacing:7px;line-height:1;text-shadow:0 2px 16px rgba(0,0,0,.55);font-variation-settings:"opsz" 144;}
+.card .place{font-style:italic;font-weight:400;font-size:clamp(20px,2.6vw,27px);margin-top:10px;color:#fff;line-height:1.15;text-shadow:0 2px 10px rgba(0,0,0,.6);font-variation-settings:"opsz" 144;}
+.card .btn{display:inline-block;margin-top:18px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px 26px;border-radius:30px;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+.card.ccmq .btn{background:var(--red);} .card.mac .btn{background:var(--mac);}
+.cards:has(.card:hover) .card:not(:hover){filter:brightness(.5);}
+.card:hover img.bg{filter:brightness(1.05);transform:scale(1.05);}
+.card:hover .shade{opacity:.65;}
+.ribbon{position:absolute;top:16px;right:16px;z-index:3;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:var(--mac);padding:5px 12px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.foot{background:var(--red);color:#fbeae0;text-align:center;padding:30px 20px;font-family:Arial,sans-serif;font-size:11.5px;letter-spacing:1px;line-height:1.9;}
+</style></head>
+<body>
+<section class="hero">
+<div class="kick">Porto Alegre</div>
+<h1>Lola <em>Gastronomia</em></h1>
+<div class="tg">bar · restaurante · eventos</div>
+<div class="gline"></div>
+</section>
+<section class="brands">
+<h2>Nossas Casas</h2>
+<div class="lead">Duas casas, a mesma alma Lola. Escolha por onde começar.</div>
+<div class="cards">
+<a class="card ccmq" href="app.html">
+<img class="bg" src="https://static.wixstatic.com/media/d4ec75_e89bb22b2c0242e89714261417926d27~mv2.jpg/v1/fill/w_1400,h_620,al_c,q_90,enc_auto/lola.jpg" alt="Lola CCMQ"><div class="shade"></div>
+<div class="cap"><div class="word">CCMQ</div><div class="place">Casa de Cultura Mario Quintana</div><span class="btn">Entrar</span></div>
+</a>
+<div class="card mac">
+<span class="ribbon">Em breve</span>
+<img class="bg" referrerpolicy="no-referrer" src="https://drive.google.com/thumbnail?id=1kS2fCb8SvGT-cUHjGGzcxjo83n9-vV-N&sz=w1600" alt="Lola MAC"><div class="shade"></div>
+<div class="cap"><div class="word">MAC</div><div class="place">Museu de Arte Contemporânea</div><span class="btn">Em breve</span></div>
+</div>
+</div>
+</section>
+<footer class="foot">www.lolabar.com.br · Porto Alegre – RS<br>@lola.ccmq · @lola.macrs</footer>
+</body></html>
