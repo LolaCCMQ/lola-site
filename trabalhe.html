@@ -56,10 +56,13 @@ textarea{min-height:90px;resize:vertical;}
 <div class="card ok" id="ok"><div class="em">🎉</div><h3>Recebemos sua candidatura!</h3><p>Obrigado pelo interesse em fazer parte do Lola. A gente entra em contato quando surgir uma vaga com o seu perfil.</p></div>
 </section>
 <script>
-// Chave do Web3Forms (recebe a candidatura por email, com o PDF anexado).
+// Web3Forms (email, só texto no plano grátis) + Supabase (guarda o PDF e gera link)
 const ACCESS_KEY="f2a76a04-111a-4a7e-ada3-b88a91bb5c11";
 const WHATS="555121605886";
+const SUPA="https://mvjbsdpfjhywhaonvpfl.supabase.co";
+const SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12amJzZHBmamh5d2hhb252cGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4MDk2OTAsImV4cCI6MjA5NTM4NTY5MH0.i_3sqgQa6umsIYBmAwWz_NP6nYuT3GfIZid24zHXSEI";
 function v(id){return (document.getElementById(id).value||"").trim();}
+function ext(name){var m=(name||"").toLowerCase().match(/\.(pdf|docx?|)$/);return m&&m[1]?m[1]:'pdf';}
 async function enviar(e){
   e.preventDefault();
   var btn=document.getElementById('btnEnviar'), erro=document.getElementById('erro');
@@ -68,24 +71,38 @@ async function enviar(e){
   try{
     var nome=v('f_nome'),vaga=v('f_vaga'),disp=v('f_disp'),tel=v('f_tel'),email=v('f_email'),sobre=v('f_sobre');
     var file=document.getElementById('f_cv').files[0];
+    if(!file) throw new Error('anexe o currículo');
+    if(file.size>8*1024*1024) throw new Error('o arquivo passa de 8 MB');
+    // 1) sobe o currículo pro Supabase Storage
+    var slug=nome.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,30)||'candidato';
+    var path='cand-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'-'+slug+'.'+ext(file.name);
+    var up=await fetch(SUPA+'/storage/v1/object/curriculos/'+path,{method:'POST',
+      headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':file.type||'application/pdf','x-upsert':'true'},body:file});
+    if(!up.ok) throw new Error('falha ao subir o currículo');
+    var cvUrl=SUPA+'/storage/v1/object/public/curriculos/'+path;
+    // 2) registra a candidatura na tabela
+    try{ await fetch(SUPA+'/rest/v1/lola_candidaturas',{method:'POST',
+      headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({nome:nome,vaga:vaga,disponibilidade:disp,telefone:tel,email:email,sobre:sobre||null,curriculo_url:cvUrl})}); }catch(e2){}
+    // 3) email (Web3Forms) com os dados + link do currículo
     var fd=new FormData();
     fd.append('access_key',ACCESS_KEY);
     fd.append('subject','Nova candidatura — Trabalhe Conosco (Lola)');
     fd.append('from_name','Site Lola — Trabalhe Conosco');
     fd.append('Nome',nome); fd.append('Vaga',vaga); fd.append('Disponibilidade',disp);
     fd.append('Telefone',tel); fd.append('E-mail',email); fd.append('Sobre',sobre||'—');
-    if(file) fd.append('attachment',file);
+    fd.append('Curriculo (download)',cvUrl);
     var r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:fd});
     var j=await r.json();
-    if(!j.success) throw new Error(j.message||'Falha no envio');
-    // aviso rápido no WhatsApp (texto)
+    if(!j.success) throw new Error(j.message||'falha no email');
+    // 4) aviso no WhatsApp com os dados + link do currículo
     var msg='*Nova candidatura — Trabalhe Conosco*%0A'
       +'Nome: '+encodeURIComponent(nome)+'%0A'
       +'Vaga: '+encodeURIComponent(vaga)+'%0A'
       +'Disponibilidade: '+encodeURIComponent(disp)+'%0A'
       +'Telefone: '+encodeURIComponent(tel)+'%0A'
-      +'E-mail: '+encodeURIComponent(email)+'%0A%0A'
-      +encodeURIComponent('(currículo enviado por email)');
+      +'E-mail: '+encodeURIComponent(email)+'%0A'
+      +'Curriculo: '+encodeURIComponent(cvUrl);
     window.open('https://wa.me/'+WHATS+'?text='+msg,'_blank');
     document.getElementById('frm').style.display='none';
     document.getElementById('ok').style.display='block';
