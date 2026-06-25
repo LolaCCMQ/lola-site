@@ -6,7 +6,6 @@
 <style>
 :root{--red:#a92a2b;--gold:#c49955;--cream:#faf6ef;--head:60px;color-scheme:light;}
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
 body{font-family:'Fraunces',Georgia,serif;background:var(--cream);overflow-anchor:none;}
 header.bar{background:var(--red);color:#fbeae0;display:flex;align-items:center;gap:6px;padding:0 14px;height:var(--head);box-shadow:0 2px 12px rgba(0,0,0,.18);position:sticky;top:0;z-index:20;}
 .brand{display:flex;align-items:baseline;gap:8px;cursor:pointer;user-select:none;padding-right:10px;}
@@ -17,7 +16,7 @@ nav::-webkit-scrollbar{height:0;}
 nav button{background:none;border:0;color:#f7e3d3;font-family:'Fraunces',Georgia,serif;font-size:17px;font-weight:500;letter-spacing:.2px;padding:8px 15px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s;font-variation-settings:"opsz" 40;}
 nav button:hover{background:rgba(255,255,255,.12);color:#fff;}
 nav button.active{background:#fff;color:var(--red);}
-section.block{scroll-margin-top:var(--head);position:relative;}
+section.block{position:relative;}
 section.block + section.block{border-top:1px solid #ece2cf;}
 iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
 .scrolltop{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;border:0;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);font-size:20px;line-height:1;display:none;align-items:center;justify-content:center;z-index:30;}
@@ -60,47 +59,47 @@ iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
   var sections=[].slice.call(document.querySelectorAll('section.block'));
   var frames=[].slice.call(document.querySelectorAll('iframe.frame'));
 
-  // ---- auto-altura: como tudo é do mesmo domínio, lemos a altura real do conteúdo ----
+  // ---- auto-altura (mesmo domínio: lemos a altura real do conteúdo) ----
   function fit(f){
-    try{
-      var d=f.contentDocument; if(!d||!d.body) return;
+    try{ var d=f.contentDocument; if(!d||!d.body) return;
       var h=Math.max(d.body.scrollHeight,d.documentElement.scrollHeight,d.body.offsetHeight);
-      if(h>0) f.style.height=h+'px';
+      if(h>0 && Math.abs((parseInt(f.style.height)||0)-h)>1) f.style.height=h+'px';
     }catch(e){}
   }
   function fitAll(){ frames.forEach(fit); }
   frames.forEach(function(f){
     f.addEventListener('load',function(){
       fit(f);
-      try{
-        var d=f.contentDocument;
+      try{ var d=f.contentDocument;
         if(d.fonts&&d.fonts.ready){ d.fonts.ready.then(function(){fit(f);}); }
         [].slice.call(d.querySelectorAll('img')).forEach(function(img){ img.addEventListener('load',function(){fit(f);}); });
       }catch(e){}
-      [150,400,900,1800,3000].forEach(function(t){ setTimeout(function(){fit(f);},t); });
+      [200,600,1200,2400].forEach(function(t){ setTimeout(function(){fit(f);},t); });
       scrollToHash();
     });
     f.src=f.dataset.src;
   });
   window.addEventListener('resize',fitAll);
 
-  // ---- navegação por âncora (desliza até a seção) ----
-  // scrollIntoView respeita o scroll-margin-top (= altura do cabeçalho), então alinha certinho.
+  // ---- navegação até a seção (suave quando o navegador permite; salto garantido sempre) ----
+  function headH(){ return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--head'))||60; }
+  function maxScroll(){ return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
+  function topOf(el){ return Math.min(maxScroll(), Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - headH())); }
+  function jumpTo(top){ try{ window.scrollTo({top:top,behavior:'smooth'}); }catch(e){ window.scrollTo(0,top); } }
   function go(id){
     var el=document.getElementById(id); if(!el) return;
     fitAll();
-    el.scrollIntoView({behavior:'smooth',block:'start'});
-    // reforça o alvo enquanto as molduras assentam (fotos/fontes mudam a altura),
-    // mas cancela assim que o usuário rolar manualmente.
-    var timers=[];
-    function cancel(){ timers.forEach(clearTimeout); window.removeEventListener('wheel',cancel); window.removeEventListener('touchstart',cancel); }
-    [350,800,1500,2400].forEach(function(t){ timers.push(setTimeout(function(){ fitAll(); el.scrollIntoView({block:'start'}); },t)); });
+    jumpTo(topOf(el));
+    var canceled=false;
+    function cancel(){ canceled=true; window.removeEventListener('wheel',cancel); window.removeEventListener('touchstart',cancel); }
     window.addEventListener('wheel',cancel,{passive:true,once:true});
     window.addEventListener('touchstart',cancel,{passive:true,once:true});
+    // garante/corrige (instantâneo) caso o suave não role ou as imagens mudem a altura
+    [450,1000,1800].forEach(function(d){ setTimeout(function(){ if(canceled) return; fitAll(); var t=topOf(el); if(Math.abs(window.pageYOffset-t)>4) window.scrollTo(0,t); },d); });
   }
   btns.forEach(function(b){ b.addEventListener('click',function(){ go(b.dataset.target); }); });
 
-  // ---- destaque do item ativo conforme rola (scrollspy) ----
+  // ---- destaque do item ativo conforme rola ----
   function setActive(id){ btns.forEach(function(b){ b.classList.toggle('active',b.dataset.target===id); }); }
   if(window.IntersectionObserver){
     var io=new IntersectionObserver(function(entries){
@@ -110,18 +109,18 @@ iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
   }
 
   // ---- abrir direto numa seção via #hash (ex.: app.html#vinhos) ----
+  var hashDone=false;
   function scrollToHash(){
+    if(hashDone) return;
     var h=(location.hash||'').replace('#','');
-    if(h && document.getElementById(h)){
-      [120,500,1100,2200].forEach(function(t){ setTimeout(function(){ go(h); },t); });
-    }
+    if(h && document.getElementById(h)){ hashDone=true; setTimeout(function(){ go(h); },400); }
   }
   scrollToHash();
 
   // ---- botão voltar ao topo ----
   var toTop=document.getElementById('toTop');
   window.addEventListener('scroll',function(){ toTop.classList.toggle('show',window.scrollY>600); });
-  toTop.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  toTop.addEventListener('click',function(){ jumpTo(0); });
 })();
 </script>
 </body></html>
