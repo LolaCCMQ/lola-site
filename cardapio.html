@@ -86,8 +86,3 @@ function setL(l){LANG=l;['pt','en','es'].forEach(x=>document.getElementById('b'+
 fetch(FN).then(r=>r.json()).then(j=>{DATA=j.items||[];render();}).catch(e=>{document.getElementById('app').innerHTML='<div class="state">Não consegui carregar agora.<br>'+e+'</div>';});
 </script>
 <script id="lolaH">(function(){function info(){var de=document.documentElement,b=document.body,wrap=document.querySelector('.wrap'),app=document.getElementById('app');var bs=b?b.scrollHeight:0,des=de?de.scrollHeight:0,bo=b?b.offsetHeight:0,wrs=wrap?wrap.scrollHeight:0,wrb=wrap?Math.ceil(wrap.getBoundingClientRect().bottom+(window.scrollY||0)):0;var h=Math.max(bs,des,bo,wrs,wrb,0);return{h:h,d:{bs:bs,des:des,bo:bo,wrs:wrs,wrb:wrb,ac:app?app.childElementCount:-1,ih:window.innerHeight}};}function send(){var m=info();try{parent.postMessage({lolaH:m.h,lolaDbg:m.d},"*");}catch(e){}}window.addEventListener("load",send);document.addEventListener("DOMContentLoaded",send);window.addEventListener("resize",send);window.addEventListener("scroll",send,true);if(document.fonts&&document.fonts.ready){document.fonts.ready.then(send);}document.addEventListener("load",function(e){if(e.target&&e.target.tagName==="IMG")send();},true);try{new MutationObserver(send).observe(document.documentElement,{subtree:true,childList:true});}catch(e){}try{var ro=new ResizeObserver(send);ro.observe(document.documentElement);if(document.body)ro.observe(document.body);}catch(e){}setInterval(send,1000);})();</script></body></html>
-
-Tab Context:
-- Executed on tabId: 1158357856
-- Available tabs:
-  • tabId 1158357856: "raw.githubusercontent.com/LolaCCMQ/lola-site/main/cardapio.html" (https://raw.githubusercontent.com/LolaCCMQ/lola-site/main/cardapio.html)
