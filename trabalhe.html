@@ -6,12 +6,12 @@
 :root{--red:#a92a2b;--gold:#c49955;--ink:#2b2620;--cream:#f7f2e9;--line:#e7dcc7;color-scheme:light;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--cream);}
-.hero{position:relative;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 20px;overflow:hidden;}
+.hero{position:relative;height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 20px;overflow:hidden;}
 .hero::before{content:"";position:absolute;inset:0;background:url('https://static.wixstatic.com/media/d4ec75_e89bb22b2c0242e89714261417926d27~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_90,enc_auto/lola.jpg') center 40%/cover no-repeat;filter:brightness(.5) saturate(1.05);}
 .hero>*{position:relative;}
 .hero .kick{font-family:Arial,sans-serif;letter-spacing:5px;text-transform:uppercase;font-size:10px;color:#f0e2c4;}
 .hero h1{font-weight:600;font-size:clamp(28px,5vw,42px);margin-top:5px;font-variation-settings:"opsz" 144;text-shadow:0 2px 18px rgba(0,0,0,.5);}
-@media(max-width:640px){.hero{height:140px;}}
+@media(max-width:640px){.hero{height:280px;}}
 .intro{max-width:680px;margin:0 auto;padding:44px 22px 10px;text-align:center;}
 .intro p{font-size:18px;line-height:1.7;color:#473f35;}
 .form{max-width:620px;margin:24px auto 0;padding:0 22px 60px;}
