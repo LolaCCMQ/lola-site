@@ -18,9 +18,13 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
 @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:560px){.grid{grid-template-columns:1fr;}}
 .prod{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 26px rgba(120,90,40,.07);}
-.prod .ph{aspect-ratio:1/1;background:#f4ecdd;display:flex;align-items:center;justify-content:center;}
-.prod .ph span{font-family:Arial,sans-serif;font-size:12px;color:#c9b48c;border:1px dashed #d8c39a;border-radius:8px;padding:8px 14px;}
-.prod .ph img{width:100%;height:100%;object-fit:cover;display:block;}
+.prod .ph{aspect-ratio:1/1;background:#f4ecdd;position:relative;overflow:hidden;}
+.gal{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}
+.gal::-webkit-scrollbar{display:none;}
+.gal img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:center;display:block;}
+.ph .dots{position:absolute;bottom:9px;left:0;right:0;display:flex;justify-content:center;gap:6px;pointer-events:none;}
+.ph .dots span{width:7px;height:7px;border-radius:50%;background:rgba(80,55,20,.3);box-shadow:0 0 3px rgba(255,255,255,.6);transition:background .2s;}
+.ph .dots span.on{background:var(--red);}
 .prod .body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1;}
 .prod h3{color:var(--red);font-size:21px;font-weight:600;font-variation-settings:"opsz" 144;}
 .prod p{font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#6f675b;margin:6px 0 14px;flex:1;}
@@ -36,33 +40,30 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
 .wines .card p{font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#f6dccb;max-width:520px;margin:0 auto 20px;}
 .wines .card a{display:inline-block;background:#fff;color:var(--red);text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;padding:12px 26px;border-radius:26px;transition:transform .2s;}
 .wines .card a:hover{transform:translateY(-1px);}
-.foot{text-align:center;color:#9a9082;font-family:Arial,Helvetica,sans-serif;font-size:12px;padding:44px 20px 40px;}
 </style></head>
 <body>
-<!-- ====== CABEÇALHO ====== -->
 <div class="head">
   <h1>Lojinha</h1>
   <div class="sub">Escolha o que quiser e finalize pelo WhatsApp. 🌿</div>
 </div>
 
 <!-- ====== PRODUTOS DA CASA ======
-     COMO EDITAR: cada produto é um bloco <article class="prod"> ... </article>.
-     - Nome: dentro de <h3>...</h3>   - Preço: dentro de <span class="price">R$ XX</span>
-     - Descrição: dentro de <p>...</p>
-     - Foto: troque <span>+ foto</span> por  <img src="LINK-DA-FOTO.jpg" alt="Nome">
-     - Botão Comprar: o texto depois de ?text= é a mensagem que abre no WhatsApp. -->
+     Cada produto é um <article class="prod">. A foto fica em <div class="gal"> (várias <img> = galeria que desliza pro lado). -->
 <div class="sec">
   <h2>Produtos da Casa</h2>
   <div class="grid">
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/camiseta.jpg" alt="Camiseta Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/camiseta-branca-1.jpg" alt="Camiseta Branca Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/camiseta-branca-2.jpg" alt="Camiseta Branca Lola — verso" loading="lazy">
+      </div></div>
       <div class="body">
-        <h3>Camiseta</h3>
-        <p>Camiseta de algodão. Tamanhos P, M, G ou GG.</p>
+        <h3>Camiseta Branca</h3>
+        <p>Camiseta de algodão branca. Tamanhos P, M, G ou GG.</p>
         <div class="row">
           <span class="price">R$ 89</span>
-          <a class="buy" target="_blank" rel="noopener" href="https://wa.me/555121605886?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Camiseta%20(R%24%2089)%20da%20Lojinha%20Lola.">
+          <a class="buy" target="_blank" rel="noopener" href="https://wa.me/555121605886?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Camiseta%20Branca%20(R%24%2089)%20da%20Lojinha%20Lola.">
             <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.477-.91zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
             Comprar
           </a>
@@ -71,7 +72,47 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
     </article>
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/bone.jpg" alt="Boné Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/camiseta-rosa-1.jpg" alt="Camiseta Rosa Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/camiseta-rosa-2.jpg" alt="Camiseta Rosa Lola — verso" loading="lazy">
+      </div></div>
+      <div class="body">
+        <h3>Camiseta Rosa</h3>
+        <p>Camiseta de algodão rosa. Tamanhos P, M, G ou GG.</p>
+        <div class="row">
+          <span class="price">R$ 89</span>
+          <a class="buy" target="_blank" rel="noopener" href="https://wa.me/555121605886?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Camiseta%20Rosa%20(R%24%2089)%20da%20Lojinha%20Lola.">
+            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.477-.91zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Comprar
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/camiseta-bordo-1.jpg" alt="Camiseta Bordô Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/camiseta-bordo-2.jpg" alt="Camiseta Bordô Lola — verso" loading="lazy">
+      </div></div>
+      <div class="body">
+        <h3>Camiseta Bordô</h3>
+        <p>Camiseta de algodão bordô. Tamanhos P, M, G ou GG.</p>
+        <div class="row">
+          <span class="price">R$ 89</span>
+          <a class="buy" target="_blank" rel="noopener" href="https://wa.me/555121605886?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Camiseta%20Bord%C3%B4%20(R%24%2089)%20da%20Lojinha%20Lola.">
+            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.477-.91zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Comprar
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/bone-1.jpg" alt="Boné Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/bone-2.jpg" alt="Boné Lola — verso" loading="lazy">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/bone-3.jpg" alt="Boné Lola — em uso" loading="lazy">
+      </div></div>
       <div class="body">
         <h3>Boné</h3>
         <p>Boné de algodão.</p>
@@ -86,7 +127,10 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
     </article>
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/chaveiro-metal.jpg" alt="Chaveiro de Metal Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/chaveiro-metal-1.jpg" alt="Chaveiro de Metal Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/chaveiro-metal-2.jpg" alt="Chaveiro de Metal Lola — 2" loading="lazy">
+      </div></div>
       <div class="body">
         <h3>Chaveiro de Metal</h3>
         <p>Chaveiro de metal, com desenho da Casa de Cultura Mário Quintana.</p>
@@ -101,7 +145,10 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
     </article>
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/ima.jpg" alt="Ímã de Geladeira Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/ima-1.jpg" alt="Ímã de Geladeira Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/ima-2.jpg" alt="Ímã de Geladeira Lola — 2" loading="lazy">
+      </div></div>
       <div class="body">
         <h3>Ímã de Geladeira</h3>
         <p>Lembrancinha do Lola pra deixar na geladeira.</p>
@@ -116,7 +163,11 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
     </article>
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/chaveiro-acrilico.jpg" alt="Chaveiro de Acrílico Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/chaveiro-acrilico-1.jpg" alt="Chaveiro de Acrílico Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/chaveiro-acrilico-2.jpg" alt="Chaveiro de Acrílico Lola — 2" loading="lazy">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/chaveiro-acrilico-3.jpg" alt="Chaveiro de Acrílico Lola — 3" loading="lazy">
+      </div></div>
       <div class="body">
         <h3>Chaveiro de Acrílico</h3>
         <p>Chaveiro leve de acrílico do Lola.</p>
@@ -131,7 +182,10 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
     </article>
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/ecobag.jpg" alt="Ecobag Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/ecobag-1.jpg" alt="Ecobag Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/ecobag-2.jpg" alt="Ecobag Lola — em uso" loading="lazy">
+      </div></div>
       <div class="body">
         <h3>Ecobag</h3>
         <p>Sacola de algodão.</p>
@@ -146,7 +200,10 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
     </article>
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/caneca-ceramica.jpg" alt="Caneca de Cerâmica Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/caneca-ceramica-1.jpg" alt="Caneca de Cerâmica Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/caneca-ceramica-2.jpg" alt="Caneca de Cerâmica Lola — 2" loading="lazy">
+      </div></div>
       <div class="body">
         <h3>Caneca de Cerâmica</h3>
         <p>Caneca de cerâmica branca.</p>
@@ -161,7 +218,10 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
     </article>
 
     <article class="prod">
-      <div class="ph"><img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/caneca-vidro.jpg" alt="Caneca de Vidro Lola" loading="lazy"></div>
+      <div class="ph"><div class="gal">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/caneca-vidro-1.jpg" alt="Caneca de Vidro Lola">
+        <img src="https://mvjbsdpfjhywhaonvpfl.supabase.co/storage/v1/object/public/loja/caneca-vidro-2.jpg" alt="Caneca de Vidro Lola — 2" loading="lazy">
+      </div></div>
       <div class="body">
         <h3>Caneca de Vidro</h3>
         <p>Caneca de vidro do Lola.</p>
@@ -175,25 +235,10 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
       </div>
     </article>
 
-    <article class="prod">
-      <div class="ph"><span>+ foto</span></div>
-      <div class="body">
-        <h3>Sacolinha de Vinho</h3>
-        <p>Sacolinha de vinho em tecido.</p>
-        <div class="row">
-          <span class="price">R$ 15</span>
-          <a class="buy" target="_blank" rel="noopener" href="https://wa.me/555121605886?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Sacolinha%20de%20Vinho%20(R%24%2015)%20da%20Lojinha%20Lola.">
-            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.477-.91zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-            Comprar
-          </a>
-        </div>
-      </div>
-    </article>
-
   </div>
 </div>
 
-<!-- ====== CONVITE PARA OS VINHOS (no lugar da lista de vinhos) ====== -->
+<!-- ====== CONVITE PARA OS VINHOS ====== -->
 <div class="wines">
   <div class="card">
     <div class="k">Da nossa carta</div>
@@ -203,4 +248,15 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
   </div>
 </div>
 
+<script>
+// bolinhas indicadoras de galeria (aparece quando o produto tem +1 foto)
+document.querySelectorAll('.prod .ph').forEach(function(ph){
+  var gal=ph.querySelector('.gal'); if(!gal) return;
+  var imgs=gal.querySelectorAll('img'); if(imgs.length<2) return;
+  var dots=document.createElement('div'); dots.className='dots';
+  for(var i=0;i<imgs.length;i++){var d=document.createElement('span'); if(i===0)d.className='on'; dots.appendChild(d);}
+  ph.appendChild(dots);
+  var t; gal.addEventListener('scroll',function(){ clearTimeout(t); t=setTimeout(function(){ var idx=Math.round(gal.scrollLeft/gal.clientWidth); for(var i=0;i<dots.children.length;i++){dots.children[i].className=(i===idx?'on':'');} },60); },{passive:true});
+});
+</script>
 </body></html>
