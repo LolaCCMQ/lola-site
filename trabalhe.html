@@ -26,6 +26,8 @@ textarea{min-height:90px;resize:vertical;}
 .file small{display:block;color:#8a7f6d;font-size:11px;margin-top:2px;}
 .btn{margin-top:24px;width:100%;font-family:Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--red);color:#fff;border:none;border-radius:30px;padding:15px;cursor:pointer;box-shadow:0 6px 18px rgba(169,42,43,.3);}
 .btn:hover{filter:brightness(1.07);}
+.btn:disabled{opacity:.6;cursor:default;}
+.err{display:none;color:var(--red);font-family:Arial,sans-serif;font-size:13px;text-align:center;margin-top:14px;}
 .ok{display:none;text-align:center;padding:30px;}
 .ok .em{font-size:40px;} .ok h3{color:var(--red);font-weight:600;font-size:24px;margin:10px 0 6px;font-variation-settings:"opsz" 144;}
 .ok p{font-family:Arial,sans-serif;font-size:14px;color:#5a5247;}
@@ -35,23 +37,66 @@ textarea{min-height:90px;resize:vertical;}
 <section class="form">
 <form class="card" id="frm" onsubmit="return enviar(event)">
 <label>Nome completo <span class="req">*</span></label>
-<input required type="text" placeholder="Seu nome">
+<input required type="text" id="f_nome" name="nome" placeholder="Seu nome">
 <label>Vaga desejada <span class="req">*</span></label>
-<select required><option>Garçom/Atendente</option><option>Auxiliar de Limpeza</option><option>Auxiliar de Cozinha</option><option>Cozinheiro</option><option>Bar/Barista</option><option>Recepcionista/Hostess</option><option>Gerência</option></select>
+<select required id="f_vaga" name="vaga"><option>Garçom/Atendente</option><option>Auxiliar de Limpeza</option><option>Auxiliar de Cozinha</option><option>Cozinheiro</option><option>Bar/Barista</option><option>Recepcionista/Hostess</option><option>Gerência</option></select>
 <label>Disponibilidade de horário <span class="req">*</span></label>
-<select required><option>das 8h às 16h</option><option>das 15h às 23h</option><option>somente finais de semana (sexta a domingo)</option><option>totalmente disponível</option></select>
+<select required id="f_disp" name="disponibilidade"><option>das 8h às 16h</option><option>das 15h às 23h</option><option>somente finais de semana (sexta a domingo)</option><option>totalmente disponível</option></select>
 <label>Telefone / WhatsApp <span class="req">*</span></label>
-<input required type="tel" placeholder="(51) 9 0000-0000">
+<input required type="tel" id="f_tel" name="telefone" placeholder="(51) 9 0000-0000">
 <label>E-mail <span class="req">*</span></label>
-<input required type="email" placeholder="voce@email.com">
+<input required type="email" id="f_email" name="email" placeholder="voce@email.com">
 <label>Currículo (PDF) <span class="req">*</span></label>
-<div class="file"><span class="ic">📎</span><div><input required type="file" accept=".pdf,.doc,.docx"><small>Anexe seu currículo em PDF (até 10 MB)</small></div></div>
+<div class="file"><span class="ic">📎</span><div><input required type="file" id="f_cv" name="attachment" accept=".pdf,.doc,.docx"><small>Anexe seu currículo em PDF (até 5 MB)</small></div></div>
 <label>Conte um pouco sobre você e suas experiências</label>
-<textarea placeholder="Experiência, o que te move, por que o Lola..."></textarea>
-<button class="btn" type="submit">Enviar</button>
+<textarea id="f_sobre" name="sobre" placeholder="Experiência, o que te move, por que o Lola..."></textarea>
+<button class="btn" type="submit" id="btnEnviar">Enviar</button>
+<div class="err" id="erro"></div>
 </form>
 <div class="card ok" id="ok"><div class="em">🎉</div><h3>Recebemos sua candidatura!</h3><p>Obrigado pelo interesse em fazer parte do Lola. A gente entra em contato quando surgir uma vaga com o seu perfil.</p></div>
 </section>
-<script>function enviar(e){e.preventDefault();document.getElementById('frm').style.display='none';document.getElementById('ok').style.display='block';window.scrollTo({top:document.getElementById('ok').offsetTop-120,behavior:'smooth'});return false;}</script>
+<script>
+// Chave do Web3Forms (recebe a candidatura por email, com o PDF anexado).
+const ACCESS_KEY="f2a76a04-111a-4a7e-ada3-b88a91bb5c11";
+const WHATS="555121605886";
+function v(id){return (document.getElementById(id).value||"").trim();}
+async function enviar(e){
+  e.preventDefault();
+  var btn=document.getElementById('btnEnviar'), erro=document.getElementById('erro');
+  erro.style.display='none';
+  btn.disabled=true; var txt=btn.textContent; btn.textContent='Enviando…';
+  try{
+    var nome=v('f_nome'),vaga=v('f_vaga'),disp=v('f_disp'),tel=v('f_tel'),email=v('f_email'),sobre=v('f_sobre');
+    var file=document.getElementById('f_cv').files[0];
+    var fd=new FormData();
+    fd.append('access_key',ACCESS_KEY);
+    fd.append('subject','Nova candidatura — Trabalhe Conosco (Lola)');
+    fd.append('from_name','Site Lola — Trabalhe Conosco');
+    fd.append('Nome',nome); fd.append('Vaga',vaga); fd.append('Disponibilidade',disp);
+    fd.append('Telefone',tel); fd.append('E-mail',email); fd.append('Sobre',sobre||'—');
+    if(file) fd.append('attachment',file);
+    var r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:fd});
+    var j=await r.json();
+    if(!j.success) throw new Error(j.message||'Falha no envio');
+    // aviso rápido no WhatsApp (texto)
+    var msg='*Nova candidatura — Trabalhe Conosco*%0A'
+      +'Nome: '+encodeURIComponent(nome)+'%0A'
+      +'Vaga: '+encodeURIComponent(vaga)+'%0A'
+      +'Disponibilidade: '+encodeURIComponent(disp)+'%0A'
+      +'Telefone: '+encodeURIComponent(tel)+'%0A'
+      +'E-mail: '+encodeURIComponent(email)+'%0A%0A'
+      +encodeURIComponent('(currículo enviado por email)');
+    window.open('https://wa.me/'+WHATS+'?text='+msg,'_blank');
+    document.getElementById('frm').style.display='none';
+    document.getElementById('ok').style.display='block';
+    window.scrollTo({top:document.getElementById('ok').offsetTop-120,behavior:'smooth'});
+  }catch(err){
+    erro.textContent='Não consegui enviar agora ('+err.message+'). Tente de novo, ou chame a gente no WhatsApp (51) 2160-5886.';
+    erro.style.display='block';
+    btn.disabled=false; btn.textContent=txt;
+  }
+  return false;
+}
+</script>
 <script id="lolaH">(function(){function p(){try{var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight);parent.postMessage({lolaH:h},"*");}catch(e){}}window.addEventListener("load",p);window.addEventListener("resize",p);document.addEventListener("DOMContentLoaded",p);var n=0,iv=setInterval(function(){p();if(++n>30)clearInterval(iv);},400);try{new MutationObserver(p).observe(document.documentElement,{subtree:true,childList:true});}catch(e){}})();</script>
 </body></html>
