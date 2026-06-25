@@ -85,14 +85,18 @@ iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
   window.addEventListener('resize',fitAll);
 
   // ---- navegação por âncora (desliza até a seção) ----
-  function headH(){ return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--head'))||60; }
-  function targetTop(el){ return el.getBoundingClientRect().top + window.pageYOffset - headH(); }
+  // scrollIntoView respeita o scroll-margin-top (= altura do cabeçalho), então alinha certinho.
   function go(id){
     var el=document.getElementById(id); if(!el) return;
     fitAll();
-    window.scrollTo({top:targetTop(el),behavior:'smooth'});
-    // reforça o alvo enquanto as molduras assentam (fotos/fontes mudam a altura)
-    [300,700,1300].forEach(function(t){ setTimeout(function(){ fitAll(); window.scrollTo({top:targetTop(el)}); },t); });
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+    // reforça o alvo enquanto as molduras assentam (fotos/fontes mudam a altura),
+    // mas cancela assim que o usuário rolar manualmente.
+    var timers=[];
+    function cancel(){ timers.forEach(clearTimeout); window.removeEventListener('wheel',cancel); window.removeEventListener('touchstart',cancel); }
+    [350,800,1500,2400].forEach(function(t){ timers.push(setTimeout(function(){ fitAll(); el.scrollIntoView({block:'start'}); },t)); });
+    window.addEventListener('wheel',cancel,{passive:true,once:true});
+    window.addEventListener('touchstart',cancel,{passive:true,once:true});
   }
   btns.forEach(function(b){ b.addEventListener('click',function(){ go(b.dataset.target); }); });
 
