@@ -73,6 +73,7 @@ iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
         try{ var rm=d.querySelectorAll('.foot, footer.foot'); for(var i=0;i<rm.length;i++) rm[i].remove(); fit(f); }catch(e){}
         if(d.fonts&&d.fonts.ready){ d.fonts.ready.then(function(){fit(f);}); }
         [].slice.call(d.querySelectorAll('img')).forEach(function(img){ img.addEventListener('load',function(){fit(f);}); });
+        try{ var mo=new MutationObserver(function(){ fit(f); }); mo.observe(d.documentElement,{subtree:true,childList:true,attributes:true,characterData:true}); }catch(e){}
       }catch(e){}
       [200,600,1200,2400].forEach(function(t){ setTimeout(function(){fit(f);},t); });
       scrollToHash();
