@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Especiais do Dia — Administração</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{--red:#a92a2b;--gold:#c49955;--ink:#2b2620;--cream:#faf6ef;--line:#e7dcc7;color-scheme:light;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink);}
+.top{background:linear-gradient(135deg,#b5302e,#7e1e1f);color:#fbeae0;padding:22px 18px;text-align:center;}
+.top h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:23px;}
+.top p{font-size:12px;opacity:.9;margin-top:4px;}
+.top a{color:#fff;font-size:12px;}
+.wrap{max-width:640px;margin:0 auto;padding:18px 16px 60px;}
+.gate{max-width:340px;margin:60px auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 24px;text-align:center;box-shadow:0 10px 28px rgba(80,55,20,.1);}
+.gate h2{font-family:'Fraunces',Georgia,serif;color:var(--red);font-size:22px;font-weight:600;margin-bottom:6px;}
+.gate p{font-size:13px;color:#7a7268;margin-bottom:16px;}
+input,textarea{width:100%;font-size:15px;color:var(--ink);background:#fbf8f2;border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:none;font-family:inherit;}
+input:focus,textarea:focus{border-color:var(--gold);background:#fff;}
+textarea{min-height:64px;resize:vertical;}
+label{display:block;font-size:12px;font-weight:bold;letter-spacing:.4px;color:#5a5247;margin:12px 0 5px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--red);color:#fff;border:none;border-radius:24px;padding:12px 20px;font-size:14px;font-weight:bold;cursor:pointer;box-shadow:0 5px 14px rgba(169,42,43,.28);}
+.btn:hover{filter:brightness(1.07);} .btn:disabled{opacity:.55;cursor:default;}
+.btn.sec{background:#fff;color:var(--red);border:1px solid var(--red);box-shadow:none;}
+.btn.ghost{background:transparent;color:#9a3b3b;box-shadow:none;font-weight:bold;}
+.addbar{display:flex;justify-content:space-between;align-items:center;margin:6px 0 16px;gap:10px;}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;margin-bottom:16px;box-shadow:0 8px 22px rgba(120,90,40,.07);}
+.ph{width:100%;height:150px;border-radius:12px;overflow:hidden;background:#f4ecdd;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.ph img{width:100%;height:100%;object-fit:cover;} .ph span{color:#c9b48c;font-size:13px;}
+.filerow{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.filerow input[type=file]{font-size:12px;border:none;background:none;padding:0;}
+.rowbtns{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;}
+.st{font-size:12px;color:#2c7a4b;min-height:16px;}
+.st.err{color:var(--red);}
+.hint{font-size:12px;color:#9a8f7c;text-align:center;margin-top:8px;}
+</style></head><body>
+
+<div class="top">
+  <h1>Especiais do Dia · Admin</h1>
+  <p>Lola CCMQ — <a href="/especiais.html" target="_blank">ver a página ↗</a></p>
+</div>
+
+<div id="gate" class="gate">
+  <h2>Área restrita</h2>
+  <p>Digite a senha para editar os especiais.</p>
+  <input id="pass" type="password" placeholder="Senha" autocomplete="off">
+  <div style="margin-top:14px"><button class="btn" onclick="entrar()" style="width:100%">Entrar</button></div>
+  <div id="gerr" class="st err" style="margin-top:10px"></div>
+</div>
+
+<div id="app" class="wrap" style="display:none">
+  <div class="addbar">
+    <div style="font-family:'Fraunces',Georgia,serif;color:var(--red);font-weight:600;font-size:18px">Pratos de hoje</div>
+    <button class="btn" onclick="addCard()">+ Adicionar prato</button>
+  </div>
+  <div id="list"></div>
+  <div class="hint">As alterações aparecem na página na hora. Cada prato tem seu próprio botão “Salvar”.</div>
+</div>
+
+<script>
+const SUPA="https://mvjbsdpfjhywhaonvpfl.supabase.co";
+const KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12amJzZHBmamh5d2hhb252cGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4MDk2OTAsImV4cCI6MjA5NTM4NTY5MH0.i_3sqgQa6umsIYBmAwWz_NP6nYuT3GfIZid24zHXSEI";
+const PASS="lola2026"; // troque aqui se quiser mudar a senha
+const H={apikey:KEY,Authorization:'Bearer '+KEY};
+let maxOrdem=0;
+
+function entrar(){
+  var v=document.getElementById('pass').value;
+  if(v===PASS){ try{localStorage.setItem('esp_auth','1');}catch(e){} abrir(); }
+  else document.getElementById('gerr').textContent='Senha incorreta.';
+}
+function abrir(){ document.getElementById('gate').style.display='none'; document.getElementById('app').style.display='block'; carregar(); }
+try{ if(localStorage.getItem('esp_auth')==='1') abrir(); }catch(e){}
+
+async function carregar(){
+  var list=document.getElementById('list'); list.innerHTML='Carregando…';
+  try{
+    var r=await fetch(SUPA+'/rest/v1/especiais_itens?select=*&order=ordem',{headers:H});
+    var items=await r.json();
+    list.innerHTML='';
+    maxOrdem=items.reduce((m,x)=>Math.max(m,x.ordem||0),0);
+    if(!items.length) list.innerHTML='<div class="hint">Nenhum prato ainda. Clique em “+ Adicionar prato”.</div>';
+    items.forEach(it=>list.appendChild(makeCard(it)));
+  }catch(e){ list.innerHTML='<div class="st err">Erro ao carregar.</div>'; }
+}
+
+function makeCard(it){
+  it=it||{};
+  var c=document.createElement('div'); c.className='card'; c.dataset.id=it.id||'';
+  c.innerHTML=
+    '<div class="ph">'+(it.foto_url?'<img src="'+it.foto_url+'">':'<span>sem foto</span>')+'</div>'+
+    '<div class="filerow">📷 <input type="file" accept="image/*" class="f_file"><span class="st f_up"></span></div>'+
+    '<label>Título</label><input class="f_nome" placeholder="Ex: Risoto de Camarão" value="'+esc(it.nome)+'">'+
+    '<label>Descrição</label><textarea class="f_desc" placeholder="Ingredientes / detalhes">'+esc(it.descricao)+'</textarea>'+
+    '<label>Preço (R$)</label><input class="f_preco" placeholder="Ex: 62" value="'+(it.preco!=null?String(it.preco).replace(".",","):"")+'">'+
+    '<div class="rowbtns"><button class="btn ghost" onclick="remover(this)">Remover</button>'+
+    '<div style="display:flex;align-items:center;gap:12px"><span class="st f_st"></span><button class="btn" onclick="salvar(this)">Salvar</button></div></div>';
+  return c;
+}
+function addCard(){ document.getElementById('list').prepend(makeCard({})); }
+function esc(s){ return (s==null?'':String(s)).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+async function resizeUp(file){
+  var img=await new Promise((res,rej)=>{var i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(file);});
+  var max=1000,w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,max/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);
+  var cv=document.createElement('canvas');cv.width=w;cv.height=h;var x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(img,0,0,w,h);
+  var blob=await new Promise(r=>cv.toBlob(r,'image/jpeg',0.85));
+  var path='esp-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.jpg';
+  var up=await fetch(SUPA+'/storage/v1/object/especiais/'+path,{method:'POST',headers:Object.assign({'Content-Type':'image/jpeg','x-upsert':'true'},H),body:blob});
+  if(!up.ok) throw new Error('falha no upload da foto');
+  return SUPA+'/storage/v1/object/public/especiais/'+path;
+}
+
+async function salvar(btn){
+  var c=btn.closest('.card'), st=c.querySelector('.f_st'); st.className='st f_st'; st.textContent='';
+  var nome=c.querySelector('.f_nome').value.trim();
+  var desc=c.querySelector('.f_desc').value.trim();
+  var precoRaw=c.querySelector('.f_preco').value.trim().replace(/[^0-9,\.]/g,'').replace(',','.');
+  var preco=precoRaw?parseFloat(precoRaw):null;
+  if(!nome){ st.className='st f_st err'; st.textContent='Coloque o título.'; return; }
+  btn.disabled=true; var t=btn.textContent; btn.textContent='Salvando…';
+  try{
+    var fileInput=c.querySelector('.f_file'), foto=null;
+    if(fileInput.files[0]){ c.querySelector('.f_up').textContent='enviando foto…'; foto=await resizeUp(fileInput.files[0]); c.querySelector('.f_up').textContent=''; }
+    var id=c.dataset.id;
+    var body={nome:nome,descricao:desc||null,preco:preco,ativo:true};
+    if(foto) body.foto_url=foto;
+    if(id){
+      var r=await fetch(SUPA+'/rest/v1/especiais_itens?id=eq.'+id,{method:'PATCH',headers:Object.assign({'Content-Type':'application/json','Prefer':'return=minimal'},H),body:JSON.stringify(body)});
+      if(!r.ok) throw new Error('erro ao salvar');
+    }else{
+      body.ordem=++maxOrdem;
+      var r=await fetch(SUPA+'/rest/v1/especiais_itens',{method:'POST',headers:Object.assign({'Content-Type':'application/json','Prefer':'return=representation'},H),body:JSON.stringify(body)});
+      if(!r.ok) throw new Error('erro ao criar');
+      var j=await r.json(); c.dataset.id=j[0].id;
+    }
+    if(foto){ c.querySelector('.ph').innerHTML='<img src="'+foto+'">'; fileInput.value=''; }
+    st.textContent='Salvo ✓';
+  }catch(e){ st.className='st f_st err'; st.textContent=(e.message||'erro'); }
+  btn.disabled=false; btn.textContent=t;
+}
+
+async function remover(btn){
+  var c=btn.closest('.card'), id=c.dataset.id;
+  if(!confirm('Remover este prato dos especiais?')) return;
+  try{
+    if(id){ var r=await fetch(SUPA+'/rest/v1/especiais_itens?id=eq.'+id,{method:'DELETE',headers:H}); if(!r.ok) throw new Error(); }
+    c.remove();
+  }catch(e){ alert('Não consegui remover agora.'); }
+}
+</script>
+</body></html>
