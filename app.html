@@ -33,6 +33,16 @@ section.block + section.block{margin-top:46px;}
 iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
 .scrolltop{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;border:0;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);font-size:20px;line-height:1;display:none;align-items:center;justify-content:center;z-index:30;}
 .scrolltop.show{display:flex;}
+#plb{position:fixed;inset:0;background:rgba(20,12,10,.94);display:none;align-items:center;justify-content:center;z-index:1000;}
+#plb.on{display:flex;}
+#plb img{max-width:92vw;max-height:86vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+#plb button{position:absolute;background:rgba(255,255,255,.14);color:#fff;border:0;cursor:pointer;border-radius:50%;width:52px;height:52px;font:700 30px/1 Arial,sans-serif;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+#plb button:hover{background:rgba(255,255,255,.28);}
+#plb .prev{left:14px;top:50%;transform:translateY(-50%);}
+#plb .next{right:14px;top:50%;transform:translateY(-50%);}
+#plb .close{top:14px;right:14px;width:46px;height:46px;font-size:26px;}
+#plb .count{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:13px;letter-spacing:.5px;opacity:.85;}
+@media(max-width:640px){#plb .prev,#plb .next{width:44px;height:44px;font-size:24px;}}
 @media(max-width:640px){
  :root{--head:54px;}
  .brand img.logo{height:32px;}
@@ -48,6 +58,7 @@ iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
    <button data-target="inicio">Início</button>
    <button data-target="menu">Menu</button>
    <button data-target="vinhos">Vinhos</button>
+   <button data-target="ambientes">Ambientes</button>
    <button data-target="lojinha">Lojinha</button>
    <button data-target="trabalhe">Trabalhe Conosco</button>
    <button data-target="contato">Contato</button>
@@ -57,11 +68,14 @@ iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
 <section class="block" id="inicio"><iframe class="frame" scrolling="no" data-src="home-ccmq.html?embed=1" title="Início"></iframe></section>
 <section class="block" id="menu"><iframe class="frame" scrolling="no" data-src="cardapio.html?embed=1" title="Menu"></iframe></section>
 <section class="block" id="vinhos"><iframe class="frame" scrolling="no" data-src="vinhos.html?embed=1" title="Vinhos"></iframe></section>
+<section class="block" id="ambientes"><iframe class="frame" scrolling="no" data-src="ambientes.html?embed=1" title="Ambientes"></iframe></section>
 <section class="block" id="lojinha"><iframe class="frame" scrolling="no" data-src="lojinha.html?embed=1" title="Lojinha"></iframe></section>
 <section class="block" id="trabalhe"><iframe class="frame" scrolling="no" data-src="trabalhe.html?embed=1" title="Trabalhe Conosco"></iframe></section>
 <section class="block" id="contato"><iframe class="frame" scrolling="no" data-src="contato.html?embed=1" title="Contato"></iframe></section>
 
 <button class="scrolltop" id="toTop" title="Voltar ao topo" aria-label="Voltar ao topo">↑</button>
+
+<div id="plb"><button class="close" aria-label="Fechar">×</button><button class="prev" aria-label="Anterior">‹</button><img id="plbImg" src="" alt="Foto do ambiente do Lola"><button class="next" aria-label="Próxima">›</button><div class="count" id="plbCount"></div></div>
 
 <script>
 (function(){
@@ -135,6 +149,23 @@ iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
   var toTop=document.getElementById('toTop');
   window.addEventListener('scroll',function(){ toTop.classList.toggle('show',window.scrollY>600); });
   toTop.addEventListener('click',function(){ jumpTo(0); });
+})();
+
+// ---- lightbox de tela cheia (galeria Ambientes envia por postMessage) ----
+(function(){
+  var plb=document.getElementById('plb'),img=document.getElementById('plbImg'),cnt=document.getElementById('plbCount');
+  var urls=[],cur=0;
+  function show(i){ cur=(i+urls.length)%urls.length; img.src=urls[cur]; cnt.textContent=(cur+1)+' / '+urls.length; }
+  function open(u,i){ urls=u||[]; if(!urls.length) return; show(i||0); plb.classList.add('on'); document.body.style.overflow='hidden'; }
+  function close(){ plb.classList.remove('on'); img.src=''; document.body.style.overflow=''; }
+  plb.querySelector('.close').addEventListener('click',close);
+  plb.querySelector('.prev').addEventListener('click',function(e){e.stopPropagation();show(cur-1);});
+  plb.querySelector('.next').addEventListener('click',function(e){e.stopPropagation();show(cur+1);});
+  plb.addEventListener('click',function(e){ if(e.target===plb) close(); });
+  document.addEventListener('keydown',function(e){ if(!plb.classList.contains('on'))return; if(e.key==='Escape')close(); if(e.key==='ArrowLeft')show(cur-1); if(e.key==='ArrowRight')show(cur+1); });
+  var sx=0; plb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  plb.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) show(cur+(dx<0?1:-1)); },{passive:true});
+  window.addEventListener('message',function(e){ var d=e.data; if(d&&d.lolaLB&&d.lolaLB.urls){ open(d.lolaLB.urls,d.lolaLB.i); } });
 })();
 </script>
 </body></html>
