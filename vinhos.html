@@ -56,7 +56,7 @@ fetch(FN).then(r=>r.json()).then(j=>{
 const it=j.items||[];const app=document.getElementById('app');let html='';
 ORDER.forEach(([t,lbl])=>{const ws=it.filter(x=>x.tipo===t);if(!ws.length)return;
 html+='<section class="sec"><h2 class="cat">'+lbl+'</h2><div class="cols">';
-ws.forEach(w=>{html+='<div class="w"><div class="wh"><span class="wn">'+w.nome+'</span><span class="wp">'+money(w.preco)+'</span></div>'+(w.regiao?'<div class="wr">'+w.regiao+'</div>':'')+(w.descricao?'<div class="wd">'+w.descricao+'</div>':'')+'</div>';});
+ws.forEach(w=>{var meta=[w.vinicola,w.regiao].filter(Boolean).join(' · ');html+='<div class="w"><div class="wh"><span class="wn">'+w.nome+'</span><span class="wp">'+money(w.preco)+'</span></div>'+(meta?'<div class="wr">'+meta+'</div>':'')+(w.descricao?'<div class="wd">'+w.descricao+'</div>':'')+'</div>';});
 html+='</div></section>';
 });
 app.innerHTML=html;
