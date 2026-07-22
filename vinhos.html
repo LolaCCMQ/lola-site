@@ -50,7 +50,7 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
 <footer class="foot">www.lolabar.com.br · Lola CCMQ · Porto Alegre – RS<br>@lolaccmq</footer>
 <script>
 const FN="https://mvjbsdpfjhywhaonvpfl.supabase.co/functions/v1/vinhos";
-const ORDER=[["rose","Rosés"],["branco","Brancos"],["espumante","Espumantes"],["tinto","Tintos"]];
+const ORDER=[["espumante","Espumantes"],["branco","Brancos"],["rose","Rosés"],["tinto","Tintos"]];
 function money(v){return "R$ "+(""+v).replace(".",",");}
 fetch(FN).then(r=>r.json()).then(j=>{
 const it=j.items||[];const app=document.getElementById('app');let html='';
