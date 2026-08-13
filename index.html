@@ -15,60 +15,149 @@
 {"@context":"https://schema.org","@type":"Restaurant","name":"Lola CCMQ","image":"https://static.wixstatic.com/media/d4ec75_e89bb22b2c0242e89714261417926d27~mv2.jpg/v1/fill/w_1200,h_630,al_c,q_90,enc_auto/lola.jpg","url":"https://lolabar.com.br/","telephone":"+555121605886","servesCuisine":["Tapas","Bar","Cozinha Contemporânea"],"priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"Rua dos Andradas, 736 — 7º andar (Casa de Cultura Mario Quintana)","addressLocality":"Porto Alegre","addressRegion":"RS","postalCode":"90020-004","addressCountry":"BR"},"geo":{"@type":"GeoCoordinates","latitude":-30.0277,"longitude":-51.2287},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"12:00","closes":"23:00"}],"hasMenu":"https://lolabar.com.br/cardapio.html","acceptsReservations":"https://wa.me/555121605886","sameAs":["https://www.instagram.com/lolaccmq"]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
 <style>
-:root{--red:#a92a2b;--gold:#c49955;--ink:#2b2620;--mac:rgb(68,93,79);color-scheme:light;}
+:root{--red:#a92a2b;--gold:#c49955;--cream:#faf6ef;--head:60px;color-scheme:light;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:#0f0d0b;}
-.hero{position:relative;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:60px 20px;overflow:hidden;}
-.hero::before{content:"";position:absolute;inset:-16px;z-index:0;background:url('https://static.wixstatic.com/media/d4ec75_d2dc9a80894f4851a2ca85f020ccd600~mv2.jpg/v1/fill/w_1600,h_1000,al_c,q_90,enc_auto/lola.jpg') center/cover no-repeat;filter:blur(3px) brightness(.82) saturate(1.18) contrast(1.04);transform:scale(1.07);}
-.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(150deg,rgba(120,30,25,.42),rgba(18,12,8,.72));}
-.hero>*{position:relative;z-index:2;}
-.hero .kick{font-family:Arial,sans-serif;letter-spacing:7px;text-transform:uppercase;font-size:11px;color:#f0e2c4;}
-.hero h1{font-weight:500;font-size:clamp(42px,8vw,92px);line-height:1.02;margin:10px 0 4px;font-variation-settings:"opsz" 144;text-shadow:0 2px 24px rgba(0,0,0,.4);}
-.hero h1 em{font-style:italic;color:#f0c97a;}
-.hero .tg{font-family:Arial,sans-serif;letter-spacing:5px;text-transform:uppercase;font-size:12px;color:#eadfce;margin-top:12px;}
-.hero .gline{width:60px;height:2px;background:var(--gold);margin:22px auto 0;}
-.brands{background:#f7f2e9;padding:50px 20px 60px;}
-.brands h2{text-align:center;color:var(--gold);font-weight:600;font-size:30px;font-variation-settings:"opsz" 144;}
-.brands .lead{text-align:center;font-family:Arial,sans-serif;font-size:13px;color:#8a7f6d;margin-top:6px;}
-.cards{display:flex;flex-direction:column;gap:20px;max-width:940px;margin:30px auto 0;}
-.card{position:relative;height:330px;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 16px 40px rgba(80,55,20,.18);display:block;text-decoration:none;transition:filter .45s ease;}
-@media(max-width:600px){.card{height:260px;}}
-.card img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease, filter .45s ease;filter:brightness(.95);}
-.card .shade{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.52));transition:opacity .45s ease;}
-.card .cap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:20px;}
-.card .word{font-weight:600;font-size:clamp(46px,8vw,72px);letter-spacing:7px;line-height:1;text-shadow:0 2px 16px rgba(0,0,0,.55);font-variation-settings:"opsz" 144;}
-.card .place{font-style:italic;font-weight:400;font-size:clamp(20px,2.6vw,27px);margin-top:10px;color:#fff;line-height:1.15;text-shadow:0 2px 10px rgba(0,0,0,.6);font-variation-settings:"opsz" 144;}
-.card .btn{display:inline-block;margin-top:18px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px 26px;border-radius:30px;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.3);}
-.card.ccmq .btn{background:var(--red);} .card.mac .btn{background:var(--mac);}
-.cards:has(.card:hover) .card:not(:hover){filter:brightness(.5);}
-.card:hover img.bg{filter:brightness(1.05);transform:scale(1.05);}
-.card:hover .shade{opacity:.65;}
-.ribbon{position:absolute;top:16px;right:16px;z-index:3;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:var(--mac);padding:5px 12px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.3);}
-.foot{background:var(--red);color:#fbeae0;text-align:center;padding:30px 20px;font-family:Arial,sans-serif;font-size:11.5px;letter-spacing:1px;line-height:1.9;}
+body{font-family:'Fraunces',Georgia,serif;background:var(--cream);overflow-anchor:none;}
+header.bar{background:var(--red);color:#fbeae0;display:flex;align-items:center;gap:6px;padding:0 14px;height:var(--head);box-shadow:0 2px 12px rgba(0,0,0,.18);position:sticky;top:0;z-index:20;}
+.brand{display:flex;align-items:center;cursor:pointer;user-select:none;padding-right:10px;}
+.brand img.logo{height:40px;display:block;}
+nav{margin-left:auto;display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+nav::-webkit-scrollbar{height:0;}
+nav button{background:none;border:0;color:#f7e3d3;font-family:'Fraunces',Georgia,serif;font-size:17px;font-weight:500;letter-spacing:.2px;padding:8px 15px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s;font-variation-settings:"opsz" 40;}
+nav button:hover{background:rgba(255,255,255,.12);color:#fff;}
+nav button.active{background:#fff;color:var(--red);}
+section.block{position:relative;}
+section.block + section.block{margin-top:46px;}
+iframe.frame{width:100%;border:0;display:block;background:var(--cream);}
+.scrolltop{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;border:0;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);font-size:20px;line-height:1;display:none;align-items:center;justify-content:center;z-index:30;}
+.scrolltop.show{display:flex;}
+#plb{position:fixed;inset:0;background:rgba(20,12,10,.94);display:none;align-items:center;justify-content:center;z-index:1000;}
+#plb.on{display:flex;}
+#plb img{max-width:92vw;max-height:86vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+#plb button{position:absolute;background:rgba(255,255,255,.14);color:#fff;border:0;cursor:pointer;border-radius:50%;width:52px;height:52px;font:700 30px/1 Arial,sans-serif;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+#plb button:hover{background:rgba(255,255,255,.28);}
+#plb .prev{left:14px;top:50%;transform:translateY(-50%);}
+#plb .next{right:14px;top:50%;transform:translateY(-50%);}
+#plb .close{top:14px;right:14px;width:46px;height:46px;font-size:26px;}
+#plb .count{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:13px;letter-spacing:.5px;opacity:.85;}
+@media(max-width:640px){#plb .prev,#plb .next{width:44px;height:44px;font-size:24px;}}
+@media(max-width:640px){
+ :root{--head:54px;}
+ .brand img.logo{height:32px;}
+ nav button{font-size:14px;padding:8px 11px;}
+}
 </style></head>
 <body>
-<section class="hero">
-<div class="kick">Porto Alegre</div>
-<h1>Lola <em>Gastronomia</em></h1>
-<div class="tg">bar · restaurante · eventos</div>
-<div class="gline"></div>
-</section>
-<section class="brands">
-<h2>Nossas Casas</h2>
-<div class="lead">Duas casas, a mesma alma Lola. Escolha por onde começar.</div>
-<div class="cards">
-<a class="card ccmq" href="app.html">
-<img class="bg" src="https://static.wixstatic.com/media/d4ec75_e89bb22b2c0242e89714261417926d27~mv2.jpg/v1/fill/w_1400,h_620,al_c,q_90,enc_auto/lola.jpg" alt="Lola CCMQ"><div class="shade"></div>
-<div class="cap"><div class="word">CCMQ</div><div class="place">Casa de Cultura Mario Quintana</div><span class="btn">Entrar</span></div>
-</a>
-<div class="card mac">
-<span class="ribbon">Em breve</span>
-<img class="bg" referrerpolicy="no-referrer" src="https://drive.google.com/thumbnail?id=1kS2fCb8SvGT-cUHjGGzcxjo83n9-vV-N&sz=w1600" alt="Lola MAC"><div class="shade"></div>
-<div class="cap"><div class="word">MAC</div><div class="place">Museu de Arte Contemporânea</div><span class="btn">Em breve</span></div>
-</div>
-</div>
-</section>
-<footer class="foot">www.lolabar.com.br · Porto Alegre – RS<br>@lola.ccmq · @lola.macrs</footer>
+<header class="bar">
+ <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Início">
+   <img class="logo" src="https://drive.google.com/thumbnail?id=1sZwsUOHDYeb8_GFeU8g05DYl6FDUgNXv&sz=w400" alt="Lola CCMQ" referrerpolicy="no-referrer">
+ </div>
+ <nav id="nav">
+   <button data-target="inicio">Início</button>
+   <button data-target="menu">Menu</button>
+   <button data-target="vinhos">Vinhos</button>
+   <button data-target="ambientes">Ambientes</button>
+   <button data-target="lojinha">Lojinha</button>
+   <button data-target="trabalhe">Trabalhe Conosco</button>
+   <button data-target="contato">Contato</button>
+ </nav>
+</header>
+
+<section class="block" id="inicio"><iframe class="frame" scrolling="no" data-src="home-ccmq.html?embed=1" title="Início"></iframe></section>
+<section class="block" id="menu"><iframe class="frame" scrolling="no" data-src="cardapio.html?embed=1" title="Menu"></iframe></section>
+<section class="block" id="vinhos"><iframe class="frame" scrolling="no" data-src="vinhos.html?embed=1" title="Vinhos"></iframe></section>
+<section class="block" id="ambientes"><iframe class="frame" scrolling="no" data-src="ambientes.html?embed=1" title="Ambientes"></iframe></section>
+<section class="block" id="lojinha"><iframe class="frame" scrolling="no" data-src="lojinha.html?embed=1" title="Lojinha"></iframe></section>
+<section class="block" id="trabalhe"><iframe class="frame" scrolling="no" data-src="trabalhe.html?embed=1" title="Trabalhe Conosco"></iframe></section>
+<section class="block" id="contato"><iframe class="frame" scrolling="no" data-src="contato.html?embed=1" title="Contato"></iframe></section>
+
+<button class="scrolltop" id="toTop" title="Voltar ao topo" aria-label="Voltar ao topo">↑</button>
+
+<div id="plb"><button class="close" aria-label="Fechar">×</button><button class="prev" aria-label="Anterior">‹</button><img id="plbImg" src="" alt="Foto do ambiente do Lola"><button class="next" aria-label="Próxima">›</button><div class="count" id="plbCount"></div></div>
+
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var btns=[].slice.call(nav.querySelectorAll('button'));
+  var sections=[].slice.call(document.querySelectorAll('section.block'));
+  var frames=[].slice.call(document.querySelectorAll('iframe.frame'));
+
+  function fit(f){
+    try{ var d=f.contentDocument; if(!d||!d.body) return;
+      var h=Math.max(d.body.scrollHeight,d.documentElement.scrollHeight,d.body.offsetHeight);
+      if(h>0 && Math.abs((parseInt(f.style.height)||0)-h)>1) f.style.height=h+'px';
+    }catch(e){}
+  }
+  function fitAll(){ frames.forEach(fit); }
+  frames.forEach(function(f){
+    f.addEventListener('load',function(){
+      fit(f);
+      try{ var d=f.contentDocument;
+        try{ var rm=d.querySelectorAll('.foot, footer.foot'); for(var i=0;i<rm.length;i++) rm[i].remove(); fit(f); }catch(e){}
+        if(d.fonts&&d.fonts.ready){ d.fonts.ready.then(function(){fit(f);}); }
+        [].slice.call(d.querySelectorAll('img')).forEach(function(img){ img.addEventListener('load',function(){fit(f);}); });
+        try{ var mo=new MutationObserver(function(){ fit(f); }); mo.observe(d.documentElement,{subtree:true,childList:true,attributes:true,characterData:true}); }catch(e){}
+      }catch(e){}
+      [200,600,1200,2400].forEach(function(t){ setTimeout(function(){fit(f);},t); });
+      scrollToHash();
+    });
+    f.src=f.dataset.src;
+  });
+  window.addEventListener('resize',fitAll);
+
+  function headH(){ return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--head'))||60; }
+  function maxScroll(){ return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
+  function topOf(el){ return Math.min(maxScroll(), Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - headH())); }
+  function jumpTo(top){ try{ window.scrollTo({top:top,behavior:'smooth'}); }catch(e){ window.scrollTo(0,top); } }
+  function go(id){
+    var el=document.getElementById(id); if(!el) return;
+    fitAll();
+    jumpTo(topOf(el));
+    var canceled=false;
+    function cancel(){ canceled=true; window.removeEventListener('wheel',cancel); window.removeEventListener('touchstart',cancel); }
+    window.addEventListener('wheel',cancel,{passive:true,once:true});
+    window.addEventListener('touchstart',cancel,{passive:true,once:true});
+    [450,1000,1800].forEach(function(d){ setTimeout(function(){ if(canceled) return; fitAll(); var t=topOf(el); if(Math.abs(window.pageYOffset-t)>4) window.scrollTo(0,t); },d); });
+  }
+  btns.forEach(function(b){ b.addEventListener('click',function(){ go(b.dataset.target); }); });
+
+  function setActive(id){ btns.forEach(function(b){ b.classList.toggle('active',b.dataset.target===id); }); }
+  if(window.IntersectionObserver){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting) setActive(en.target.id); });
+    },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+    sections.forEach(function(s){ io.observe(s); });
+  }
+
+  var hashDone=false;
+  function scrollToHash(){
+    if(hashDone) return;
+    var h=(location.hash||'').replace('#','');
+    if(h && document.getElementById(h)){ hashDone=true; setTimeout(function(){ go(h); },400); }
+  }
+  scrollToHash();
+
+  var toTop=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){ toTop.classList.toggle('show',window.scrollY>600); });
+  toTop.addEventListener('click',function(){ jumpTo(0); });
+})();
+
+(function(){
+  var plb=document.getElementById('plb'),img=document.getElementById('plbImg'),cnt=document.getElementById('plbCount');
+  var urls=[],cur=0;
+  function show(i){ cur=(i+urls.length)%urls.length; img.src=urls[cur]; cnt.textContent=(cur+1)+' / '+urls.length; }
+  function open(u,i){ urls=u||[]; if(!urls.length) return; show(i||0); plb.classList.add('on'); document.body.style.overflow='hidden'; }
+  function close(){ plb.classList.remove('on'); img.src=''; document.body.style.overflow=''; }
+  plb.querySelector('.close').addEventListener('click',close);
+  plb.querySelector('.prev').addEventListener('click',function(e){e.stopPropagation();show(cur-1);});
+  plb.querySelector('.next').addEventListener('click',function(e){e.stopPropagation();show(cur+1);});
+  plb.addEventListener('click',function(e){ if(e.target===plb) close(); });
+  document.addEventListener('keydown',function(e){ if(!plb.classList.contains('on'))return; if(e.key==='Escape')close(); if(e.key==='ArrowLeft')show(cur-1); if(e.key==='ArrowRight')show(cur+1); });
+  var sx=0; plb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  plb.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) show(cur+(dx<0?1:-1)); },{passive:true});
+  window.addEventListener('message',function(e){ var d=e.data; if(d&&d.lolaLB&&d.lolaLB.urls){ open(d.lolaLB.urls,d.lolaLB.i); } });
+})();
+</script>
 </body></html>
