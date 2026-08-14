@@ -3,6 +3,7 @@
 <title>Lola CCMQ — Início</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
 <style>
 :root{--red:#a92a2b;--gold:#c49955;--ink:#2b2620;--cream:#faf6ef;--line:#ece3d4;color-scheme:light;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -20,21 +21,23 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
 .hero .tg{font-family:Arial,sans-serif;letter-spacing:4px;text-transform:uppercase;font-size:11px;color:#eadfce;margin-top:10px;}
 .hero .gline{width:56px;height:2px;background:var(--gold);margin:18px auto 0;}
 
-.actions{max-width:620px;margin:0 auto;padding:22px 18px 6px;display:flex;flex-direction:column;gap:11px;}
-.btn{display:block;text-align:center;text-decoration:none;border-radius:13px;font-family:Arial,sans-serif;font-weight:700;padding:15px;letter-spacing:.3px;}
-.btn.main{background:var(--red);color:#fff;font-size:16px;box-shadow:0 8px 20px rgba(169,42,43,.28);}
-.two{display:flex;gap:11px;}
-.two .btn{flex:1;font-size:14px;padding:14px 8px;border:1.6px solid;background:#fff;}
-.btn.menu{color:var(--red);border-color:var(--red);}
-.btn.amb{color:#8a6224;border-color:var(--gold);}
+.actions{max-width:560px;margin:0 auto;padding:24px 20px 4px;}
+.btn-res{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--red);color:#fff;text-decoration:none;border-radius:14px;padding:15px;font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:600;letter-spacing:.2px;box-shadow:0 8px 22px -8px rgba(169,42,43,.45);transition:background .2s;}
+.btn-res:hover{background:#7e1e1f;}
+.btn-res i{font-size:21px;}
+.subs{display:flex;gap:12px;margin-top:12px;}
+.subs a{flex:1;text-align:center;text-decoration:none;color:var(--red);border:1px solid #e2c9bf;border-radius:14px;padding:13px 6px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;transition:background .2s,border-color .2s;}
+.subs a:hover{background:#fff;border-color:var(--red);}
 
-.info{max-width:620px;margin:16px auto;padding:0 18px;}
-.info .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:0 1px 2px rgba(42,26,23,.05),0 12px 26px -18px rgba(42,26,23,.22);}
-.info .row{display:flex;gap:12px;align-items:flex-start;font-family:Arial,sans-serif;font-size:13px;line-height:1.45;color:#5a5247;}
-.info .row + .row{margin-top:12px;padding-top:12px;border-top:1px solid #f2eae0;}
-.info .row .ic{color:var(--red);font-size:18px;line-height:1.2;flex:0 0 auto;}
-.info .row b{color:var(--red);font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;}
-.info a{color:var(--red);text-decoration:none;}
+.info{max-width:560px;margin:22px auto;padding:0 20px;}
+.info .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 1px 2px rgba(42,26,23,.04),0 18px 34px -24px rgba(42,26,23,.20);}
+.info .row{display:flex;gap:13px;align-items:flex-start;}
+.info .row i{font-size:23px;color:var(--gold);margin-top:1px;flex:0 0 auto;line-height:1;}
+.info .lbl{font-family:Arial,sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);}
+.info .val{font-size:16px;margin-top:3px;line-height:1.35;color:var(--ink);}
+.info .val .sub{color:#8a7a72;font-size:14px;}
+.info .rule{height:1px;background:var(--line);margin:17px 0;}
+.info .maplink{display:inline-block;margin-top:7px;color:var(--red);text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:.4px;border-bottom:1px solid #e2c9bf;padding-bottom:1px;}
 
 .story{max-width:620px;margin:6px auto 8px;padding:14px 22px 30px;text-align:center;}
 .story .kick{color:var(--gold);letter-spacing:4px;text-transform:uppercase;font-size:10px;font-family:Arial,sans-serif;}
@@ -57,17 +60,18 @@ body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--crea
 </section>
 
 <section class="actions">
-  <a class="btn main" href="https://wa.me/555121605886?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Lola." target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
-  <div class="two">
-    <a class="btn menu" href="/#menu" target="_top">Ver o Menu</a>
-    <a class="btn amb" href="/#ambientes" target="_top">Ver o espaço</a>
+  <a class="btn-res" href="https://wa.me/555121605886?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Lola." target="_blank" rel="noopener"><i class="ph-duotone ph-whatsapp-logo"></i>Reservar</a>
+  <div class="subs">
+    <a href="/#menu" target="_top">Ver o menu</a>
+    <a href="/#ambientes" target="_top">Ver o espaço</a>
   </div>
 </section>
 
 <section class="info">
   <div class="card">
-    <div class="row"><span class="ic">◷</span><div><b>Horário</b><br>Terça a domingo · 12h às 23h</div></div>
-    <div class="row"><span class="ic">⌖</span><div><b>Onde</b><br>Rua dos Andradas, 736 — 7º andar<br>Casa de Cultura Mário Quintana · Centro Histórico, Porto Alegre<br><a href="https://maps.google.com/?q=Casa+de+Cultura+Mario+Quintana+Porto+Alegre" target="_blank" rel="noopener">Ver no mapa ›</a></div></div>
+    <div class="row"><i class="ph-duotone ph-clock"></i><div><div class="lbl">Horário</div><div class="val">Terça a domingo · 12h às 23h</div></div></div>
+    <div class="rule"></div>
+    <div class="row"><i class="ph-duotone ph-map-pin"></i><div><div class="lbl">Onde</div><div class="val">Rua dos Andradas, 736 — 7º andar<br><span class="sub">Casa de Cultura Mário Quintana · Centro Histórico, Porto Alegre</span></div><a class="maplink" href="https://maps.google.com/?q=Casa+de+Cultura+Mario+Quintana+Porto+Alegre" target="_blank" rel="noopener">Ver no mapa</a></div></div>
   </div>
 </section>
 
