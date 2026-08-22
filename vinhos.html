@@ -53,7 +53,7 @@ const FN="https://mvjbsdpfjhywhaonvpfl.supabase.co/functions/v1/vinhos";
 const ORDER=[["espumante","Espumantes"],["branco","Brancos"],["rose","Rosés"],["tinto","Tintos"]];
 function money(v){return "R$ "+(""+v).replace(".",",");}
 fetch(FN).then(r=>r.json()).then(j=>{
-const it=j.items||[];const app=document.getElementById('app');let html='';
+const it=(j.items||[]).filter(function(x){return x.em_estoque!==false;});const app=document.getElementById('app');let html='';
 ORDER.forEach(([t,lbl])=>{const ws=it.filter(x=>x.tipo===t);if(!ws.length)return;
 html+='<section class="sec"><h2 class="cat">'+lbl+'</h2><div class="cols">';
 ws.forEach(w=>{var meta=[w.vinicola,w.regiao].filter(Boolean).join(' · ');html+='<div class="w"><div class="wh"><span class="wn">'+w.nome+'</span><span class="wp">'+money(w.preco)+'</span></div>'+(meta?'<div class="wr">'+meta+'</div>':'')+(w.descricao?'<div class="wd">'+w.descricao+'</div>':'')+'</div>';});
