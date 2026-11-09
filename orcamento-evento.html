@@ -92,20 +92,20 @@ const LOCAIS=[
   {id:'mac',nome:'Lola MAC',txt:'jardim do Museu de Arte Contemporânea do RS, no Floresta'},
   {id:'outro',nome:'Outro local',txt:'a gente leva o evento até você: em outros espaços da CCMQ, empresas, espaços de eventos, até em casa!'}
 ];
-const PASSOS=['local','quando','pessoas','tipo','detalhes','menu','enviar'];
+const PASSOS=['local','quando','pessoas','tipo','servico','detalhes','menu','enviar'];
 const PREVIA=/[?&]previa/.test(location.search);
 // Pacotes iniciais (iguais aos do SQL) — usados só na prévia, enquanto a tabela não existe
 const PAC_PADRAO=[
- {id:'d1',nome:'Coffee break',descricao:'Pra reunião, workshop ou encontro de trabalho: salgado, doce e café que não acaba.',inclui:'Café passado, chás, água com e sem gás e suco. Louça, montagem e reposição.',ordem:1,locais:['ccmq','mac','outro'],duracoes:[{horas:1,preco_pp:null},{horas:2,preco_pp:null},{horas:4,preco_pp:null}],grupos:[{titulo:'Salgados',secoes:['Comidinhas'],itens:[],escolher:3,qtd_pp_h:1.5},{titulo:'Doces',secoes:['Sobremesa'],itens:[],escolher:2,qtd_pp_h:0.75}],min_pax:10,servico_pct:10},
- {id:'d2',nome:'Brunch',descricao:'Manhã ou começo de tarde sem pressa, com coisas boas pra beliscar.',inclui:'Café, chás, sucos e água. Louça e serviço.',ordem:2,locais:['ccmq','mac','outro'],duracoes:[{horas:2,preco_pp:null},{horas:3,preco_pp:null}],grupos:[{titulo:'Salgados',secoes:['Comidinhas'],itens:[],escolher:4,qtd_pp_h:2},{titulo:'Mini porções',secoes:['Mini porção'],itens:[],escolher:1,qtd_pp_h:0.4},{titulo:'Doces',secoes:['Sobremesa'],itens:[],escolher:2,qtd_pp_h:0.75}],min_pax:15,servico_pct:10},
- {id:'d6',nome:'Almoço',descricao:'Almoço servido pra equipe, família ou convidados: entrada, prato principal e sobremesa.',inclui:'Água, louça e serviço.',ordem:3,locais:['ccmq','mac','outro'],duracoes:[{horas:2,preco_pp:null},{horas:3,preco_pp:null}],grupos:[{titulo:'Pra começar',secoes:['Comidinhas'],itens:[],escolher:2,qtd_pp_h:0.7},{titulo:'Prato principal',secoes:['Mini porção'],itens:[],escolher:2,qtd_pp_h:0.5},{titulo:'Sobremesa',secoes:['Sobremesa'],itens:[],escolher:1,qtd_pp_h:0.5}],min_pax:10,servico_pct:10},
- {id:'d3',nome:'Feijoada',descricao:'A feijoada do Lola, com tudo o que acompanha, pra reunir a turma.',inclui:'Feijoada completa com acompanhamentos, água e serviço.',ordem:4,locais:['ccmq','mac','outro'],duracoes:[{horas:3,preco_pp:null},{horas:4,preco_pp:null}],grupos:[{titulo:'Pra começar',secoes:['Comidinhas'],itens:[],escolher:2,qtd_pp_h:0.7},{titulo:'Sobremesa',secoes:['Sobremesa'],itens:[],escolher:1,qtd_pp_h:0.35},{titulo:'Bebidas',secoes:['Bebidas'],itens:[],escolher:2,qtd_pp_h:0.7}],min_pax:20,servico_pct:10},
- {id:'d4',nome:'Coquetel + jantar',descricao:'Comidinhas passando, mini porções quentes e doces no fim: festa de pé sem ninguém ir pra casa com fome.',inclui:'Equipe de serviço, louça e montagem.',ordem:5,locais:['ccmq','mac','outro'],duracoes:[{horas:3,preco_pp:null},{horas:4,preco_pp:null}],grupos:[{titulo:'Comidinhas',secoes:['Comidinhas'],itens:[],escolher:5,qtd_pp_h:4},{titulo:'Mini porções',secoes:['Mini porção'],itens:[],escolher:2,qtd_pp_h:0.35},{titulo:'Doces',secoes:['Sobremesa'],itens:[],escolher:2,qtd_pp_h:0.5},{titulo:'Bebidas',secoes:['Bebidas'],itens:[],escolher:3,qtd_pp_h:1}],min_pax:20,servico_pct:10},
- {id:'d5',nome:'Super Completo',descricao:'O mais personalizado: coquetel, jantar completo, lanchinhos e o que mais o seu evento pedir — a gente monta junto.',inclui:'Equipe completa, louça, montagem, estação de destaque e bebidas.',ordem:6,locais:['ccmq','mac','outro'],duracoes:[{horas:4,preco_pp:null},{horas:5,preco_pp:null}],grupos:[{titulo:'Comidinhas',secoes:['Comidinhas'],itens:[],escolher:7,qtd_pp_h:4.5},{titulo:'Mini porções',secoes:['Mini porção'],itens:[],escolher:3,qtd_pp_h:0.4},{titulo:'Doces',secoes:['Sobremesa'],itens:[],escolher:3,qtd_pp_h:0.6},{titulo:'Bebidas',secoes:['Bebidas'],itens:[],escolher:4,qtd_pp_h:1.2}],min_pax:30,servico_pct:10}
+ {"id": "d1", "nome": "Coffee Break", "descricao": "Manhã ou tarde, perfeito para reuniões, workshops e encontros de trabalho.", "inclui": "Café passado, chás, água com e sem gás e suco. Louça, montagem e reposição.", "ordem": 1, "locais": ["ccmq", "mac", "outro"], "duracoes": [{"horas": 1, "preco_pp": null}, {"horas": 2, "preco_pp": null}, {"horas": 4, "preco_pp": null}], "grupos": [{"titulo": "Salgados", "secoes": ["Comidinhas"], "itens": [], "escolher": 3, "qtd_pp_h": 1.5, "servicos": []}, {"titulo": "Doces", "secoes": ["Sobremesa"], "itens": [], "escolher": 2, "qtd_pp_h": 0.75, "servicos": []}], "servicos": [{"id": "apoio", "nome": "Mesa de apoio", "descricao": "Tudo montado numa mesa bonita, cada um se serve no intervalo.", "estilo": "ilhas"}, {"id": "volante", "nome": "Volante", "descricao": "A equipe passa servindo, sem precisar parar a reunião.", "estilo": "volante"}], "min_pax": 10, "servico_pct": 10, "estilo_servico": "ilhas"},
+ {"id": "d2", "nome": "Brunch", "descricao": "Manhã ou começo de tarde sem pressa, com coisas boas pra beliscar.", "inclui": "Café, chás, sucos e água. Louça e serviço.", "ordem": 2, "locais": ["ccmq", "mac", "outro"], "duracoes": [{"horas": 2, "preco_pp": null}, {"horas": 3, "preco_pp": null}], "grupos": [{"titulo": "Salgados", "secoes": ["Comidinhas"], "itens": [], "escolher": 4, "qtd_pp_h": 2, "servicos": []}, {"titulo": "Mini porções", "secoes": ["Mini porção"], "itens": [], "escolher": 1, "qtd_pp_h": 0.4, "servicos": []}, {"titulo": "Doces", "secoes": ["Sobremesa"], "itens": [], "escolher": 2, "qtd_pp_h": 0.75, "servicos": []}], "servicos": [{"id": "buffet", "nome": "Buffet", "descricao": "Mesa farta pra cada um montar o seu prato.", "estilo": "buffet"}, {"id": "compartilhar", "nome": "Pra compartilhar", "descricao": "Tábuas e travessas na mesa, todo mundo junto.", "estilo": "compartilhar"}], "min_pax": 15, "servico_pct": 10, "estilo_servico": "brunch"},
+ {"id": "d3", "nome": "Almoço", "descricao": "Express para eventos mais corridos ou completo, com entrada, prato principal, sobremesa e cafezinho.", "inclui": "Água, cafezinho, louça e serviço.", "ordem": 3, "locais": ["ccmq", "mac", "outro"], "duracoes": [{"horas": 1.5, "preco_pp": null}, {"horas": 3, "preco_pp": null}], "grupos": [{"titulo": "Entrada", "secoes": ["Entradas"], "itens": [], "escolher": 1, "qtd_pp_h": 0.4, "servicos": ["completo", "buffet"]}, {"titulo": "Prato principal", "secoes": ["Pratos principais"], "itens": [], "escolher": 2, "qtd_pp_h": 0.5, "servicos": []}, {"titulo": "Sobremesa", "secoes": ["Sobremesa"], "itens": [], "escolher": 1, "qtd_pp_h": 0.4, "servicos": ["completo", "buffet"]}], "servicos": [{"id": "express", "nome": "Express", "descricao": "Prato principal servido à mesa, rapidinho, pra eventos mais corridos.", "estilo": "empratado"}, {"id": "completo", "nome": "Completo", "descricao": "Entrada, prato principal, sobremesa e cafezinho, servidos à mesa.", "estilo": "empratado"}, {"id": "buffet", "nome": "Buffet", "descricao": "Entrada, pratos e sobremesa pra cada um se servir.", "estilo": "buffet"}], "min_pax": 10, "servico_pct": 10, "estilo_servico": "empratado"},
+ {"id": "d4", "nome": "Feijoada", "descricao": "A feijoada do Lola, com tudo o que acompanha, pra reunir a turma.", "inclui": "Feijoada completa com acompanhamentos, água e serviço.", "ordem": 4, "locais": ["ccmq", "mac", "outro"], "duracoes": [{"horas": 3, "preco_pp": null}, {"horas": 4, "preco_pp": null}], "grupos": [{"titulo": "Pra começar", "secoes": ["Comidinhas"], "itens": [], "escolher": 2, "qtd_pp_h": 0.7, "servicos": []}, {"titulo": "Sobremesa", "secoes": ["Sobremesa"], "itens": [], "escolher": 1, "qtd_pp_h": 0.35, "servicos": []}, {"titulo": "Bebidas", "secoes": ["Bebidas"], "itens": [], "escolher": 2, "qtd_pp_h": 0.7, "servicos": []}], "servicos": [{"id": "buffet", "nome": "Buffet", "descricao": "Feijoada e acompanhamentos montados pra cada um se servir.", "estilo": "buffet_quente"}, {"id": "compartilhar", "nome": "Na mesa, pra compartilhar", "descricao": "Panelinhas e travessas direto na mesa.", "estilo": "compartilhar"}], "min_pax": 20, "servico_pct": 10, "estilo_servico": "buffet_quente"},
+ {"id": "d5", "nome": "Coquetel + Jantar", "descricao": "Comidinhas passando, mini porções quentes e doces no fim: festa de pé sem ninguém ir pra casa com fome.", "inclui": "Equipe de serviço, louça e montagem.", "ordem": 5, "locais": ["ccmq", "mac", "outro"], "duracoes": [{"horas": 3, "preco_pp": null}, {"horas": 4, "preco_pp": null}], "grupos": [{"titulo": "Comidinhas", "secoes": ["Comidinhas"], "itens": [], "escolher": 5, "qtd_pp_h": 4, "servicos": []}, {"titulo": "Jantar", "secoes": ["Mini porção", "Pratos principais"], "itens": [], "escolher": 2, "qtd_pp_h": 0.35, "servicos": []}, {"titulo": "Doces", "secoes": ["Sobremesa"], "itens": [], "escolher": 2, "qtd_pp_h": 0.5, "servicos": []}, {"titulo": "Bebidas", "secoes": ["Bebidas"], "itens": [], "escolher": 3, "qtd_pp_h": 1, "servicos": []}], "servicos": [{"id": "volante", "nome": "Volante", "descricao": "Comidinhas passando o tempo todo e o jantar em mini porções.", "estilo": "volante"}, {"id": "ilhas", "nome": "Ilhas", "descricao": "Estações de comida pelo espaço, cada um se serve.", "estilo": "ilhas"}, {"id": "empratado", "nome": "Coquetel + jantar à mesa", "descricao": "Coquetel de pé na chegada e jantar servido à mesa.", "estilo": "jantar"}], "min_pax": 20, "servico_pct": 10, "estilo_servico": "coquetel"},
+ {"id": "d6", "nome": "Super Completo", "descricao": "O mais personalizado: coquetel, jantar completo, lanchinhos e o que mais o seu evento pedir, a gente monta junto.", "inclui": "Equipe completa, louça, montagem, estação de destaque e bebidas.", "ordem": 6, "locais": ["ccmq", "mac", "outro"], "duracoes": [{"horas": 4, "preco_pp": null}, {"horas": 5, "preco_pp": null}], "grupos": [{"titulo": "Comidinhas", "secoes": ["Comidinhas"], "itens": [], "escolher": 7, "qtd_pp_h": 4.5, "servicos": []}, {"titulo": "Jantar", "secoes": ["Mini porção", "Pratos principais"], "itens": [], "escolher": 3, "qtd_pp_h": 0.4, "servicos": []}, {"titulo": "Lanchinhos de pista", "secoes": ["Lanchinho de pista"], "itens": [], "escolher": 2, "qtd_pp_h": 0.4, "servicos": []}, {"titulo": "Doces", "secoes": ["Sobremesa"], "itens": [], "escolher": 3, "qtd_pp_h": 0.6, "servicos": []}, {"titulo": "Bebidas", "secoes": ["Bebidas"], "itens": [], "escolher": 4, "qtd_pp_h": 1.2, "servicos": []}], "servicos": [{"id": "volante", "nome": "Volante", "descricao": "Tudo passando entre os convidados.", "estilo": "volante"}, {"id": "ilhas", "nome": "Ilhas", "descricao": "Estações temáticas pelo espaço.", "estilo": "ilhas"}, {"id": "empratado", "nome": "Empratado", "descricao": "Jantar servido à mesa.", "estilo": "jantar"}, {"id": "buffet", "nome": "Buffet", "descricao": "Cada um se serve à vontade.", "estilo": "buffet"}, {"id": "misto", "nome": "Misto", "descricao": "Um pouco de cada, a gente monta junto.", "estilo": "outro"}], "min_pax": 30, "servico_pct": 10, "estilo_servico": "coquetel"}
 ];
 let PAC_ORIGEM='banco';
 let PAC=[], ITENS=[], FICHAS=[], COMFOTO=new Set(), FOTOS={};
-const S={passo:0,local:'',espaco:'',endereco:'',data:'',hora:'',fim:'',pacote:null,pax:'',horas:null,det:{ocasiao:'',exclusividade:'',nota:'nao',som:'',decoracao:'',restricoes:''},obs:'',esc:{},nome:'',tel:'',email:''};
+const S={passo:0,servico:'',local:'',espaco:'',endereco:'',data:'',hora:'',fim:'',pacote:null,pax:'',horas:null,det:{ocasiao:'',exclusividade:'',nota:'nao',som:'',decoracao:'',restricoes:''},obs:'',esc:{},nome:'',tel:'',email:''};
 
 function h(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 function money(v){return 'R$ '+(Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -138,8 +138,9 @@ function painelFaltas(){
   PAC.forEach(function(p){var semPreco=(p.duracoes||[]).filter(function(d){return !(Number(d.preco_pp)>0);}).map(function(d){return fmtH(d.horas);});
     if(!(Number(p.hora_extra_pp)>0))semPreco.push('hora a mais');
     h2+='<div class="grupo"><h3>'+h(p.nome)+(semPreco.length?' <small style="color:var(--red)">sem preço: '+h(semPreco.join(', '))+'</small>':' <small class="ok">preços ok</small>')+'</h3>';
+    if((p.servicos||[]).length)h2+='<div class="pvg">Serviços: '+h(p.servicos.map(function(x){return x.nome;}).join(' · '))+'</div>';
     (p.grupos||[]).forEach(function(g){var ops=opcoesGrupo(g),noSite=ops.filter(function(c){return c.publico===true;}).length,prob=ops.filter(function(c){return faltas(c).length;});
-      h2+='<div class="pvg"><b>'+h(g.titulo)+'</b> — cliente escolhe '+g.escolher+' · '+ops.length+' opções no catálogo, '+noSite+' no site'+(noSite<g.escolher?' <span style="color:var(--red)">(precisa de pelo menos '+g.escolher+' no site)</span>':'')
+      h2+='<div class="pvg"><b>'+h(g.titulo)+'</b>'+((g.servicos||[]).length?' <i>(só em: '+h(g.servicos.map(function(id){var x=(p.servicos||[]).find(function(y){return y.id===id;});return x?x.nome:id;}).join(', '))+')</i>':'')+' — cliente escolhe '+g.escolher+' · '+ops.length+' opções no catálogo, '+noSite+' no site'+(noSite<g.escolher?' <span style="color:var(--red)">(precisa de pelo menos '+g.escolher+' no site)</span>':'')
         +(prob.length?'<ul>'+prob.map(function(c){return '<li>'+h(c.nome)+' — '+h(faltas(c).join(', '))+'</li>';}).join('')+'</ul>':' · tudo pronto ✓')+'</div>';});
     h2+='</div>';});
   return h2;
@@ -161,7 +162,10 @@ function opcoesGrupo(g){
   var ids=(g.itens||[]).map(String);
   return ITENS.filter(function(c){return ids.length?ids.indexOf(String(c.id))>=0:(g.secoes||[]).indexOf(c.secao)>=0;});
 }
-function grupos(){var p=pacote();return p?(p.grupos||[]).map(function(g,i){g._i=i;return g;}).filter(function(g){return opcoesGrupo(g).length>0;}):[];}
+function servicos(){var p=pacote();return p?(p.servicos||[]):[];}
+function servico(){return servicos().find(function(x){return x.id===S.servico;})||null;}
+// grupos do menu: os do pacote que valem pro serviço escolhido (lista vazia = todos os serviços) e que têm opções
+function grupos(){var p=pacote();return p?(p.grupos||[]).map(function(g,i){g._i=i;return g;}).filter(function(g){var sv=g.servicos||[];return (!sv.length||!S.servico||sv.indexOf(S.servico)>=0)&&opcoesGrupo(g).length>0;}):[];}
 function pax(){return Math.max(0,parseInt(S.pax,10)||0);}
 function precoPP(){var p=pacote(),c=p?precoCalc(p,Number(S.horas)):null;return c?Math.round(c.pp*100)/100:null;}
 function contas(){var p=pacote(),pp=precoPP();if(!p||pp==null||!pax())return null;var sub=pp*pax(),serv=Math.round(sub*(Number(p.servico_pct)||0))/100;return {pp:pp,sub:sub,serv:serv,tot:sub+serv,pct:Number(p.servico_pct)||0};}
@@ -181,6 +185,7 @@ function ok(passo){
     case 'local':return !!S.local&&(S.local!=='outro'||S.endereco.trim().length>2);
     case 'quando':return !!S.data&&!!S.hora&&!!S.fim&&Number(S.horas)>0&&Number(S.horas)<=14;
     case 'tipo':return !!pacote();
+    case 'servico':return !servicos().length||!!servico();
     case 'pessoas':return pax()>=1;
     case 'tempo':return !!duracao();
     case 'detalhes':return !!S.det.ocasiao;
@@ -200,7 +205,7 @@ function render(rolar){
   var el=document.getElementById('app'),p=PASSOS[S.passo],x='';
   if(p==='local'){
     x='<h2>Onde vai ser?</h2><p class="sub">Escolha o lugar e a gente cuida do resto.</p><div class="opts">'+LOCAIS.map(function(l){return '<button type="button" class="opt'+(S.local===l.id?' on':'')+'" onclick="setLocal(\''+l.id+'\')"><b>'+h(l.nome)+'</b><span>'+h(l.txt)+'</span></button>';}).join('')+'</div>';
-    if(S.local==='ccmq')x+='<label>No Lola CCMQ, onde vocês preferem?</label><select onchange="S.espaco=this.value"><option value="">Tanto faz — vocês sugerem</option><option value="cupula_ccmq"'+(S.espaco==='cupula_ccmq'?' selected':'')+'>Cúpula (ao ar livre, sujeita ao clima)</option><option value="interno_ccmq"'+(S.espaco==='interno_ccmq'?' selected':'')+'>Salão interno</option></select>';
+    if(S.local==='ccmq')x+='<label>No Lola CCMQ, onde vocês preferem?</label><select onchange="S.espaco=this.value"><option value="">Tanto faz — vocês sugerem</option><option value="cupula_ccmq"'+(S.espaco==='cupula_ccmq'?' selected':'')+'>Cúpula (ao ar livre, sujeito ao clima)</option><option value="interno_ccmq"'+(S.espaco==='interno_ccmq'?' selected':'')+'>Salão interno</option></select>';
     if(S.local==='outro')x+='<label>Onde fica? <span class="req">*</span></label><input placeholder="ex.: outro espaço da CCMQ, empresa, endereço ou bairro" value="'+h(S.endereco)+'" oninput="S.endereco=this.value;atualizaNav()">';
   }
   if(p==='quando'){
@@ -219,7 +224,7 @@ function render(rolar){
   }
   if(p==='pessoas'){
     var pc=pacote();
-    x='<h2>Quantas pessoas?</h2><p class="sub">Um número aproximado já ajuda. Dá pra ajustar até 7 dias antes.</p><label>Convidados <span class="req">*</span></label><input type="number" min="1" max="2000" inputmode="numeric" value="'+h(S.pax)+'" oninput="S.pax=this.value;atualizaNav()" style="max-width:220px">';
+    x='<h2>Quantas pessoas?</h2><p class="sub">Um número aproximado já ajuda.</p><label>Convidados <span class="req">*</span></label><input type="number" min="1" max="2000" inputmode="numeric" value="'+h(S.pax)+'" oninput="S.pax=this.value;atualizaNav()" style="max-width:220px">';
   }
   if(p==='tempo'){
     var pc2=pacote(),hs=(pc2.duracoes||[]).map(function(d){return Number(d.horas);}).filter(function(v){return v>0;}).sort(function(a,b){return a-b;});
@@ -230,6 +235,12 @@ function render(rolar){
      +'<button type="button" class="btn ghost" style="padding:10px 16px" onclick="maisH(0.5)">+</button><span class="sub" style="margin:0">horas</span></div>'
      +(hs.length?'<div class="opts" style="grid-template-columns:repeat(auto-fill,minmax(110px,1fr))">'+hs.map(function(v){return '<button type="button" class="opt'+(Number(S.horas)===v?' on':'')+'" style="padding:10px 12px" onclick="S.horas='+v+';render()"><b style="font-size:15px">'+fmtH(v)+'</b></button>';}).join('')+'</div>':'')
      +'<div id="tempoInfo"></div>';
+  }
+  if(p==='servico'){
+    var pcs=pacote(),sv=servicos();
+    x='<h2>Como vai ser o serviço?</h2><p class="sub">'+h(pcs.nome)+' · '+pax()+' pessoas · '+fmtH(S.horas)+'.</p>'
+     +(sv.length?'<div class="opts">'+sv.map(function(o){return '<button type="button" class="opt'+(S.servico===o.id?' on':'')+'" onclick="setServico(\''+h(o.id)+'\')"><b>'+h(o.nome)+'</b><span>'+h(o.descricao||'')+'</span></button>';}).join('')+'</div>'
+       :'<div class="aviso">Esse formato tem um jeito só de servir. É só continuar.</div>');
   }
   if(p==='detalhes'){
     var d=S.det;
@@ -246,7 +257,7 @@ function render(rolar){
     var pc3=pacote(),gs=grupos();
     x='<h2>Agora, o menu</h2><p class="sub">Escolha as opções de cada grupo. As quantidades a gente calcula pelo formato, pelo tempo e pelo número de convidados.</p>'
      +(pc3.inclui?'<div class="aviso" style="background:#f3f8f1;border-color:#d5e6cf;color:#3c5a40">Já incluso: '+h(pc3.inclui)+'</div>':'');
-    if(!gs.length)x+='<div class="aviso">Esse formato ainda está sem opções no site. Conta pra gente no passo anterior o que você imagina, que montamos juntos.</div>';
+    if(!gs.length)x+='<div class="aviso">As opções desse formato estão sendo montadas. Conta pra gente no passo anterior o que você imagina, que montamos juntos.</div>';
     gs.forEach(function(g){var opts=opcoesGrupo(g),n=Math.min(Number(g.escolher)||0,opts.length),esc=S.esc[g._i]||[];
       x+='<div class="grupo"><h3>'+h(g.titulo)+' <small id="cnt'+g._i+'" class="'+(esc.length===n?'ok':'')+'">'+esc.length+' de '+n+' escolhid'+(n>1?'os':'o')+'</small></h3><div class="items">'
         +opts.map(function(c){var on=esc.indexOf(String(c.id))>=0,cheio=!on&&esc.length>=n;
@@ -257,9 +268,9 @@ function render(rolar){
     var c=contas(),pc4=pacote(),loc=LOCAIS.find(function(l){return l.id===S.local;});
     x='<h2>Quase lá</h2><p class="sub">Confira o resumo e deixe seu contato. Seu pedido entra direto na agenda da equipe de eventos.</p>'
      +'<div class="resumo"><table>'
-     +'<tr><td>Local</td><td class="v">'+h(loc?loc.nome:'')+(S.local==='outro'?' · '+h(S.endereco):'')+'</td></tr>'
+     +'<tr><td>Local</td><td class="v">'+h(loc?loc.nome:'')+(S.local==='ccmq'&&S.espaco?' · '+(S.espaco==='cupula_ccmq'?'Cúpula':'Salão interno'):'')+(S.local==='outro'?' · '+h(S.endereco):'')+'</td></tr>'
      +'<tr><td>Data</td><td class="v">'+h(S.data.split('-').reverse().join('/'))+' · '+h(S.hora)+' às '+h(S.fim)+(viraDia()?' (dia seguinte)':'')+'</td></tr>'
-     +'<tr><td>Formato</td><td class="v">'+h(pc4.nome)+' · '+fmtH(S.horas)+'</td></tr>'
+     +'<tr><td>Formato</td><td class="v">'+h(pc4.nome)+(servico()?' · '+h(servico().nome):'')+' · '+fmtH(S.horas)+'</td></tr>'
      +'<tr><td>Convidados</td><td class="v">'+pax()+'</td></tr>'
      +grupos().map(function(g){var nm=(S.esc[g._i]||[]).map(function(id){var it=ITENS.find(function(x){return String(x.id)===String(id);});return it?it._nome:'';});return nm.length?'<tr><td>'+h(g.titulo)+'</td><td class="v" style="white-space:normal">'+h(nm.join(', '))+'</td></tr>':'';}).join('')
      +(c?'<tr><td>'+money(c.pp)+' × '+pax()+' pessoas</td><td class="v">'+money(c.sub)+'</td></tr>'+(c.pct?'<tr><td>Serviço ('+c.pct+'%)</td><td class="v">'+money(c.serv)+'</td></tr>':'')+'<tr class="tot"><td>Estimativa</td><td class="v">'+money(c.tot)+'</td></tr>':'<tr><td colspan="2">O valor desse formato a gente passa no orçamento.</td></tr>')
@@ -275,7 +286,7 @@ function render(rolar){
   fotosVisiveis(); barra();
   if(rolar)window.scrollTo({top:document.querySelector('.wrap').offsetTop-10,behavior:'smooth'});
 }
-function irPara(i){S.faltas=false;S.passo=i;if(!S.local)S.local='ccmq';if(i>1&&!S.hora){S.hora='19:00';S.fim='23:00';calcHoras();}if(i>2&&!pax())S.pax='50';if(i>3&&!pacote()&&PAC[0])S.pacote=PAC[0].id;render(true);}
+function irPara(i){S.faltas=false;S.passo=i;if(!S.local)S.local='ccmq';if(i>1&&!S.hora){S.hora='19:00';S.fim='23:00';calcHoras();}if(i>2&&!pax())S.pax='50';if(i>3&&!pacote()&&PAC[0])S.pacote=PAC[0].id;if(i>4&&!servico()&&servicos()[0])S.servico=servicos()[0].id;render(true);}
 function verFaltas(){S.faltas=true;render(true);}
 function quandoInfo(){var el=document.getElementById('quandoInfo');if(!el)return;
   if(!(Number(S.horas)>0)){el.innerHTML='';return;}
@@ -288,7 +299,8 @@ function tempoInfo(){var el=document.getElementById('tempoInfo');if(!el)return;v
     :'<div class="aviso">O valor desse formato a gente passa no orçamento.</div>';}
 function fmtH(v){v=Number(v);var hh=Math.floor(v),mm=Math.round((v-hh)*60);if(mm===60){hh++;mm=0;}if(!mm)return hh===1?'1 hora':hh+' horas';if(!hh)return mm+' min';return hh+'h'+String(mm).padStart(2,'0');}
 function setLocal(id){S.local=id;var pc=pacote();if(pc&&pc.locais&&pc.locais.length&&pc.locais.indexOf(id)<0){S.pacote=null;S.esc={};}render();}
-function setPacote(id){if(S.pacote!==id){S.esc={};}S.pacote=id;render();setTimeout(seguir,180);}
+function setPacote(id){if(S.pacote!==id){S.esc={};S.servico='';}S.pacote=id;render();setTimeout(seguir,180);}
+function setServico(id){if(S.servico!==id){S.esc={};}S.servico=id;render();setTimeout(seguir,180);}
 function setHoras(v){S.horas=v;render();setTimeout(seguir,180);}
 function avisoMin(){var pc=pacote(),el=document.getElementById('avMin');if(!el)return;el.innerHTML=(pc&&pax()&&pax()<(Number(pc.min_pax)||0))?'<div class="aviso">O '+h(pc.nome)+' é pensado pra a partir de '+pc.min_pax+' pessoas. Pode seguir — a gente adapta na proposta.</div>':'';}
 function escolher(gi,id){var g=grupos().find(function(x){return x._i===gi;});if(!g)return;var n=Math.min(Number(g.escolher)||0,opcoesGrupo(g).length);
@@ -303,7 +315,7 @@ async function carregaFoto(el){const id=el.getAttribute('data-ficha');el.removeA
   if(FOTOS[id]===undefined)FOTOS[id]=api('lola_fichas_fotos?ficha_id=eq.'+id+'&select=foto&order=created_at.asc&limit=1').then(function(r){return r[0]&&r[0].foto||null;}).catch(function(){return null;});
   const u=await FOTOS[id];if(u)el.style.backgroundImage='url("'+u+'")';}
 function waTexto(){var pc=pacote(),c=contas(),loc=LOCAIS.find(function(l){return l.id===S.local;});
-  var t='*Pedido de orçamento — evento no Lola*\nNome: '+S.nome+'\nOcasião: '+S.det.ocasiao+'\nLocal: '+(loc?loc.nome:'')+(S.local==='outro'?' ('+S.endereco+')':'')+'\nData: '+S.data.split('-').reverse().join('/')+' · '+S.hora+' às '+S.fim+' ('+fmtH(S.horas)+')\nFormato: '+pc.nome+'\nConvidados: '+pax()+'\n';
+  var t='*Pedido de orçamento — evento no Lola*\nNome: '+S.nome+'\nOcasião: '+S.det.ocasiao+'\nLocal: '+(loc?loc.nome:'')+(S.local==='outro'?' ('+S.endereco+')':'')+'\nData: '+S.data.split('-').reverse().join('/')+' · '+S.hora+' às '+S.fim+' ('+fmtH(S.horas)+')\nFormato: '+pc.nome+(servico()?' · '+servico().nome:'')+'\nConvidados: '+pax()+'\n';
   grupos().forEach(function(g){var nm=(S.esc[g._i]||[]).map(function(id){var it=ITENS.find(function(x){return String(x.id)===String(id);});return it?it._nome:'';});if(nm.length)t+='\n*'+g.titulo+':* '+nm.join(', ');});
   if(c)t+='\n\nEstimativa: '+money(c.tot);if(S.obs)t+='\n\nObs.: '+S.obs;return t;}
 async function enviar(){
@@ -311,7 +323,7 @@ async function enviar(){
     document.getElementById('erro').innerHTML='<b>Prévia — nada foi enviado.</b> O evento que seria criado na aba Eventos levaria este menu:<ul style="margin:6px 0 0 18px">'+its.map(function(x){var c=ITENS.find(function(k){return String(k.id)===String(x.id);})||{};return '<li>'+h(c.nome||x.nome)+' — '+(c.per_pax!==false?'por pessoa':x.qtd+' '+h(c.unidade||'un'))+(c._fichaNome?' · ficha: '+h(c._fichaNome):' · <b>sem ficha</b>')+'</li>';}).join('')+'</ul>';return;}
   if(!ok('enviar'))return;var b=document.getElementById('btnEnviar'),erro=document.getElementById('erro');b.disabled=true;b.textContent='Enviando…';erro.style.display='none';
   var pc=pacote(),c=contas();
-  var det=Object.assign({},S.det,{espaco_ccmq:S.local==='ccmq'?S.espaco:'',endereco:S.local==='outro'?S.endereco:'',inicio:S.hora,termino:S.fim});
+  var det=Object.assign({},S.det,{espaco_ccmq:S.local==='ccmq'?S.espaco:'',endereco:S.local==='outro'?S.endereco:'',inicio:S.hora,termino:S.fim,servico:S.servico,servico_nome:servico()?servico().nome:'',servico_estilo:servico()?servico().estilo:''});
   var body={nome:S.nome.trim(),telefone:S.tel.trim(),email:S.email.trim()||null,ocasiao:S.det.ocasiao||null,data:S.data||null,horario:S.hora||null,pax:pax(),local:S.local,
     formato:pc.nome,pacote_id:pc.id,duracao:fmtH(S.horas)+' ('+S.hora+' às '+S.fim+')',horas:Number(S.horas),preco_pp:c?c.pp:null,detalhes:det,itens:itensComQtd(),
     subtotal:c?Math.round(c.sub*100)/100:null,servico:c?c.serv:null,estimativa:c?Math.round(c.tot*100)/100:null,obs:S.obs.trim()||null};
