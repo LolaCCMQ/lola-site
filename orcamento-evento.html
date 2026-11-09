@@ -92,7 +92,7 @@ const LOCAIS=[
   {id:'mac',nome:'Lola MAC',txt:'jardim do Museu de Arte Contemporânea do RS, no Floresta'},
   {id:'outro',nome:'Outro local',txt:'a gente leva o Lola até você: casa, empresa, espaço de eventos'}
 ];
-const PASSOS=['local','quando','tipo','pessoas','tempo','detalhes','menu','enviar'];
+const PASSOS=['local','quando','pessoas','tipo','detalhes','menu','enviar'];
 const PREVIA=/[?&]previa/.test(location.search);
 // Pacotes iniciais (iguais aos do SQL) — usados só na prévia, enquanto a tabela não existe
 const PAC_PADRAO=[
@@ -105,7 +105,7 @@ const PAC_PADRAO=[
 ];
 let PAC_ORIGEM='banco';
 let PAC=[], ITENS=[], FICHAS=[], COMFOTO=new Set(), FOTOS={};
-const S={passo:0,local:'',espaco:'',endereco:'',data:'',hora:'',pacote:null,pax:'',horas:null,det:{ocasiao:'',exclusividade:'',nota:'nao',som:'',decoracao:'',restricoes:''},obs:'',esc:{},nome:'',tel:'',email:''};
+const S={passo:0,local:'',espaco:'',endereco:'',data:'',hora:'',fim:'',pacote:null,pax:'',horas:null,det:{ocasiao:'',exclusividade:'',nota:'nao',som:'',decoracao:'',restricoes:''},obs:'',esc:{},nome:'',tel:'',email:''};
 
 function h(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 function money(v){return 'R$ '+(Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -154,6 +154,9 @@ function precoCalc(p,H){
   return {pp:Number(base.preco_pp)+extraH*he, base:base, extraH:extraH, aCombinar:extraH>0&&!he};
 }
 function duracao(){var p=pacote();return p&&Number(S.horas)>0?{horas:Number(S.horas)}:null;}
+// duração = término − início (se o término for menor, é no dia seguinte), arredondada em 15 min
+function calcHoras(){if(!S.hora||!S.fim){S.horas=null;return;}var a=S.hora.split(':'),b=S.fim.split(':');var ini=(+a[0])*60+(+a[1]),fim=(+b[0])*60+(+b[1]);var d=fim-ini;if(d<=0)d+=1440;S.horas=Math.round(d/15)*15/60;}
+function viraDia(){if(!S.hora||!S.fim)return false;return S.fim<=S.hora;}
 function opcoesGrupo(g){
   var ids=(g.itens||[]).map(String);
   return ITENS.filter(function(c){return ids.length?ids.indexOf(String(c.id))>=0:(g.secoes||[]).indexOf(c.secao)>=0;});
@@ -176,7 +179,7 @@ function ok(passo){
   if(PREVIA&&passo!=='enviar')return true;
   switch(passo){
     case 'local':return !!S.local&&(S.local!=='outro'||S.endereco.trim().length>2);
-    case 'quando':return !!S.data;
+    case 'quando':return !!S.data&&!!S.hora&&!!S.fim&&Number(S.horas)>0&&Number(S.horas)<=14;
     case 'tipo':return !!pacote();
     case 'pessoas':return pax()>=1;
     case 'tempo':return !!duracao();
@@ -201,18 +204,22 @@ function render(rolar){
     if(S.local==='outro')x+='<label>Onde fica? <span class="req">*</span></label><input placeholder="bairro, cidade ou endereço" value="'+h(S.endereco)+'" oninput="S.endereco=this.value;atualizaNav()">';
   }
   if(p==='quando'){
-    x='<h2>Quando?</h2><p class="sub">Dia e horário de início.</p><div class="g2"><div><label>Data <span class="req">*</span></label><input type="date" value="'+h(S.data)+'" min="'+new Date().toISOString().slice(0,10)+'" oninput="S.data=this.value;atualizaNav()"></div><div><label>Horário de início</label><input type="time" value="'+h(S.hora)+'" oninput="S.hora=this.value"></div></div>'
+    x='<h2>Quando?</h2><p class="sub">Dia e horário do serviço — do início até o fim.</p>'
+     +'<label>Data <span class="req">*</span></label><input type="date" value="'+h(S.data)+'" min="'+new Date().toISOString().slice(0,10)+'" oninput="S.data=this.value;atualizaNav()" style="max-width:260px">'
+     +'<div class="g2"><div><label>Horário de início <span class="req">*</span></label><input type="time" step="900" value="'+h(S.hora)+'" oninput="S.hora=this.value;calcHoras();quandoInfo();atualizaNav()"></div>'
+     +'<div><label>Horário de término <span class="req">*</span></label><input type="time" step="900" value="'+h(S.fim)+'" oninput="S.fim=this.value;calcHoras();quandoInfo();atualizaNav()"></div></div>'
+     +'<div id="quandoInfo"></div>'
      +'<div class="aviso">Data e horário estão <b>sujeitos à disponibilidade</b>. A gente confere a agenda e confirma com você.</div>';
   }
   if(p==='tipo'){
     var l=PAC.filter(function(pc){return !pc.locais||!pc.locais.length||pc.locais.indexOf(S.local)>=0;});
-    x='<h2>Que tipo de evento?</h2><p class="sub">Cada formato já vem com o serviço pensado. Depois você escolhe as opções do menu.</p><div class="opts">'+l.map(function(pc){
-      var precos=(pc.duracoes||[]).map(function(d){return Number(d.preco_pp);}).filter(function(v){return v>0;});
-      return '<button type="button" class="opt big'+(S.pacote===pc.id?' on':'')+'" onclick="setPacote(\''+pc.id+'\')">'+(pc.foto_url?'<div class="ph" style="background-image:url(&quot;'+h(pc.foto_url)+'&quot;)"></div>':'')+'<div class="in"><b>'+h(pc.nome)+'</b><span>'+h(pc.descricao||'')+'</span>'+(precos.length?'<div class="pr">a partir de <b style="font-size:14px;color:var(--ink)">'+money(Math.min.apply(null,precos))+'</b> por pessoa</div>':'')+'</div></button>';}).join('')+'</div>';
+    x='<h2>Que tipo de evento?</h2><p class="sub">'+pax()+' pessoas · '+fmtH(S.horas)+' de serviço. Cada formato já vem com o serviço pensado; depois você escolhe as opções do menu.</p><div class="opts">'+l.map(function(pc){
+      var pcalc=precoCalc(pc,Number(S.horas)),abaixo=pax()&&pax()<(Number(pc.min_pax)||0);
+      return '<button type="button" class="opt big'+(S.pacote===pc.id?' on':'')+'" onclick="setPacote(\''+pc.id+'\')">'+(pc.foto_url?'<div class="ph" style="background-image:url(&quot;'+h(pc.foto_url)+'&quot;)"></div>':'')+'<div class="in"><b>'+h(pc.nome)+'</b><span>'+h(pc.descricao||'')+'</span>'+(pcalc?'<div class="pr"><b style="font-size:14px;color:var(--ink)">'+money(pcalc.pp)+'</b> por pessoa · '+fmtH(S.horas)+(pcalc.aCombinar?' <span style="color:var(--muted)">(horas a mais no orçamento)</span>':'')+'</div>':'')+(abaixo?'<div class="pr" style="color:var(--muted)">pensado pra a partir de '+pc.min_pax+' pessoas</div>':'')+'</div></button>';}).join('')+'</div>';
   }
   if(p==='pessoas'){
     var pc=pacote();
-    x='<h2>Quantas pessoas?</h2><p class="sub">Um número aproximado já ajuda. Dá pra ajustar até 7 dias antes.</p><label>Convidados <span class="req">*</span></label><input type="number" min="1" max="2000" inputmode="numeric" value="'+h(S.pax)+'" oninput="S.pax=this.value;atualizaNav();avisoMin()" style="max-width:220px"><div id="avMin"></div>';
+    x='<h2>Quantas pessoas?</h2><p class="sub">Um número aproximado já ajuda. Dá pra ajustar até 7 dias antes.</p><label>Convidados <span class="req">*</span></label><input type="number" min="1" max="2000" inputmode="numeric" value="'+h(S.pax)+'" oninput="S.pax=this.value;atualizaNav()" style="max-width:220px">';
   }
   if(p==='tempo'){
     var pc2=pacote(),hs=(pc2.duracoes||[]).map(function(d){return Number(d.horas);}).filter(function(v){return v>0;}).sort(function(a,b){return a-b;});
@@ -251,7 +258,7 @@ function render(rolar){
     x='<h2>Quase lá</h2><p class="sub">Confira o resumo e deixe seu contato. Seu pedido entra direto na agenda da equipe de eventos.</p>'
      +'<div class="resumo"><table>'
      +'<tr><td>Local</td><td class="v">'+h(loc?loc.nome:'')+(S.local==='outro'?' · '+h(S.endereco):'')+'</td></tr>'
-     +'<tr><td>Data</td><td class="v">'+h(S.data.split('-').reverse().join('/'))+(S.hora?' às '+h(S.hora):'')+'</td></tr>'
+     +'<tr><td>Data</td><td class="v">'+h(S.data.split('-').reverse().join('/'))+' · '+h(S.hora)+' às '+h(S.fim)+(viraDia()?' (dia seguinte)':'')+'</td></tr>'
      +'<tr><td>Formato</td><td class="v">'+h(pc4.nome)+' · '+fmtH(S.horas)+'</td></tr>'
      +'<tr><td>Convidados</td><td class="v">'+pax()+'</td></tr>'
      +grupos().map(function(g){var nm=(S.esc[g._i]||[]).map(function(id){var it=ITENS.find(function(x){return String(x.id)===String(id);});return it?it._nome:'';});return nm.length?'<tr><td>'+h(g.titulo)+'</td><td class="v" style="white-space:normal">'+h(nm.join(', '))+'</td></tr>':'';}).join('')
@@ -264,27 +271,30 @@ function render(rolar){
   }
   if(PREVIA&&S.faltas){el.innerHTML='<div class="step">'+painelFaltas()+'</div>';return;}
   el.innerHTML='<div class="step">'+x+nav()+'</div>';
-  if(p==='pessoas')avisoMin();
-  if(p==='tempo')tempoInfo();
+  if(p==='quando')quandoInfo();
   fotosVisiveis(); barra();
   if(rolar)window.scrollTo({top:document.querySelector('.wrap').offsetTop-10,behavior:'smooth'});
 }
-function irPara(i){S.faltas=false;S.passo=i;if(!S.local)S.local='ccmq';if(i>2&&!pacote()&&PAC[0])S.pacote=PAC[0].id;if(i>3&&!pax())S.pax='50';if(i>4&&!(Number(S.horas)>0)&&pacote())S.horas=((pacote().duracoes||[])[0]||{horas:2}).horas;render(true);}
+function irPara(i){S.faltas=false;S.passo=i;if(!S.local)S.local='ccmq';if(i>1&&!S.hora){S.hora='19:00';S.fim='23:00';calcHoras();}if(i>2&&!pax())S.pax='50';if(i>3&&!pacote()&&PAC[0])S.pacote=PAC[0].id;render(true);}
 function verFaltas(){S.faltas=true;render(true);}
+function quandoInfo(){var el=document.getElementById('quandoInfo');if(!el)return;
+  if(!(Number(S.horas)>0)){el.innerHTML='';return;}
+  el.innerHTML='<div class="aviso" style="background:'+(S.horas>14?'#fff7e6':'#f3f8f1')+';border-color:'+(S.horas>14?'#f0dca8':'#d5e6cf')+';color:'+(S.horas>14?'#7a5b13':'#3c5a40')+'">'
+    +(S.horas>14?'Mais de 14 horas de serviço? Confere os horários — se for isso mesmo, conta pra gente no fim que montamos junto.':'Duração do serviço: <b>'+fmtH(S.horas)+'</b>'+(viraDia()?' (termina no dia seguinte)':''))+'</div>';}
 function maisH(d){var v=Math.max(0.5,Math.min(14,(Number(S.horas)||0)+d));S.horas=v;render();}
 function tempoInfo(){var el=document.getElementById('tempoInfo');if(!el)return;var p=pacote(),c=p?precoCalc(p,Number(S.horas)):null;
   if(!(Number(S.horas)>0)){el.innerHTML='';return;}
   el.innerHTML=c?'<div class="aviso" style="background:#f3f8f1;border-color:#d5e6cf;color:#3c5a40"><b>'+money(c.pp)+' por pessoa</b> para '+fmtH(S.horas)+(c.extraH>0&&!c.aCombinar?' ('+fmtH(c.base.horas)+' + '+fmtH(c.extraH)+' a mais)':'')+'.'+(c.aCombinar?' As horas além de '+fmtH(c.base.horas)+' entram no orçamento.':'')+'</div>'
     :'<div class="aviso">O valor desse formato a gente passa no orçamento.</div>';}
 function fmtH(v){v=Number(v);var hh=Math.floor(v),mm=Math.round((v-hh)*60);if(mm===60){hh++;mm=0;}if(!mm)return hh===1?'1 hora':hh+' horas';if(!hh)return mm+' min';return hh+'h'+String(mm).padStart(2,'0');}
-function setLocal(id){S.local=id;var pc=pacote();if(pc&&pc.locais&&pc.locais.length&&pc.locais.indexOf(id)<0){S.pacote=null;S.horas=null;S.esc={};}render();}
-function setPacote(id){if(S.pacote!==id){S.esc={};S.horas=null;}S.pacote=id;render();setTimeout(seguir,180);}
+function setLocal(id){S.local=id;var pc=pacote();if(pc&&pc.locais&&pc.locais.length&&pc.locais.indexOf(id)<0){S.pacote=null;S.esc={};}render();}
+function setPacote(id){if(S.pacote!==id){S.esc={};}S.pacote=id;render();setTimeout(seguir,180);}
 function setHoras(v){S.horas=v;render();setTimeout(seguir,180);}
 function avisoMin(){var pc=pacote(),el=document.getElementById('avMin');if(!el)return;el.innerHTML=(pc&&pax()&&pax()<(Number(pc.min_pax)||0))?'<div class="aviso">O '+h(pc.nome)+' é pensado pra a partir de '+pc.min_pax+' pessoas. Pode seguir — a gente adapta na proposta.</div>':'';}
 function escolher(gi,id){var g=grupos().find(function(x){return x._i===gi;});if(!g)return;var n=Math.min(Number(g.escolher)||0,opcoesGrupo(g).length);
   var a=S.esc[gi]=S.esc[gi]||[];var k=a.indexOf(String(id));if(k>=0)a.splice(k,1);else if(a.length<n)a.push(String(id));else if(n===1){a[0]=String(id);}else return;
   var y=window.scrollY;render();window.scrollTo(0,y);}
-function barra(){var c=contas(),b=document.getElementById('bar');if(!c||S.passo<4){b.style.display='none';return;}b.style.display='block';
+function barra(){var c=contas(),b=document.getElementById('bar');if(!c||S.passo<=PASSOS.indexOf('tipo')){b.style.display='none';return;}b.style.display='block';
   document.getElementById('barTxt').textContent=pacote().nome+' · '+fmtH(S.horas)+' · '+pax()+' pessoas · estimativa';document.getElementById('barTot').textContent=money(c.tot);}
 let IO=null;
 function fotosVisiveis(){const els=document.querySelectorAll('.ph[data-ficha]');if(!('IntersectionObserver' in window)){els.forEach(carregaFoto);return;}
@@ -293,7 +303,7 @@ async function carregaFoto(el){const id=el.getAttribute('data-ficha');el.removeA
   if(FOTOS[id]===undefined)FOTOS[id]=api('lola_fichas_fotos?ficha_id=eq.'+id+'&select=foto&order=created_at.asc&limit=1').then(function(r){return r[0]&&r[0].foto||null;}).catch(function(){return null;});
   const u=await FOTOS[id];if(u)el.style.backgroundImage='url("'+u+'")';}
 function waTexto(){var pc=pacote(),c=contas(),loc=LOCAIS.find(function(l){return l.id===S.local;});
-  var t='*Pedido de orçamento — evento no Lola*\nNome: '+S.nome+'\nOcasião: '+S.det.ocasiao+'\nLocal: '+(loc?loc.nome:'')+(S.local==='outro'?' ('+S.endereco+')':'')+'\nData: '+S.data.split('-').reverse().join('/')+(S.hora?' às '+S.hora:'')+'\nFormato: '+pc.nome+' · '+fmtH(S.horas)+'\nConvidados: '+pax()+'\n';
+  var t='*Pedido de orçamento — evento no Lola*\nNome: '+S.nome+'\nOcasião: '+S.det.ocasiao+'\nLocal: '+(loc?loc.nome:'')+(S.local==='outro'?' ('+S.endereco+')':'')+'\nData: '+S.data.split('-').reverse().join('/')+' · '+S.hora+' às '+S.fim+' ('+fmtH(S.horas)+')\nFormato: '+pc.nome+'\nConvidados: '+pax()+'\n';
   grupos().forEach(function(g){var nm=(S.esc[g._i]||[]).map(function(id){var it=ITENS.find(function(x){return String(x.id)===String(id);});return it?it._nome:'';});if(nm.length)t+='\n*'+g.titulo+':* '+nm.join(', ');});
   if(c)t+='\n\nEstimativa: '+money(c.tot);if(S.obs)t+='\n\nObs.: '+S.obs;return t;}
 async function enviar(){
@@ -301,9 +311,9 @@ async function enviar(){
     document.getElementById('erro').innerHTML='<b>Prévia — nada foi enviado.</b> O evento que seria criado na aba Eventos levaria este menu:<ul style="margin:6px 0 0 18px">'+its.map(function(x){var c=ITENS.find(function(k){return String(k.id)===String(x.id);})||{};return '<li>'+h(c.nome||x.nome)+' — '+(c.per_pax!==false?'por pessoa':x.qtd+' '+h(c.unidade||'un'))+(c._fichaNome?' · ficha: '+h(c._fichaNome):' · <b>sem ficha</b>')+'</li>';}).join('')+'</ul>';return;}
   if(!ok('enviar'))return;var b=document.getElementById('btnEnviar'),erro=document.getElementById('erro');b.disabled=true;b.textContent='Enviando…';erro.style.display='none';
   var pc=pacote(),c=contas();
-  var det=Object.assign({},S.det,{espaco_ccmq:S.local==='ccmq'?S.espaco:'',endereco:S.local==='outro'?S.endereco:''});
+  var det=Object.assign({},S.det,{espaco_ccmq:S.local==='ccmq'?S.espaco:'',endereco:S.local==='outro'?S.endereco:'',inicio:S.hora,termino:S.fim});
   var body={nome:S.nome.trim(),telefone:S.tel.trim(),email:S.email.trim()||null,ocasiao:S.det.ocasiao||null,data:S.data||null,horario:S.hora||null,pax:pax(),local:S.local,
-    formato:pc.nome,pacote_id:pc.id,duracao:fmtH(S.horas),horas:Number(S.horas),preco_pp:c?c.pp:null,detalhes:det,itens:itensComQtd(),
+    formato:pc.nome,pacote_id:pc.id,duracao:fmtH(S.horas)+' ('+S.hora+' às '+S.fim+')',horas:Number(S.horas),preco_pp:c?c.pp:null,detalhes:det,itens:itensComQtd(),
     subtotal:c?Math.round(c.sub*100)/100:null,servico:c?c.serv:null,estimativa:c?Math.round(c.tot*100)/100:null,obs:S.obs.trim()||null};
   var gravou=false;
   try{var r=await fetch(SUPA+'/rest/v1/lola_eventos_pedidos',{method:'POST',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(body)});gravou=r.ok;}catch(_e){}
