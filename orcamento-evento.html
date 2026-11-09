@@ -118,7 +118,7 @@ textarea{min-height:80px;resize:vertical;}
 
 <section class="step">
   <h2><span class="n">3</span> Monte o menu</h2>
-  <p class="sub">Toque em <b>Escolher</b> nos itens que quiser. As quantidades aparecem já calculadas pelo número de convidados e pelo formato — dá pra mudar.</p>
+  <p class="sub">Toque em <b>Escolher</b> nos itens que quiser. A quantidade já vem sugerida pelo número de convidados e pelo formato — é só ajustar no − e +.</p>
   <div class="tabs" id="tabs"></div>
   <div id="itens"><div class="state">Carregando o cardápio…</div></div>
 </section>
@@ -148,16 +148,15 @@ const SUPA="https://mvjbsdpfjhywhaonvpfl.supabase.co";
 const SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12amJzZHBmamh5d2hhb252cGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4MDk2OTAsImV4cCI6MjA5NTM4NTY5MH0.i_3sqgQa6umsIYBmAwWz_NP6nYuT3GfIZid24zHXSEI";
 const WHATS="555121605886";
 const SERVICO=0.10;
-// Formatos: peças de comidinha por pessoa (salgados) e doces por pessoa
+// Formatos: k = quantas unidades de cada item escolhido por convidado (sugestão inicial; o cliente ajusta)
 const FORMATOS=[
-  {id:'recepcao',nome:'Recepção',txt:'até 1h · algo na mão antes do principal',dur:'1h',sal:7,mini:0,doce:0},
-  {id:'leve',nome:'Coquetel leve',txt:'cerca de 2h · fim de tarde',dur:'2h',sal:12,mini:0,doce:1},
-  {id:'completo',nome:'Coquetel completo',txt:'cerca de 3h · não substitui o jantar',dur:'3h',sal:15,mini:0.5,doce:1.5},
-  {id:'jantar',nome:'Coquetel jantar',txt:'3h a 4h · ninguém vai pra casa com fome',dur:'4h',sal:18,mini:1,doce:2},
-  {id:'coffee',nome:'Coffee break',txt:'reunião ou encontro de trabalho',dur:'1h a 2h',sal:5,mini:0,doce:1.5}
+  {id:'recepcao',nome:'Recepção',txt:'até 1h · algo na mão antes do principal',dur:'1h',k:0.75},
+  {id:'leve',nome:'Coquetel leve',txt:'cerca de 2h · fim de tarde',dur:'2h',k:1},
+  {id:'completo',nome:'Coquetel completo',txt:'cerca de 3h · não substitui o jantar',dur:'3h',k:1.25},
+  {id:'jantar',nome:'Coquetel jantar',txt:'3h a 4h · ninguém vai pra casa com fome',dur:'4h',k:1.5},
+  {id:'coffee',nome:'Coffee break',txt:'reunião ou encontro de trabalho',dur:'1h a 2h',k:0.75}
 ];
 const ORDEM=['Comidinhas','Mini porção','Lanchinho de pista','Sobremesa','Bebidas'];
-const ALVO_SEC={'Comidinhas':'sal','Lanchinho de pista':'sal','Mini porção':'mini','Sobremesa':'doce'};
 let ITENS=[], FICHAS=[], COMFOTO=new Set(), SEC='', FMT='leve', PAX=30, SEL={}, FOTOS={};
 
 function h(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
@@ -223,16 +222,11 @@ async function carregaFoto(el){
   if(FOTOS[id]===undefined){FOTOS[id]=api('lola_fichas_fotos?ficha_id=eq.'+id+'&select=foto&order=created_at.asc&limit=1').then(function(r){return r[0]&&r[0].foto||null;}).catch(function(){return null;});}
   const u=await FOTOS[id]; if(u)el.style.backgroundImage='url("'+u+'")';
 }
-// sugestão de quantidade: divide a meta de peças por pessoa entre os itens escolhidos daquela seção
+// sugestão de quantidade: k unidades de cada item por convidado (bebida: 1 por convidado)
 function sugerir(){
   const f=FORMATOS.find(function(x){return x.id===FMT;})||FORMATOS[1];
-  const grupos={};
-  ITENS.forEach(function(c){if(!SEL[c.id]||c.per_pax!==false)return;var k=ALVO_SEC[c.secao]||c.secao;(grupos[k]=grupos[k]||[]).push(c);});
-  Object.keys(grupos).forEach(function(k){
-    const l=grupos[k], porPessoa=(k==='sal'||k==='mini'||k==='doce')?f[k]:1;
-    const meta=Math.max(porPessoa,k==='mini'||k==='doce'?0.5:1)*PAX;
-    l.forEach(function(c){if(SEL[c.id].manual)return;SEL[c.id].q=Math.max(1,Math.ceil(meta/l.length));});
-  });
+  ITENS.forEach(function(c){if(!SEL[c.id]||c.per_pax!==false||SEL[c.id].manual)return;
+    SEL[c.id].q=Math.max(1,Math.ceil(PAX*(c.secao==='Bebidas'?1:f.k)));});
 }
 function setFmt(id){FMT=id;renderFmts();sugerir();renderItens();renderResumo();}
 function setSec(s){SEC=s;renderTabs();renderItens();}
