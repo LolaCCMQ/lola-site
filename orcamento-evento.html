@@ -276,7 +276,7 @@ function tempoInfo(){var el=document.getElementById('tempoInfo');if(!el)return;v
   if(!(Number(S.horas)>0)){el.innerHTML='';return;}
   el.innerHTML=c?'<div class="aviso" style="background:#f3f8f1;border-color:#d5e6cf;color:#3c5a40"><b>'+money(c.pp)+' por pessoa</b> para '+fmtH(S.horas)+(c.extraH>0&&!c.aCombinar?' ('+fmtH(c.base.horas)+' + '+fmtH(c.extraH)+' a mais)':'')+'.'+(c.aCombinar?' As horas além de '+fmtH(c.base.horas)+' entram no orçamento.':'')+'</div>'
     :'<div class="aviso">O valor desse formato a gente passa no orçamento.</div>';}
-function fmtH(v){v=Number(v);return v===1?'1 hora':(String(v).replace('.',',')+' horas');}
+function fmtH(v){v=Number(v);var hh=Math.floor(v),mm=Math.round((v-hh)*60);if(mm===60){hh++;mm=0;}if(!mm)return hh===1?'1 hora':hh+' horas';if(!hh)return mm+' min';return hh+'h'+String(mm).padStart(2,'0');}
 function setLocal(id){S.local=id;var pc=pacote();if(pc&&pc.locais&&pc.locais.length&&pc.locais.indexOf(id)<0){S.pacote=null;S.horas=null;S.esc={};}render();}
 function setPacote(id){if(S.pacote!==id){S.esc={};S.horas=null;}S.pacote=id;render();setTimeout(seguir,180);}
 function setHoras(v){S.horas=v;render();setTimeout(seguir,180);}
