@@ -8,5 +8,6 @@
   <url><loc>https://lolabar.com.br/ambientes.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://lolabar.com.br/lojinha.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://lolabar.com.br/contato.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://lolabar.com.br/orcamento-evento.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://lolabar.com.br/trabalhe.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>
