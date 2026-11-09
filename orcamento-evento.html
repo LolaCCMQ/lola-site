@@ -90,7 +90,7 @@ const WHATS="555121605886";
 const LOCAIS=[
   {id:'ccmq',nome:'Lola CCMQ',txt:'7º andar da Casa de Cultura Mario Quintana, no Centro Histórico'},
   {id:'mac',nome:'Lola MAC',txt:'jardim do Museu de Arte Contemporânea do RS, no Floresta'},
-  {id:'outro',nome:'Outro local',txt:'a gente leva o Lola até você: casa, empresa, espaço de eventos'}
+  {id:'outro',nome:'Outro local',txt:'a gente leva o evento até você: em outros espaços da CCMQ, empresas, espaços de eventos, até em casa!'}
 ];
 const PASSOS=['local','quando','pessoas','tipo','detalhes','menu','enviar'];
 const PREVIA=/[?&]previa/.test(location.search);
@@ -201,7 +201,7 @@ function render(rolar){
   if(p==='local'){
     x='<h2>Onde vai ser?</h2><p class="sub">Escolha o lugar e a gente cuida do resto.</p><div class="opts">'+LOCAIS.map(function(l){return '<button type="button" class="opt'+(S.local===l.id?' on':'')+'" onclick="setLocal(\''+l.id+'\')"><b>'+h(l.nome)+'</b><span>'+h(l.txt)+'</span></button>';}).join('')+'</div>';
     if(S.local==='ccmq')x+='<label>No Lola CCMQ, onde vocês preferem?</label><select onchange="S.espaco=this.value"><option value="">Tanto faz — vocês sugerem</option><option value="cupula_ccmq"'+(S.espaco==='cupula_ccmq'?' selected':'')+'>Cúpula (ao ar livre, sujeita ao clima)</option><option value="interno_ccmq"'+(S.espaco==='interno_ccmq'?' selected':'')+'>Salão interno</option></select>';
-    if(S.local==='outro')x+='<label>Onde fica? <span class="req">*</span></label><input placeholder="bairro, cidade ou endereço" value="'+h(S.endereco)+'" oninput="S.endereco=this.value;atualizaNav()">';
+    if(S.local==='outro')x+='<label>Onde fica? <span class="req">*</span></label><input placeholder="ex.: outro espaço da CCMQ, empresa, endereço ou bairro" value="'+h(S.endereco)+'" oninput="S.endereco=this.value;atualizaNav()">';
   }
   if(p==='quando'){
     x='<h2>Quando?</h2><p class="sub">Dia e horário do serviço — do início até o fim.</p>'
