@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monte seu evento — Lola CCMQ | Orçamento de eventos em Porto Alegre</title>
-<meta name="description" content="Monte o menu do seu evento no Lola: escolha comidinhas, mini porções, doces e bebidas e veja uma estimativa na hora. Lola CCMQ, cúpula da Casa de Cultura Mario Quintana e Lola MAC.">
+<meta name="description" content="Monte seu evento no Lola: escolha o local, o tipo de evento — coffee break, brunch, feijoada, coquetel e jantar — e o menu, e veja uma estimativa na hora. Lola CCMQ, cúpula da Casa de Cultura Mario Quintana e Lola MAC.">
 <link rel="canonical" href="https://lolabar.com.br/orcamento-evento.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lola CCMQ">
@@ -16,148 +16,82 @@
 :root{--red:#a92a2b;--gold:#c49955;--ink:#2b2620;--cream:#f7f2e9;--line:#e7dcc7;--muted:#7a7268;--green:#3c5a40;color-scheme:light;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Fraunces',Georgia,serif;color:var(--ink);background:var(--cream);}
-.sans{font-family:Arial,sans-serif;}
-.hero{position:relative;height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 20px;overflow:hidden;}
+.hero{position:relative;height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 20px;overflow:hidden;}
 .hero::before{content:"";position:absolute;inset:0;background:url('https://static.wixstatic.com/media/d4ec75_e89bb22b2c0242e89714261417926d27~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_90,enc_auto/lola.jpg') center 40%/cover no-repeat;filter:brightness(.5) saturate(1.05);}
 .hero>*{position:relative;}
 .hero .kick{font-family:Arial,sans-serif;letter-spacing:5px;text-transform:uppercase;font-size:10px;color:#f0e2c4;}
 .hero h1{font-weight:600;font-size:clamp(28px,5vw,42px);margin-top:5px;font-variation-settings:"opsz" 144;text-shadow:0 2px 18px rgba(0,0,0,.5);}
-@media(max-width:640px){.hero{height:240px;}}
-.intro{max-width:680px;margin:0 auto;padding:36px 22px 4px;text-align:center;}
-.intro p{font-size:17px;line-height:1.65;color:#473f35;}
-.wrap{max-width:1080px;margin:0 auto;padding:10px 18px 140px;}
-.step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px 24px;margin-top:22px;box-shadow:0 10px 28px rgba(80,55,20,.07);}
-.step h2{font-weight:600;font-size:22px;color:var(--red);font-variation-settings:"opsz" 144;display:flex;gap:10px;align-items:baseline;}
-.step h2 .n{font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:#fff;background:var(--gold);border-radius:20px;padding:3px 9px;transform:translateY(-3px);}
-.step .sub{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.5;}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 16px;}
-@media(max-width:640px){.g2,.g3{grid-template-columns:1fr;}}
+@media(max-width:640px){.hero{height:210px;}}
+.wrap{max-width:980px;margin:0 auto;padding:18px 18px 130px;}
+.prog{display:flex;gap:6px;justify-content:center;margin:6px 0 18px;flex-wrap:wrap;}
+.prog span{width:30px;height:5px;border-radius:4px;background:var(--line);}
+.prog span.on{background:var(--gold);} .prog span.at{background:var(--red);}
+.step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 24px 24px;box-shadow:0 10px 28px rgba(80,55,20,.07);}
+.step h2{font-weight:600;font-size:clamp(22px,3.4vw,28px);color:var(--red);font-variation-settings:"opsz" 144;}
+.step .sub{font-size:15px;color:var(--muted);margin-top:6px;line-height:1.5;}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:18px;}
+.opt{border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;cursor:pointer;background:#fbf8f2;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:4px;}
+.opt b{color:var(--red);font-weight:600;font-size:17px;}
+.opt span{font-family:Arial,sans-serif;font-size:12.5px;color:var(--muted);line-height:1.4;}
+.opt .pr{font-family:Arial,sans-serif;font-size:12.5px;color:var(--ink);margin-top:4px;}
+.opt.on{border-color:var(--red);background:#fff;box-shadow:0 0 0 3px rgba(169,42,43,.13);}
+.opt.big{padding:0;overflow:hidden;} .opt.big .ph{aspect-ratio:16/9;background:#efe8dc center/cover no-repeat;} .opt.big .in{padding:13px 15px 15px;display:flex;flex-direction:column;gap:4px;}
 label{display:block;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink);margin:16px 0 6px;}
 label .req{color:var(--red);}
-input,select,textarea{width:100%;font-family:Arial,sans-serif;font-size:14px;color:var(--ink);background:#fbf8f2;border:1px solid var(--line);border-radius:10px;padding:12px 13px;outline:none;}
+input,select,textarea{width:100%;font-family:Arial,sans-serif;font-size:15px;color:var(--ink);background:#fbf8f2;border:1px solid var(--line);border-radius:10px;padding:12px 13px;outline:none;}
 input:focus,select:focus,textarea:focus{border-color:var(--gold);background:#fff;}
-textarea{min-height:80px;resize:vertical;}
-.fmts{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:14px;}
-.fmt{border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;cursor:pointer;background:#fbf8f2;text-align:left;font:inherit;color:inherit;}
-.fmt b{display:block;color:var(--red);font-weight:600;font-size:16px;}
-.fmt span{display:block;font-family:Arial,sans-serif;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35;}
-.fmt.on{border-color:var(--red);background:#fff;box-shadow:0 0 0 3px rgba(169,42,43,.12);}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px;position:sticky;top:0;background:#fff;padding:8px 0;z-index:3;}
-.tab{font-family:Arial,sans-serif;font-size:12px;font-weight:700;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:20px;padding:8px 14px;cursor:pointer;}
-.tab.on{background:var(--red);color:#fff;border-color:var(--red);}
-.tab small{font-weight:400;opacity:.8;}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:10px;}
-.it{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:box-shadow .15s;}
-.it.on{border-color:var(--red);box-shadow:0 0 0 2px rgba(169,42,43,.25);}
-.ph{aspect-ratio:4/3;background:#efe8dc center/cover no-repeat;}
-.bd{padding:11px 13px 13px;display:flex;flex-direction:column;gap:5px;flex:1;}
-.nm{color:var(--red);font-weight:600;font-size:16px;line-height:1.2;}
-.ds{font-size:13px;color:#4f4a42;line-height:1.4;}
-.pr{font-family:Arial,sans-serif;font-size:12.5px;color:var(--ink);}
+textarea{min-height:76px;resize:vertical;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;} @media(max-width:640px){.g2{grid-template-columns:1fr;}}
+.aviso{font-family:Arial,sans-serif;font-size:12.5px;color:#7a5b13;background:#fff7e6;border:1px solid #f0dca8;border-radius:10px;padding:10px 12px;margin-top:14px;line-height:1.5;}
+.nav{display:flex;gap:10px;justify-content:space-between;margin-top:22px;align-items:center;}
+.btn{font-family:Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;background:var(--red);color:#fff;border:none;border-radius:30px;padding:14px 26px;cursor:pointer;box-shadow:0 6px 18px rgba(169,42,43,.25);}
+.btn:disabled{opacity:.45;cursor:default;box-shadow:none;}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none;}
+.btn.wa{background:#1f9d55;box-shadow:0 6px 18px rgba(31,157,85,.3);display:inline-block;text-decoration:none;margin-top:16px;}
+.grupo{margin-top:24px;} .grupo h3{font-weight:600;font-size:19px;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+.grupo h3 small{font-family:Arial,sans-serif;font-size:12px;color:var(--muted);font-weight:400;}
+.grupo h3 small.ok{color:var(--green);font-weight:700;}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:10px;}
+.it{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;cursor:pointer;display:flex;flex-direction:column;position:relative;text-align:left;font:inherit;color:inherit;padding:0;}
+.it .ph{aspect-ratio:4/3;background:#efe8dc center/cover no-repeat;}
+.it .bd{padding:9px 11px 11px;}
+.it .nm{color:var(--red);font-weight:600;font-size:15px;line-height:1.2;}
+.it .ds{font-size:12.5px;color:#4f4a42;line-height:1.35;margin-top:3px;}
+.it .ck{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.92);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-weight:700;color:#fff;}
+.it.on{border-color:var(--red);box-shadow:0 0 0 2px rgba(169,42,43,.25);} .it.on .ck{background:var(--red);border-color:var(--red);}
+.it.off{opacity:.45;}
 .bdg{font-family:Arial,sans-serif;font-size:9px;font-weight:bold;border-radius:10px;padding:1px 6px;background:#e3f0df;color:var(--green);margin-left:4px;vertical-align:middle;}
-.act{margin-top:auto;padding-top:6px;display:flex;align-items:center;gap:8px;}
-.add{font-family:Arial,sans-serif;font-size:12px;font-weight:700;border:1.5px solid var(--red);color:var(--red);background:#fff;border-radius:20px;padding:7px 14px;cursor:pointer;}
-.it.on .add{background:var(--red);color:#fff;}
-.qty{display:flex;align-items:center;gap:4px;font-family:Arial,sans-serif;font-size:12px;}
-.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:#fbf8f2;cursor:pointer;font-size:15px;line-height:1;}
-.qty input{width:58px;text-align:center;padding:5px;border-radius:8px;}
-.hint{font-family:Arial,sans-serif;font-size:11.5px;color:var(--muted);}
-.resumo{margin-top:12px;font-family:Arial,sans-serif;font-size:13.5px;}
-.resumo table{width:100%;border-collapse:collapse;}
-.resumo td{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:top;}
-.resumo td.v{text-align:right;white-space:nowrap;}
-.resumo .tot td{font-weight:700;font-size:16px;border-bottom:none;padding-top:12px;color:var(--red);}
-.aviso{font-family:Arial,sans-serif;font-size:12px;color:#7a5b13;background:#fff7e6;border:1px solid #f0dca8;border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.45;}
-.btn{margin-top:20px;width:100%;font-family:Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--red);color:#fff;border:none;border-radius:30px;padding:15px;cursor:pointer;box-shadow:0 6px 18px rgba(169,42,43,.3);}
-.btn:disabled{opacity:.6;cursor:default;}
-.btn.wa{background:#1f9d55;box-shadow:0 6px 18px rgba(31,157,85,.3);display:block;text-align:center;text-decoration:none;}
-.err{display:none;color:var(--red);font-family:Arial,sans-serif;font-size:13px;text-align:center;margin-top:14px;}
-.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(80,55,20,.10);z-index:20;}
-.bar .in{max-width:1080px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:14px;font-family:Arial,sans-serif;}
-.bar .t{flex:1;font-size:12px;color:var(--muted);line-height:1.35;}
-.bar .t b{display:block;font-size:19px;color:var(--red);font-family:'Fraunces',Georgia,serif;}
-.bar button{font-family:Arial,sans-serif;font-size:12px;font-weight:700;background:var(--red);color:#fff;border:none;border-radius:24px;padding:11px 18px;cursor:pointer;white-space:nowrap;}
-.ok{display:none;text-align:center;}
-.ok h2{justify-content:center;}
+.resumo{font-family:Arial,sans-serif;font-size:14px;margin-top:14px;}
+.resumo table{width:100%;border-collapse:collapse;} .resumo td{padding:8px 4px;border-bottom:1px solid var(--line);vertical-align:top;} .resumo td.v{text-align:right;white-space:nowrap;}
+.resumo .tot td{font-weight:700;font-size:18px;border-bottom:none;padding-top:12px;color:var(--red);font-family:'Fraunces',Georgia,serif;}
+.cond{font-family:Arial,sans-serif;font-size:12px;color:var(--muted);line-height:1.55;margin-top:14px;padding-left:16px;}
+.err{display:none;color:var(--red);font-family:Arial,sans-serif;font-size:13px;margin-top:12px;}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(80,55,20,.10);z-index:20;display:none;}
+.bar .in{max-width:980px;margin:0 auto;padding:10px 18px;font-family:Arial,sans-serif;font-size:12px;color:var(--muted);line-height:1.35;}
+.bar b{display:block;font-size:19px;color:var(--red);font-family:'Fraunces',Georgia,serif;}
 .state{text-align:center;color:var(--muted);font-family:Arial,sans-serif;padding:30px;}
 </style><style id="embedcss">html{background:#f7f2e9}html.embed .hero{display:none!important}html.embed body{padding-top:0!important}</style><script>if(/[?&]embed/.test(location.search))document.documentElement.classList.add("embed");</script>
 </head>
 <body>
 <header class="hero"><div class="kick">Eventos no Lola</div><h1>Monte seu evento</h1></header>
-<div class="intro"><p>Escolha o formato, monte o menu e veja na hora uma estimativa do valor. A gente recebe tudo e volta com o orçamento certinho — e com as ideias que fazem o evento ser a cara de vocês.</p></div>
-
 <div class="wrap">
-<form id="frm" onsubmit="return enviar(event)">
-
-<section class="step">
-  <h2><span class="n">1</span> Sobre o evento</h2>
-  <div class="g2">
-    <div><label for="f_nome">Seu nome <span class="req">*</span></label><input id="f_nome" required maxlength="120" autocomplete="name"></div>
-    <div><label for="f_tel">WhatsApp <span class="req">*</span></label><input id="f_tel" required maxlength="40" inputmode="tel" autocomplete="tel" placeholder="(51) 9…"></div>
-  </div>
-  <div class="g2">
-    <div><label for="f_email">E-mail</label><input id="f_email" type="email" maxlength="160" autocomplete="email"></div>
-    <div><label for="f_oc">O que vamos celebrar? <span class="req">*</span></label>
-      <select id="f_oc" required><option value="">Escolha…</option><option>Aniversário</option><option>Confraternização de empresa</option><option>Reunião / encontro de trabalho</option><option>Lançamento</option><option>Casamento / noivado</option><option>Formatura</option><option>Outro</option></select></div>
-  </div>
-  <div class="g3">
-    <div><label for="f_data">Data</label><input id="f_data" type="date"></div>
-    <div><label for="f_hora">Horário de início</label><input id="f_hora" type="time"></div>
-    <div><label for="f_pax">Nº de convidados <span class="req">*</span></label><input id="f_pax" type="number" min="1" max="2000" required value="30" oninput="setPax(this.value)"></div>
-  </div>
-  <label for="f_local">Onde?</label>
-  <select id="f_local"><option value="ccmq">Lola CCMQ — 7º andar da Casa de Cultura Mario Quintana</option><option value="cupula">Cúpula da Casa de Cultura Mario Quintana</option><option value="mac">Lola MAC — jardim do Museu de Arte Contemporânea</option><option value="catering">No meu espaço (casa, empresa…)</option><option value="indef">Ainda não sei</option></select>
-</section>
-
-<section class="step">
-  <h2><span class="n">2</span> Formato</h2>
-  <p class="sub">Isso só serve pra gente sugerir as quantidades. Você ajusta tudo depois.</p>
-  <div class="fmts" id="fmts"></div>
-</section>
-
-<section class="step">
-  <h2><span class="n">3</span> Monte o menu</h2>
-  <p class="sub">Toque em <b>Escolher</b> nos itens que quiser. A quantidade já vem sugerida pelo número de convidados e pelo formato — é só ajustar no − e +.</p>
-  <div class="tabs" id="tabs"></div>
-  <div id="itens"><div class="state">Carregando o cardápio…</div></div>
-</section>
-
-<section class="step" id="stResumo">
-  <h2><span class="n">4</span> Resumo</h2>
-  <div class="resumo" id="resumo"></div>
-  <div class="aviso">É uma <b>estimativa</b>, pra ajudar a planejar. O valor final vem no orçamento e pode incluir equipe extra, uso do espaço, impostos e ajustes de quantidade.</div>
-  <label for="f_obs">Quer contar mais alguma coisa?</label>
-  <textarea id="f_obs" maxlength="1500" placeholder="restrições alimentares, ideia de decoração, se precisa de som, horário de montagem…"></textarea>
-  <button class="btn" id="btnEnviar" type="submit">Enviar pro Lola</button>
-  <div class="err" id="erro"></div>
-</section>
-</form>
-
-<section class="step ok" id="ok">
-  <h2>Recebemos! 🥂</h2>
-  <p class="sub" style="font-size:16px">Obrigado, <span id="okNome"></span>. A equipe de eventos vai olhar o seu pedido e falar com você pelo WhatsApp. Se quiser adiantar, manda o resumo pra gente:</p>
-  <a class="btn wa" id="waBtn" target="_blank" rel="noopener">Mandar o resumo no WhatsApp</a>
-</section>
+  <div class="prog" id="prog"></div>
+  <div id="app"><div class="step"><div class="state">Carregando…</div></div></div>
 </div>
-
-<div class="bar" id="bar"><div class="in"><div class="t"><span id="barQtd">Nenhum item escolhido</span><b id="barTot">R$ 0,00</b></div><button type="button" onclick="document.getElementById('stResumo').scrollIntoView({behavior:'smooth'})">Ver resumo</button></div></div>
+<div class="bar" id="bar"><div class="in"><span id="barTxt"></span><b id="barTot"></b></div></div>
 
 <script>
 const SUPA="https://mvjbsdpfjhywhaonvpfl.supabase.co";
 const SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12amJzZHBmamh5d2hhb252cGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4MDk2OTAsImV4cCI6MjA5NTM4NTY5MH0.i_3sqgQa6umsIYBmAwWz_NP6nYuT3GfIZid24zHXSEI";
 const WHATS="555121605886";
-const SERVICO=0.10;
-// Formatos: k = quantas unidades de cada item escolhido por convidado (sugestão inicial; o cliente ajusta)
-const FORMATOS=[
-  {id:'recepcao',nome:'Recepção',txt:'até 1h · algo na mão antes do principal',dur:'1h',k:0.75},
-  {id:'leve',nome:'Coquetel leve',txt:'cerca de 2h · fim de tarde',dur:'2h',k:1},
-  {id:'completo',nome:'Coquetel completo',txt:'cerca de 3h · não substitui o jantar',dur:'3h',k:1.25},
-  {id:'jantar',nome:'Coquetel jantar',txt:'3h a 4h · ninguém vai pra casa com fome',dur:'4h',k:1.5},
-  {id:'coffee',nome:'Coffee break',txt:'reunião ou encontro de trabalho',dur:'1h a 2h',k:0.75}
+const LOCAIS=[
+  {id:'ccmq',nome:'Lola CCMQ',txt:'7º andar da Casa de Cultura Mario Quintana, no Centro Histórico'},
+  {id:'mac',nome:'Lola MAC',txt:'jardim do Museu de Arte Contemporânea do RS, no Floresta'},
+  {id:'outro',nome:'Outro local',txt:'a gente leva o Lola até você: casa, empresa, espaço de eventos'}
 ];
-const ORDEM=['Comidinhas','Mini porção','Lanchinho de pista','Sobremesa','Bebidas'];
-let ITENS=[], FICHAS=[], COMFOTO=new Set(), SEC='', FMT='leve', PAX=30, SEL={}, FOTOS={};
+const PASSOS=['local','quando','tipo','pessoas','tempo','detalhes','menu','enviar'];
+let PAC=[], ITENS=[], FICHAS=[], COMFOTO=new Set(), FOTOS={};
+const S={passo:0,local:'',espaco:'',endereco:'',data:'',hora:'',pacote:null,pax:'',horas:null,det:{ocasiao:'',exclusividade:'',nota:'nao',som:'',decoracao:'',restricoes:''},obs:'',esc:{},nome:'',tel:'',email:''};
 
 function h(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 function money(v){return 'R$ '+(Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -167,122 +101,167 @@ function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[�
 function toks(n){return n.split(' ').filter(Boolean).map(function(w){return w.length>4?w.replace(/s$/,''):w;});}
 function sem(A,B){if(!A.length||!B.length)return 0;var m=0;A.forEach(function(a){if(B.some(function(b){return a===b||(a.length>=4&&b.length>=4&&(a.indexOf(b)===0||b.indexOf(a)===0));}))m++;});if(m<Math.min(A.length,B.length))return 0;return m/Math.max(A.length,B.length);}
 function fichaDe(c){if(c.ficha_id)return c.ficha_id;var A=toks(norm(c.nome)),best=null,bs=0;FICHAS.forEach(function(f){var s=sem(A,f._t);if(s>bs||(s===bs&&best&&COMFOTO.has(f.id)&&!COMFOTO.has(best.id))){bs=s;best=f;}});return bs>=0.6&&best?best.id:null;}
-// nome bonito pro cliente: tira "UN", "Evento", "110gr"…
 function nomeSite(n){return String(n||'').replace(/\b(UN|UND|EVENTO|Evento|eventos|Eventos)\b/g,'').replace(/\b\d+\s?(gr|g|ml)\b/gi,'').replace(/\s{2,}/g,' ').trim();}
 
 async function carregar(){
-  let itens;
-  try{ itens=await api('lola_eventos_itens?ativo=eq.true&publico=eq.true&select=*&order=nome'); }
-  catch(e){ // coluna "publico" ainda não existe: mostra só comida/bebida com preço, sem itens internos
-    itens=(await api('lola_eventos_itens?ativo=eq.true&select=*&order=nome')).filter(function(c){return Number(c.preco)>0&&ORDEM.indexOf(c.secao)>=0&&!/\bkg\b|cúpula|cupula/i.test(c.nome);});
-  }
-  ITENS=itens.map(function(c){c._nome=nomeSite(c.nome);return c;});
-  try{
-    const r=await Promise.all([api('lola_fichas_tecnicas?ativo=eq.true&select=id,nome'),api('lola_fichas_fotos?select=ficha_id&limit=5000')]);
-    FICHAS=r[0].map(function(f){f._t=toks(norm(f.nome));return f;}); COMFOTO=new Set(r[1].map(function(x){return x.ficha_id;}));
-  }catch(e){}
+  const r=await Promise.all([
+    api('lola_eventos_pacotes?ativo=eq.true&select=*&order=ordem'),
+    api('lola_eventos_itens?ativo=eq.true&publico=eq.true&select=*&order=nome'),
+    api('lola_fichas_tecnicas?ativo=eq.true&select=id,nome').catch(function(){return [];}),
+    api('lola_fichas_fotos?select=ficha_id&limit=5000').catch(function(){return [];})
+  ]);
+  PAC=r[0]; ITENS=r[1].map(function(c){c._nome=nomeSite(c.nome);return c;});
+  FICHAS=r[2].map(function(f){f._t=toks(norm(f.nome));return f;}); COMFOTO=new Set(r[3].map(function(x){return x.ficha_id;}));
   ITENS.forEach(function(c){var fid=fichaDe(c);c._ficha=(fid&&COMFOTO.has(fid))?fid:null;});
-  const secs=ORDEM.filter(function(s){return ITENS.some(function(c){return c.secao===s;});});
-  SEC=secs[0]||'';
-  renderTabs(); renderItens(); renderResumo();
 }
-function renderFmts(){document.getElementById('fmts').innerHTML=FORMATOS.map(function(f){return '<button type="button" class="fmt'+(f.id===FMT?' on':'')+'" onclick="setFmt(\''+f.id+'\')"><b>'+h(f.nome)+'</b><span>'+h(f.txt)+'</span></button>';}).join('');}
-function renderTabs(){
-  const secs=ORDEM.filter(function(s){return ITENS.some(function(c){return c.secao===s;});});
-  document.getElementById('tabs').innerHTML=secs.map(function(s){var n=ITENS.filter(function(c){return c.secao===s&&SEL[c.id];}).length;return '<button type="button" class="tab'+(s===SEC?' on':'')+'" onclick="setSec(\''+h(s)+'\')">'+h(s)+(n?' <small>('+n+')</small>':'')+'</button>';}).join('');
+function pacote(){return PAC.find(function(p){return p.id===S.pacote;})||null;}
+function duracao(){var p=pacote();if(!p)return null;return (p.duracoes||[]).find(function(d){return Number(d.horas)===Number(S.horas);})||null;}
+function opcoesGrupo(g){
+  var ids=(g.itens||[]).map(String);
+  return ITENS.filter(function(c){return ids.length?ids.indexOf(String(c.id))>=0:(g.secoes||[]).indexOf(c.secao)>=0;});
 }
-function unTxt(c){return c.per_pax!==false?'por pessoa':(c.unidade?'por '+h(c.unidade):'cada');}
-function renderItens(){
-  const el=document.getElementById('itens');
-  if(!ITENS.length){el.innerHTML='<div class="state">O cardápio de eventos está sendo atualizado. Conta pra gente o que você imagina no campo do resumo, que montamos juntos.</div>';return;}
-  const l=ITENS.filter(function(c){return c.secao===SEC;});
-  el.innerHTML='<div class="items">'+l.map(function(c){
-    const on=!!SEL[c.id];
-    const tags=(c.tags||[]).map(function(t){return '<span class="bdg">'+h(t)+'</span>';}).join('');
-    let act='<button type="button" class="add" onclick="toggle(\''+c.id+'\')">'+(on?'✓ Escolhido':'Escolher')+'</button>';
-    if(on){ act+=c.per_pax!==false?'<span class="hint">para '+PAX+' pessoas</span>'
-      :'<span class="qty"><button type="button" onclick="mais(\''+c.id+'\',-1)">−</button><input type="number" min="0" value="'+SEL[c.id].q+'" onchange="setQ(\''+c.id+'\',this.value)"><button type="button" onclick="mais(\''+c.id+'\',1)">+</button></span>'; }
-    const foto=c.foto_url?' style="background-image:url(&quot;'+h(c.foto_url)+'&quot;)"':(c._ficha?' data-ficha="'+c._ficha+'"':'');
-    return '<div class="it'+(on?' on':'')+'"><div class="ph"'+foto+'></div><div class="bd"><div class="nm">'+h(c._nome)+tags+'</div>'
-      +(c.descricao?'<div class="ds">'+h(c.descricao)+'</div>':'')
-      +'<div class="pr">'+money(c.preco)+' <span class="hint">'+unTxt(c)+'</span></div>'
-      +'<div class="act">'+act+'</div></div></div>';
-  }).join('')+'</div>';
-  fotosVisiveis();
+function grupos(){var p=pacote();return p?(p.grupos||[]).map(function(g,i){g._i=i;return g;}).filter(function(g){return opcoesGrupo(g).length>0;}):[];}
+function pax(){return Math.max(0,parseInt(S.pax,10)||0);}
+function precoPP(){var d=duracao();return d&&d.preco_pp!=null&&d.preco_pp!==''?Number(d.preco_pp):null;}
+function contas(){var p=pacote(),pp=precoPP();if(!p||pp==null||!pax())return null;var sub=pp*pax(),serv=Math.round(sub*(Number(p.servico_pct)||0))/100;return {pp:pp,sub:sub,serv:serv,tot:sub+serv,pct:Number(p.servico_pct)||0};}
+// quantidades: pacote × tempo × convidados, divididas entre os itens escolhidos do grupo (o cliente não vê)
+function itensComQtd(){
+  var out=[];grupos().forEach(function(g){var esc=S.esc[g._i]||[];if(!esc.length)return;
+    var total=pax()*(Number(g.qtd_pp_h)||0)*(Number(S.horas)||0);
+    esc.forEach(function(id){var c=ITENS.find(function(x){return String(x.id)===String(id);});if(!c)return;
+      out.push({id:c.id,nome:c._nome,secao:c.secao,grupo:g.titulo,qtd:Math.max(1,Math.ceil(total/esc.length))});});});
+  return out;
 }
-let IO=null;
-function fotosVisiveis(){
-  const els=document.querySelectorAll('.ph[data-ficha]');
-  if(!('IntersectionObserver' in window)){els.forEach(carregaFoto);return;}
-  if(!IO)IO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){IO.unobserve(e.target);carregaFoto(e.target);}});},{rootMargin:'300px'});
-  els.forEach(function(e){IO.observe(e);});
+
+/* ---------- etapas ---------- */
+function ok(passo){
+  switch(passo){
+    case 'local':return !!S.local&&(S.local!=='outro'||S.endereco.trim().length>2);
+    case 'quando':return !!S.data;
+    case 'tipo':return !!pacote();
+    case 'pessoas':return pax()>=1;
+    case 'tempo':return !!duracao();
+    case 'detalhes':return !!S.det.ocasiao;
+    case 'menu':return grupos().every(function(g){return (S.esc[g._i]||[]).length===Math.min(Number(g.escolher)||0,opcoesGrupo(g).length);});
+    case 'enviar':return S.nome.trim().length>1&&S.tel.replace(/\D/g,'').length>=8;
+  }return true;
 }
-async function carregaFoto(el){
-  const id=el.getAttribute('data-ficha'); el.removeAttribute('data-ficha');
-  if(FOTOS[id]===undefined){FOTOS[id]=api('lola_fichas_fotos?ficha_id=eq.'+id+'&select=foto&order=created_at.asc&limit=1').then(function(r){return r[0]&&r[0].foto||null;}).catch(function(){return null;});}
-  const u=await FOTOS[id]; if(u)el.style.backgroundImage='url("'+u+'")';
-}
-// sugestão de quantidade: k unidades de cada item por convidado (bebida: 1 por convidado)
-function sugerir(){
-  const f=FORMATOS.find(function(x){return x.id===FMT;})||FORMATOS[1];
-  ITENS.forEach(function(c){if(!SEL[c.id]||c.per_pax!==false||SEL[c.id].manual)return;
-    SEL[c.id].q=Math.max(1,Math.ceil(PAX*(c.secao==='Bebidas'?1:f.k)));});
-}
-function setFmt(id){FMT=id;renderFmts();sugerir();renderItens();renderResumo();}
-function setSec(s){SEC=s;renderTabs();renderItens();}
-function setPax(v){PAX=Math.max(1,parseInt(v,10)||1);sugerir();renderItens();renderResumo();}
-function toggle(id){if(SEL[id])delete SEL[id];else SEL[id]={q:1,manual:false};sugerir();renderTabs();renderItens();renderResumo();}
-function setQ(id,v){if(!SEL[id])return;SEL[id].q=Math.max(0,parseInt(v,10)||0);SEL[id].manual=true;renderItens();renderResumo();}
-function mais(id,d){if(!SEL[id])return;setQ(id,SEL[id].q+d);}
-function linhas(){
-  return ITENS.filter(function(c){return SEL[c.id];}).map(function(c){
-    const pp=c.per_pax!==false, q=pp?PAX:SEL[c.id].q;
-    return {id:c.id,nome:c._nome,nome_catalogo:c.nome,secao:c.secao,preco:Number(c.preco)||0,per_pax:pp,unidade:c.unidade||'',qtd:q,total:(Number(c.preco)||0)*q};
-  }).sort(function(a,b){return ORDEM.indexOf(a.secao)-ORDEM.indexOf(b.secao);});
-}
-function contas(){const l=linhas();const sub=l.reduce(function(s,x){return s+x.total;},0);const serv=Math.round(sub*SERVICO*100)/100;return {l:l,sub:sub,serv:serv,tot:sub+serv};}
-function renderResumo(){
-  const c=contas();
-  document.getElementById('barQtd').textContent=c.l.length?(c.l.length+' ite'+(c.l.length>1?'ns':'m')+' · '+PAX+' pessoas · estimativa'):'Nenhum item escolhido';
-  document.getElementById('barTot').textContent=money(c.tot);
-  document.getElementById('resumo').innerHTML=c.l.length?'<table>'+c.l.map(function(x){return '<tr><td>'+h(x.nome)+'<div class="hint">'+(x.per_pax?PAX+' pessoas':x.qtd+' '+h(x.unidade||'un'))+' × '+money(x.preco)+'</div></td><td class="v">'+money(x.total)+'</td></tr>';}).join('')
-    +'<tr><td>Subtotal</td><td class="v">'+money(c.sub)+'</td></tr><tr><td>Serviço ('+Math.round(SERVICO*100)+'%)</td><td class="v">'+money(c.serv)+'</td></tr>'
-    +'<tr class="tot"><td>Estimativa</td><td class="v">'+money(c.tot)+'</td></tr><tr><td colspan="2" class="hint">'+money(c.tot/PAX)+' por pessoa</td></tr></table>'
-    :'<p class="sub">Escolha os itens no passo 3 e o resumo aparece aqui.</p>';
-}
-function v(id){return (document.getElementById(id).value||'').trim();}
-function waTexto(c){
-  const f=FORMATOS.find(function(x){return x.id===FMT;});const loc=document.getElementById('f_local');
-  let t='*Pedido de orçamento — evento no Lola*\n'+'Nome: '+v('f_nome')+'\nOcasião: '+v('f_oc')+'\nData: '+(v('f_data')?v('f_data').split('-').reverse().join('/'):'a definir')+(v('f_hora')?' às '+v('f_hora'):'')
-   +'\nConvidados: '+PAX+'\nLocal: '+loc.options[loc.selectedIndex].text+'\nFormato: '+(f?f.nome:'')+'\n\n*Menu*\n';
-  c.l.forEach(function(x){t+='• '+x.nome+' — '+(x.per_pax?PAX+' pessoas':x.qtd+' '+(x.unidade||'un'))+'\n';});
-  t+='\nEstimativa: '+money(c.tot)+' (com serviço)'; if(v('f_obs'))t+='\n\nObs.: '+v('f_obs'); return t;
-}
-async function enviar(e){
-  e.preventDefault();
-  const btn=document.getElementById('btnEnviar'),erro=document.getElementById('erro');erro.style.display='none';
-  const c=contas();
-  if(!c.l.length&&!v('f_obs')){erro.textContent='Escolha pelo menos um item do menu (ou conte no campo acima o que você imagina).';erro.style.display='block';return false;}
-  btn.disabled=true;const txt=btn.textContent;btn.textContent='Enviando…';
-  const f=FORMATOS.find(function(x){return x.id===FMT;});
-  const body={nome:v('f_nome'),telefone:v('f_tel'),email:v('f_email')||null,ocasiao:v('f_oc')||null,data:v('f_data')||null,horario:v('f_hora')||null,pax:PAX,
-    local:document.getElementById('f_local').value,formato:f?f.nome:null,duracao:f?f.dur:null,
-    itens:c.l.map(function(x){return {id:x.id,nome:x.nome,nome_catalogo:x.nome_catalogo,secao:x.secao,preco:x.preco,per_pax:x.per_pax,unidade:x.unidade,qtd:x.qtd};}),
-    subtotal:Math.round(c.sub*100)/100,servico:c.serv,estimativa:Math.round(c.tot*100)/100,obs:v('f_obs')||null};
-  let gravou=false;
-  try{const r=await fetch(SUPA+'/rest/v1/lola_eventos_pedidos',{method:'POST',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(body)});gravou=r.ok;}catch(_e){}
-  document.getElementById('waBtn').href='https://wa.me/'+WHATS+'?text='+encodeURIComponent(waTexto(c));
-  document.getElementById('okNome').textContent=v('f_nome').split(' ')[0];
-  if(!gravou){ // sem gravar no sistema, o WhatsApp é o caminho
-    document.querySelector('#ok .sub').textContent='Falta só um passo: toque no botão abaixo pra mandar o seu pedido pro nosso WhatsApp.';
+function nav(extra){var p=PASSOS[S.passo];return '<div class="nav">'+(S.passo>0?'<button type="button" class="btn ghost" onclick="voltar()">← Voltar</button>':'<span></span>')
+  +(p==='enviar'?'<button type="button" class="btn" id="btnEnviar" onclick="enviar()" '+(ok(p)?'':'disabled')+'>Enviar pro Lola</button>':'<button type="button" class="btn" id="btnNext" onclick="seguir()" '+(ok(p)?'':'disabled')+'>Continuar →</button>')+'</div>'+(extra||'');}
+function atualizaNav(){var p=PASSOS[S.passo];var b=document.getElementById(p==='enviar'?'btnEnviar':'btnNext');if(b)b.disabled=!ok(p);barra();}
+function seguir(){if(!ok(PASSOS[S.passo]))return;S.passo=Math.min(S.passo+1,PASSOS.length-1);render(true);}
+function voltar(){S.passo=Math.max(0,S.passo-1);render(true);}
+function render(rolar){
+  document.getElementById('prog').innerHTML=PASSOS.map(function(_,i){return '<span class="'+(i<S.passo?'on':i===S.passo?'at':'')+'"></span>';}).join('');
+  var el=document.getElementById('app'),p=PASSOS[S.passo],x='';
+  if(p==='local'){
+    x='<h2>Onde vai ser?</h2><p class="sub">Escolha o lugar e a gente cuida do resto.</p><div class="opts">'+LOCAIS.map(function(l){return '<button type="button" class="opt'+(S.local===l.id?' on':'')+'" onclick="setLocal(\''+l.id+'\')"><b>'+h(l.nome)+'</b><span>'+h(l.txt)+'</span></button>';}).join('')+'</div>';
+    if(S.local==='ccmq')x+='<label>No Lola CCMQ, onde vocês preferem?</label><select onchange="S.espaco=this.value"><option value="">Tanto faz — vocês sugerem</option><option value="cupula_ccmq"'+(S.espaco==='cupula_ccmq'?' selected':'')+'>Cúpula (ao ar livre, sujeita ao clima)</option><option value="interno_ccmq"'+(S.espaco==='interno_ccmq'?' selected':'')+'>Salão interno</option></select>';
+    if(S.local==='outro')x+='<label>Onde fica? <span class="req">*</span></label><input placeholder="bairro, cidade ou endereço" value="'+h(S.endereco)+'" oninput="S.endereco=this.value;atualizaNav()">';
   }
-  document.getElementById('frm').style.display='none';document.getElementById('bar').style.display='none';
-  const ok=document.getElementById('ok');ok.style.display='block';window.scrollTo({top:ok.offsetTop-80,behavior:'smooth'});
-  btn.disabled=false;btn.textContent=txt;
-  return false;
+  if(p==='quando'){
+    x='<h2>Quando?</h2><p class="sub">Dia e horário de início.</p><div class="g2"><div><label>Data <span class="req">*</span></label><input type="date" value="'+h(S.data)+'" min="'+new Date().toISOString().slice(0,10)+'" oninput="S.data=this.value;atualizaNav()"></div><div><label>Horário de início</label><input type="time" value="'+h(S.hora)+'" oninput="S.hora=this.value"></div></div>'
+     +'<div class="aviso">Data e horário estão <b>sujeitos à disponibilidade</b>. A gente confere a agenda e confirma com você.</div>';
+  }
+  if(p==='tipo'){
+    var l=PAC.filter(function(pc){return !pc.locais||!pc.locais.length||pc.locais.indexOf(S.local)>=0;});
+    x='<h2>Que tipo de evento?</h2><p class="sub">Cada formato já vem com o serviço pensado. Depois você escolhe as opções do menu.</p><div class="opts">'+l.map(function(pc){
+      var precos=(pc.duracoes||[]).map(function(d){return Number(d.preco_pp);}).filter(function(v){return v>0;});
+      return '<button type="button" class="opt big'+(S.pacote===pc.id?' on':'')+'" onclick="setPacote(\''+pc.id+'\')">'+(pc.foto_url?'<div class="ph" style="background-image:url(&quot;'+h(pc.foto_url)+'&quot;)"></div>':'')+'<div class="in"><b>'+h(pc.nome)+'</b><span>'+h(pc.descricao||'')+'</span>'+(precos.length?'<div class="pr">a partir de <b style="font-size:14px;color:var(--ink)">'+money(Math.min.apply(null,precos))+'</b> por pessoa</div>':'')+'</div></button>';}).join('')+'</div>';
+  }
+  if(p==='pessoas'){
+    var pc=pacote();
+    x='<h2>Quantas pessoas?</h2><p class="sub">Um número aproximado já ajuda. Dá pra ajustar até 7 dias antes.</p><label>Convidados <span class="req">*</span></label><input type="number" min="1" max="2000" inputmode="numeric" value="'+h(S.pax)+'" oninput="S.pax=this.value;atualizaNav();avisoMin()" style="max-width:220px"><div id="avMin"></div>';
+  }
+  if(p==='tempo'){
+    var pc2=pacote();
+    x='<h2>Quanto tempo de serviço?</h2><p class="sub">'+h(pc2.nome)+' para '+pax()+' pessoas.</p><div class="opts">'+(pc2.duracoes||[]).map(function(d){var v=Number(d.preco_pp);return '<button type="button" class="opt'+(Number(S.horas)===Number(d.horas)?' on':'')+'" onclick="setHoras('+Number(d.horas)+')"><b>'+fmtH(d.horas)+'</b>'+(v>0?'<span>'+money(v)+' por pessoa</span>':'<span>valor sob consulta</span>')+'</button>';}).join('')+'</div>';
+  }
+  if(p==='detalhes'){
+    var d=S.det;
+    x='<h2>Conta mais um pouco</h2><p class="sub">Isso ajuda a gente a preparar a proposta certa.</p>'
+     +'<label>O que vamos celebrar? <span class="req">*</span></label><select onchange="S.det.ocasiao=this.value;atualizaNav()">'+['','Aniversário','Confraternização de empresa','Reunião / encontro de trabalho','Lançamento','Casamento / noivado','Formatura','Outro'].map(function(o){return '<option'+(d.ocasiao===o?' selected':'')+' value="'+h(o)+'">'+(o||'Escolha…')+'</option>';}).join('')+'</select>'
+     +(S.local!=='outro'?'<label>O espaço precisa ser só de vocês?</label><select onchange="S.det.exclusividade=this.value"><option value="">Não sei ainda</option><option value="exclusivo"'+(d.exclusividade==='exclusivo'?' selected':'')+'>Sim, exclusivo</option><option value="compartilhado"'+(d.exclusividade==='compartilhado'?' selected':'')+'>Pode ser compartilhado com outros clientes</option></select>':'')
+     +'<div class="g2"><div><label>Precisa de nota fiscal?</label><select onchange="S.det.nota=this.value"><option value="nao">Não</option><option value="sim"'+(d.nota==='sim'?' selected':'')+'>Sim</option></select></div>'
+     +'<div><label>Música</label><select onchange="S.det.som=this.value"><option value="">Sem música especial</option>'+['Vamos trazer DJ ou banda','Queremos indicação de DJ ou banda','Só som ambiente'].map(function(o){return '<option'+(d.som===o?' selected':'')+'>'+o+'</option>';}).join('')+'</select></div></div>'
+     +'<label>Decoração</label><input placeholder="ex.: vamos trazer flores; queremos algo temático…" value="'+h(d.decoracao)+'" oninput="S.det.decoracao=this.value">'
+     +'<label>Restrições alimentares</label><input placeholder="ex.: 3 vegetarianos, 1 sem glúten" value="'+h(d.restricoes)+'" oninput="S.det.restricoes=this.value">'
+     +'<label>Mais alguma coisa?</label><textarea maxlength="1500" oninput="S.obs=this.value">'+h(S.obs)+'</textarea>';
+  }
+  if(p==='menu'){
+    var pc3=pacote(),gs=grupos();
+    x='<h2>Agora, o menu</h2><p class="sub">Escolha as opções de cada grupo. As quantidades a gente calcula pelo formato, pelo tempo e pelo número de convidados.</p>'
+     +(pc3.inclui?'<div class="aviso" style="background:#f3f8f1;border-color:#d5e6cf;color:#3c5a40">Já incluso: '+h(pc3.inclui)+'</div>':'');
+    if(!gs.length)x+='<div class="aviso">Esse formato ainda está sem opções no site. Conta pra gente no passo anterior o que você imagina, que montamos juntos.</div>';
+    gs.forEach(function(g){var opts=opcoesGrupo(g),n=Math.min(Number(g.escolher)||0,opts.length),esc=S.esc[g._i]||[];
+      x+='<div class="grupo"><h3>'+h(g.titulo)+' <small id="cnt'+g._i+'" class="'+(esc.length===n?'ok':'')+'">'+esc.length+' de '+n+' escolhid'+(n>1?'os':'o')+'</small></h3><div class="items">'
+        +opts.map(function(c){var on=esc.indexOf(String(c.id))>=0,cheio=!on&&esc.length>=n;
+          var foto=c.foto_url?' style="background-image:url(&quot;'+h(c.foto_url)+'&quot;)"':(c._ficha?' data-ficha="'+c._ficha+'"':'');
+          return '<button type="button" class="it'+(on?' on':'')+(cheio?' off':'')+'" onclick="escolher('+g._i+',\''+c.id+'\')"><div class="ph"'+foto+'></div><span class="ck">'+(on?'✓':'')+'</span><div class="bd"><div class="nm">'+h(c._nome)+(c.tags||[]).map(function(t){return '<span class="bdg">'+h(t)+'</span>';}).join('')+'</div>'+(c.descricao?'<div class="ds">'+h(c.descricao)+'</div>':'')+'</div></button>';}).join('')+'</div></div>';});
+  }
+  if(p==='enviar'){
+    var c=contas(),pc4=pacote(),loc=LOCAIS.find(function(l){return l.id===S.local;});
+    x='<h2>Quase lá</h2><p class="sub">Confira o resumo e deixe seu contato. Seu pedido entra direto na agenda da equipe de eventos.</p>'
+     +'<div class="resumo"><table>'
+     +'<tr><td>Local</td><td class="v">'+h(loc?loc.nome:'')+(S.local==='outro'?' · '+h(S.endereco):'')+'</td></tr>'
+     +'<tr><td>Data</td><td class="v">'+h(S.data.split('-').reverse().join('/'))+(S.hora?' às '+h(S.hora):'')+'</td></tr>'
+     +'<tr><td>Formato</td><td class="v">'+h(pc4.nome)+' · '+fmtH(S.horas)+'</td></tr>'
+     +'<tr><td>Convidados</td><td class="v">'+pax()+'</td></tr>'
+     +grupos().map(function(g){var nm=(S.esc[g._i]||[]).map(function(id){var it=ITENS.find(function(x){return String(x.id)===String(id);});return it?it._nome:'';});return nm.length?'<tr><td>'+h(g.titulo)+'</td><td class="v" style="white-space:normal">'+h(nm.join(', '))+'</td></tr>':'';}).join('')
+     +(c?'<tr><td>'+money(c.pp)+' × '+pax()+' pessoas</td><td class="v">'+money(c.sub)+'</td></tr>'+(c.pct?'<tr><td>Serviço ('+c.pct+'%)</td><td class="v">'+money(c.serv)+'</td></tr>':'')+'<tr class="tot"><td>Estimativa</td><td class="v">'+money(c.tot)+'</td></tr>':'<tr><td colspan="2">O valor desse formato a gente passa no orçamento.</td></tr>')
+     +'</table></div>'
+     +'<div class="g2"><div><label>Seu nome <span class="req">*</span></label><input maxlength="120" autocomplete="name" value="'+h(S.nome)+'" oninput="S.nome=this.value;atualizaNav()"></div><div><label>WhatsApp <span class="req">*</span></label><input maxlength="40" inputmode="tel" autocomplete="tel" placeholder="(51) 9…" value="'+h(S.tel)+'" oninput="S.tel=this.value;atualizaNav()"></div></div>'
+     +'<label>E-mail</label><input type="email" maxlength="160" autocomplete="email" value="'+h(S.email)+'" oninput="S.email=this.value">'
+     +'<ul class="cond"><li>É uma estimativa: o valor final vem no orçamento, que vale por 30 dias.</li><li>Data e horário sujeitos à disponibilidade.</li><li>O orçamento prevê variação de 5% no número de convidados, pra mais ou pra menos.</li><li>A reserva é confirmada com entrada de 30% do valor total.</li><li>O número de convidados é confirmado com 7 dias de antecedência.</li></ul>'
+     +'<div class="err" id="erro"></div>';
+  }
+  el.innerHTML='<div class="step">'+x+nav()+'</div>';
+  if(p==='pessoas')avisoMin();
+  fotosVisiveis(); barra();
+  if(rolar)window.scrollTo({top:document.querySelector('.wrap').offsetTop-10,behavior:'smooth'});
 }
-renderFmts();
-carregar().catch(function(e){console.error(e);document.getElementById('itens').innerHTML='<div class="state">Não consegui carregar o cardápio agora. Você pode mandar o pedido mesmo assim, contando no campo do resumo o que imagina — ou chamar no WhatsApp (51) 2160-5886.</div>';});
+function fmtH(v){v=Number(v);return v===1?'1 hora':(String(v).replace('.',',')+' horas');}
+function setLocal(id){S.local=id;var pc=pacote();if(pc&&pc.locais&&pc.locais.length&&pc.locais.indexOf(id)<0){S.pacote=null;S.horas=null;S.esc={};}render();}
+function setPacote(id){if(S.pacote!==id){S.esc={};S.horas=null;}S.pacote=id;render();setTimeout(seguir,180);}
+function setHoras(v){S.horas=v;render();setTimeout(seguir,180);}
+function avisoMin(){var pc=pacote(),el=document.getElementById('avMin');if(!el)return;el.innerHTML=(pc&&pax()&&pax()<(Number(pc.min_pax)||0))?'<div class="aviso">O '+h(pc.nome)+' é pensado pra a partir de '+pc.min_pax+' pessoas. Pode seguir — a gente adapta na proposta.</div>':'';}
+function escolher(gi,id){var g=grupos().find(function(x){return x._i===gi;});if(!g)return;var n=Math.min(Number(g.escolher)||0,opcoesGrupo(g).length);
+  var a=S.esc[gi]=S.esc[gi]||[];var k=a.indexOf(String(id));if(k>=0)a.splice(k,1);else if(a.length<n)a.push(String(id));else if(n===1){a[0]=String(id);}else return;
+  var y=window.scrollY;render();window.scrollTo(0,y);}
+function barra(){var c=contas(),b=document.getElementById('bar');if(!c||S.passo<4){b.style.display='none';return;}b.style.display='block';
+  document.getElementById('barTxt').textContent=pacote().nome+' · '+fmtH(S.horas)+' · '+pax()+' pessoas · estimativa';document.getElementById('barTot').textContent=money(c.tot);}
+let IO=null;
+function fotosVisiveis(){const els=document.querySelectorAll('.ph[data-ficha]');if(!('IntersectionObserver' in window)){els.forEach(carregaFoto);return;}
+  if(!IO)IO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){IO.unobserve(e.target);carregaFoto(e.target);}});},{rootMargin:'300px'});els.forEach(function(e){IO.observe(e);});}
+async function carregaFoto(el){const id=el.getAttribute('data-ficha');el.removeAttribute('data-ficha');
+  if(FOTOS[id]===undefined)FOTOS[id]=api('lola_fichas_fotos?ficha_id=eq.'+id+'&select=foto&order=created_at.asc&limit=1').then(function(r){return r[0]&&r[0].foto||null;}).catch(function(){return null;});
+  const u=await FOTOS[id];if(u)el.style.backgroundImage='url("'+u+'")';}
+function waTexto(){var pc=pacote(),c=contas(),loc=LOCAIS.find(function(l){return l.id===S.local;});
+  var t='*Pedido de orçamento — evento no Lola*\nNome: '+S.nome+'\nOcasião: '+S.det.ocasiao+'\nLocal: '+(loc?loc.nome:'')+(S.local==='outro'?' ('+S.endereco+')':'')+'\nData: '+S.data.split('-').reverse().join('/')+(S.hora?' às '+S.hora:'')+'\nFormato: '+pc.nome+' · '+fmtH(S.horas)+'\nConvidados: '+pax()+'\n';
+  grupos().forEach(function(g){var nm=(S.esc[g._i]||[]).map(function(id){var it=ITENS.find(function(x){return String(x.id)===String(id);});return it?it._nome:'';});if(nm.length)t+='\n*'+g.titulo+':* '+nm.join(', ');});
+  if(c)t+='\n\nEstimativa: '+money(c.tot);if(S.obs)t+='\n\nObs.: '+S.obs;return t;}
+async function enviar(){
+  if(!ok('enviar'))return;var b=document.getElementById('btnEnviar'),erro=document.getElementById('erro');b.disabled=true;b.textContent='Enviando…';erro.style.display='none';
+  var pc=pacote(),c=contas();
+  var det=Object.assign({},S.det,{espaco_ccmq:S.local==='ccmq'?S.espaco:'',endereco:S.local==='outro'?S.endereco:''});
+  var body={nome:S.nome.trim(),telefone:S.tel.trim(),email:S.email.trim()||null,ocasiao:S.det.ocasiao||null,data:S.data||null,horario:S.hora||null,pax:pax(),local:S.local,
+    formato:pc.nome,pacote_id:pc.id,duracao:fmtH(S.horas),horas:Number(S.horas),preco_pp:c?c.pp:null,detalhes:det,itens:itensComQtd(),
+    subtotal:c?Math.round(c.sub*100)/100:null,servico:c?c.serv:null,estimativa:c?Math.round(c.tot*100)/100:null,obs:S.obs.trim()||null};
+  var gravou=false;
+  try{var r=await fetch(SUPA+'/rest/v1/lola_eventos_pedidos',{method:'POST',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(body)});gravou=r.ok;}catch(_e){}
+  document.getElementById('bar').style.display='none';document.getElementById('prog').innerHTML='';
+  document.getElementById('app').innerHTML='<div class="step" style="text-align:center"><h2>'+(gravou?'Recebemos! 🥂':'Falta só um passo')+'</h2><p class="sub" style="font-size:16px">'
+   +(gravou?'Obrigado, '+h(S.nome.split(' ')[0])+'. Seu pedido já está com a equipe de eventos do Lola — a gente confere a agenda e fala com você pelo WhatsApp. Se quiser adiantar a conversa:':'Não consegui registrar seu pedido agora. Toque abaixo pra mandar o resumo direto no nosso WhatsApp:')
+   +'</p><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/'+WHATS+'?text='+encodeURIComponent(waTexto())+'">Mandar o resumo no WhatsApp</a></div>';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+carregar().then(function(){
+  if(!PAC.length)throw new Error('sem pacotes');
+  render();
+}).catch(function(e){console.error(e);
+  document.getElementById('app').innerHTML='<div class="step" style="text-align:center"><h2>Vamos montar juntos</h2><p class="sub" style="font-size:16px">Nosso montador de eventos está passando por uma atualização. Chama a gente no WhatsApp que a equipe de eventos monta a proposta com você.</p><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/'+WHATS+'?text='+encodeURIComponent('Oi! Quero fazer um orçamento de evento no Lola.')+'">Falar no WhatsApp</a></div>';
+});
 </script>
+
 <script id="lolaH">(function(){function p(){try{var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight);parent.postMessage({lolaH:h},"*");}catch(e){}}window.addEventListener("load",p);window.addEventListener("resize",p);document.addEventListener("DOMContentLoaded",p);var n=0,iv=setInterval(function(){p();if(++n>30)clearInterval(iv);},400);try{new MutationObserver(p).observe(document.documentElement,{subtree:true,childList:true});}catch(e){}})();</script>
 </body></html>
