@@ -113,7 +113,7 @@ function api(path){return fetch(SUPA+'/rest/v1/'+path,{headers:{apikey:SUPA_KEY,
 const STOP=['un','und','unid','unidade','evento','eventos','mini','porcao','kg','gr','g','individual','nova','novo','de','da','do','e','com','pp','porcoes'];
 function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\d+\s*(gr|g|ml|kg)\b/g,' ').replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(function(w){return w&&STOP.indexOf(w)<0;}).join(' ');}
 function toks(n){return n.split(' ').filter(Boolean).map(function(w){return w.length>4?w.replace(/s$/,''):w;});}
-function sem(A,B){if(!A.length||!B.length)return 0;var m=0;A.forEach(function(a){if(B.some(function(b){return a===b||(a.length>=4&&b.length>=4&&(a.indexOf(b)===0||b.indexOf(a)===0));}))m++;});if(m<Math.min(A.length,B.length))return 0;return m/Math.max(A.length,B.length);}
+function sem(A,B){if(!A.length||!B.length)return 0;var m=0;A.forEach(function(a){if(B.some(function(b){return a===b||(a.length>=4&&b.length>=4&&(a.indexOf(b)===0||b.indexOf(a)===0));}))m++;});if(m<Math.min(A.length,B.length))return 0;var L=A.length>=B.length?A:B,Sm=L===A?B:A;if(L.length>Sm.length&&!Sm.some(function(b){var a=L[0];return a===b||(a.length>=4&&b.length>=4&&(a.indexOf(b)===0||b.indexOf(a)===0));}))return 0;return m/Math.max(A.length,B.length);}
 function fichaDe(c){if(c.ficha_id)return c.ficha_id;var A=toks(norm(c.nome)),best=null,bs=0;FICHAS.forEach(function(f){var s=sem(A,f._t);if(s>bs||(s===bs&&best&&COMFOTO.has(f.id)&&!COMFOTO.has(best.id))){bs=s;best=f;}});return bs>=0.6&&best?best.id:null;}
 function nomeSite(n){return String(n||'').replace(/\b(UN|UND|EVENTO|Evento|eventos|Eventos)\b/g,'').replace(/\b\d+\s?(gr|g|ml)\b/gi,'').replace(/\s{2,}/g,' ').trim();}
 
