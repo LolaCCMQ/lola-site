@@ -264,7 +264,7 @@ function render(rolar){
   if(p==='menu'){
     var pc3=pacote(),gs=grupos();
     x='<h2>Agora, o menu</h2><p class="sub">Escolha as opções de cada grupo. As quantidades a gente calcula pelo formato, pelo tempo e pelo número de convidados.</p>'
-     +(function(){var fx=[];fixos().forEach(function(g){opcoesGrupo(g).forEach(function(c){fx.push(c._nome);});});var t=fx.join(', ')+(fx.length&&pc3.inclui?'. ':'')+(pc3.inclui||'');return t?'<div class="aviso" style="background:#f3f8f1;border-color:#d5e6cf;color:#3c5a40">Já incluso: '+h(t)+'</div>':'';})();
+    ;
     if(!gs.length)x+='<div class="aviso">As opções desse formato estão sendo montadas. Conta pra gente no passo anterior o que você imagina, que montamos juntos.</div>';
     conjuntos().forEach(function(c){x+='<div class="aviso" id="cj_'+h(c.nome)+'" style="'+(c.n>=c.min?'background:#f3f8f1;border-color:#d5e6cf;color:#3c5a40':'')+'">Escolha <b>pelo menos '+c.min+' '+h(c.nome)+'</b> somando '+h(c.grupos.map(function(g){return g.titulo;}).join(' e '))+' · <b>'+c.n+' escolhid'+(c.n===1?'o':'os')+'</b></div>';});
     gs.forEach(function(g){var opts=opcoesGrupo(g),mn=gMin(g),mx=gMax(g),esc=S.esc[g._i]||[];
