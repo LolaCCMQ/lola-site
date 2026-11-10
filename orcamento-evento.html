@@ -196,7 +196,7 @@ function ok(passo){
 function nav(extra){var p=PASSOS[S.passo];return '<div class="nav">'+(S.passo>0?'<button type="button" class="btn ghost" onclick="voltar()">← Voltar</button>':'<span></span>')
   +(p==='enviar'?'<button type="button" class="btn" id="btnEnviar" onclick="enviar()" '+(ok(p)||PREVIA?'':'disabled')+'>'+(PREVIA?'Ver o que seria criado':'Enviar pro Lola')+'</button>':'<button type="button" class="btn" id="btnNext" onclick="seguir()" '+(ok(p)?'':'disabled')+'>Continuar →</button>')+'</div>'+(extra||'');}
 function atualizaNav(){var p=PASSOS[S.passo];var b=document.getElementById(p==='enviar'?'btnEnviar':'btnNext');if(b)b.disabled=!ok(p);barra();}
-function seguir(){if(!ok(PASSOS[S.passo]))return;S.passo=Math.min(S.passo+1,PASSOS.length-1);render(true);}
+function seguir(){if(!ok(PASSOS[S.passo]))return;if(PREVIA){irPara(Math.min(S.passo+1,PASSOS.length-1));return;}S.passo=Math.min(S.passo+1,PASSOS.length-1);render(true);}
 function voltar(){S.passo=Math.max(0,S.passo-1);render(true);}
 function render(rolar){
   document.getElementById('prog').innerHTML=PASSOS.map(function(_,i){return '<span class="'+(i<S.passo?'on':i===S.passo?'at':'')+'"'+(PREVIA?' style="cursor:pointer" title="'+PASSOS[i]+'" onclick="irPara('+i+')"':'')+'></span>';}).join('');
@@ -217,7 +217,7 @@ function render(rolar){
      +'<div class="aviso">Data e horário estão <b>sujeitos à disponibilidade</b>. A gente confere a agenda e confirma com você.</div>';
   }
   if(p==='tipo'){
-    var l=PAC.filter(function(pc){return !pc.locais||!pc.locais.length||pc.locais.indexOf(S.local)>=0;});
+    var l=PAC.filter(function(pc){return !S.local||!pc.locais||!pc.locais.length||pc.locais.indexOf(S.local)>=0;});
     x='<h2>Que tipo de evento?</h2><p class="sub">'+pax()+' pessoas · '+fmtH(S.horas)+' de serviço. Cada formato já vem com o serviço pensado; depois você escolhe as opções do menu.</p><div class="opts">'+l.map(function(pc){
       var pcalc=precoCalc(pc,Number(S.horas)),abaixo=pax()&&pax()<(Number(pc.min_pax)||0);
       return '<button type="button" class="opt big'+(S.pacote===pc.id?' on':'')+'" onclick="setPacote(\''+pc.id+'\')">'+(pc.foto_url?'<div class="ph" style="background-image:url(&quot;'+h(pc.foto_url)+'&quot;)"></div>':'')+'<div class="in"><b>'+h(pc.nome)+'</b><span>'+h(pc.descricao||'')+'</span>'+(pcalc?'<div class="pr"><b style="font-size:14px;color:var(--ink)">'+money(pcalc.pp)+'</b> por pessoa · '+fmtH(S.horas)+(pcalc.aCombinar?' <span style="color:var(--muted)">(horas a mais no orçamento)</span>':'')+'</div>':'')+(abaixo?'<div class="pr" style="color:var(--muted)">pensado pra a partir de '+pc.min_pax+' pessoas</div>':'')+'</div></button>';}).join('')+'</div>';
