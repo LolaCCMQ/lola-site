@@ -117,6 +117,13 @@ function sem(A,B){if(!A.length||!B.length)return 0;var m=0;A.forEach(function(a)
 function fichaDe(c){if(c.ficha_id)return c.ficha_id;var A=toks(norm(c.nome)),best=null,bs=0;FICHAS.forEach(function(f){var s=sem(A,f._t);if(s>bs||(s===bs&&best&&COMFOTO.has(f.id)&&!COMFOTO.has(best.id))){bs=s;best=f;}});return bs>=0.6&&best?best.id:null;}
 function nomeSite(n){return String(n||'').replace(/\b(UN|UND|EVENTO|Evento|eventos|Eventos)\b/g,'').replace(/\b\d+\s?(gr|g|ml)\b/gi,'').replace(/\s{2,}/g,' ').trim();}
 
+// fotos de eventos guardadas no próprio site (img/eventos/) — valem enquanto o item não tiver foto própria no catálogo
+var FOTOS_SITE={
+  'a27af8ac-d624-431b-958c-0890794f7ecb':'img/eventos/cesta-de-paes.jpg',   // Mix de pães
+  '06c77d0d-dc0b-4910-ab28-795d05628514':'img/eventos/chips-pao-sirio.jpg', // Chips crocantes de pão sírio
+  '14cf1cff-249e-4701-a0f3-741871ffee0c':'img/eventos/grissinis.jpg'        // Grissinis
+};
+
 async function carregar(){
   const r=await Promise.all([
     api('lola_eventos_pacotes?ativo=eq.true&select=*&order=ordem').catch(function(e){if(PREVIA){PAC_ORIGEM='padrao';return PAC_PADRAO;}throw e;}),
@@ -124,7 +131,7 @@ async function carregar(){
     api('lola_fichas_tecnicas?ativo=eq.true&select=id,nome').catch(function(){return [];}),
     api('lola_fichas_fotos?select=ficha_id&limit=5000').catch(function(){return [];})
   ]);
-  PAC=r[0]; ITENS=r[1].map(function(c){c._nome=nomeSite(c.nome);return c;});
+  PAC=r[0]; ITENS=r[1].map(function(c){c._nome=nomeSite(c.nome);if(!c.foto_url&&FOTOS_SITE[c.id])c.foto_url=FOTOS_SITE[c.id];return c;});
   FICHAS=r[2].map(function(f){f._t=toks(norm(f.nome));return f;}); COMFOTO=new Set(r[3].map(function(x){return x.ficha_id;}));
   ITENS.forEach(function(c){var fid=fichaDe(c);c._fichaId=fid;c._ficha=(fid&&COMFOTO.has(fid))?fid:null;
     var f=fid?FICHAS.find(function(x){return x.id===fid;}):null;c._fichaNome=f?f.nome:'';c._fichaLigada=!!c.ficha_id;});
